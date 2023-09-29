@@ -69,12 +69,12 @@ export const categories = [
         description: 'Experience Quad-bike and off-road adventures!'
       },
       {
-        label: 'Family-Friendly',
+        label: 'Family',
         icon: BsSnow,
         description: 'Experience family-friendly adventures!'
       },
       {
-        label: 'Photography & Film',
+        label: 'Photography',
         icon: GiCactus,
         description: 'Experience scenic and photographic adventures!'
       },

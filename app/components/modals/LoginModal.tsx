@@ -19,8 +19,8 @@ import { useRouter } from "next/navigation";
 
 const LoginModal= () => {
     const router=useRouter();
-    const LoginModal=useLoginModal();
-    const RegisterModal=useRegisterModal();
+    const LoginModalHook=useLoginModal();
+    const RegisterModalHook=useRegisterModal();
     const [isLoading, setIsLoading]=useState(false);
 
     const { register, handleSubmit, formState: { errors, } } = useForm<FieldValues> ({ 
@@ -40,7 +40,7 @@ const LoginModal= () => {
             if(callback?.ok) {
                 toast.success("Logged in");
                 router.refresh();
-                LoginModal.onClose();
+                LoginModalHook.onClose();
             }
             if(callback?.error) {
                 toast.error(callback.error);
@@ -49,9 +49,9 @@ const LoginModal= () => {
     };
 
     const toggle = useCallback(() => {
-        LoginModal.onClose();
-        RegisterModal.onOpen();
-    }, [LoginModal, RegisterModal]);
+        LoginModalHook.onClose();
+        RegisterModalHook.onOpen();
+    }, [LoginModalHook, RegisterModalHook]);
 
     const bodyContent= (
         <div className="flex flex-col gap-4">
@@ -77,8 +77,8 @@ const LoginModal= () => {
     );
 
     return (
-        <Modal disabled={isLoading} isOpen={LoginModal.isOpen} title="Login" actionLabel="Continue"
-        onClose={LoginModal.onClose} onSubmit={handleSubmit(onSubmit)} body={bodyContent} footer={footerContent}/>
+        <Modal disabled={isLoading} isOpen={LoginModalHook.isOpen} title="Login" actionLabel="Continue"
+        onClose={LoginModalHook.onClose} onSubmit={handleSubmit(onSubmit)} body={bodyContent} footer={footerContent}/>
     );
 }
 

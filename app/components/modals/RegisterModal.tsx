@@ -15,8 +15,8 @@ import Button from "../Button";
 import {signIn} from "next-auth/react";
 
 const RegisterModal= () => {
-    const RegisterModal=useRegisterModal();
-    const LoginModal=useLoginModal();
+    const RegisterModalHook=useRegisterModal();
+    const LoginModalHook=useLoginModal();
     const [isLoading, setIsLoading]=useState(false);
 
     const { register, handleSubmit, formState: { errors, } } = useForm<FieldValues> ({ 
@@ -27,7 +27,7 @@ const RegisterModal= () => {
         setIsLoading(true);
         axios.post("/api/register", data)
             .then(() => {
-                RegisterModal.onClose();
+                RegisterModalHook.onClose();
             })
             .catch((error) => {
                 toast.error('Something went wrong.');
@@ -38,9 +38,9 @@ const RegisterModal= () => {
     };
 
     const toggle = useCallback(() => {
-        RegisterModal.onClose();
-        LoginModal.onOpen();
-    }, [LoginModal, RegisterModal]);
+        RegisterModalHook.onClose();
+        LoginModalHook.onOpen();
+    }, [LoginModalHook, RegisterModalHook]);
 
     const bodyContent= (
         <div className="flex flex-col gap-4">
@@ -67,8 +67,8 @@ const RegisterModal= () => {
     );
 
     return (
-        <Modal disabled={isLoading} isOpen={RegisterModal.isOpen} title="Register" actionLabel="Continue"
-        onClose={RegisterModal.onClose} onSubmit={handleSubmit(onSubmit)} body={bodyContent} footer={footerContent}/>
+        <Modal disabled={isLoading} isOpen={RegisterModalHook.isOpen} title="Register" actionLabel="Continue"
+        onClose={RegisterModalHook.onClose} onSubmit={handleSubmit(onSubmit)} body={bodyContent} footer={footerContent}/>
     );
 }
 

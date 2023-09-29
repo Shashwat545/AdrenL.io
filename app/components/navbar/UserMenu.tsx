@@ -23,10 +23,18 @@ const UserMenu:React.FC<UserMenuProps> = ({currentUser}) => {
         setIsOpen((value) => !value);
     }, []);
 
+    const onRent=useCallback(() => {
+        if(!currentUser) {
+            return LoginModal.onOpen();
+        }
+
+        //Open Host model here
+    }, [currentUser, LoginModal]);
+
     return (
         <div className="relative">
             <div className="flex flex-row items-center gap-3">
-                <div onClick={() => {}} className="hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer">
+                <div onClick={onRent} className="hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer">
                     Host your own adventure!
                 </div>
                 <div onClick={toggleOpen} className="p-4 md:py-1 md:px-2 border-[1px] border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition">
