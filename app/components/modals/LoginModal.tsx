@@ -48,6 +48,11 @@ const LoginModal= () => {
         })
     };
 
+    const toggle = useCallback(() => {
+        LoginModal.onClose();
+        RegisterModal.onOpen();
+    }, [LoginModal, RegisterModal]);
+
     const bodyContent= (
         <div className="flex flex-col gap-4">
             <Heading title="Welcome back" subtitle="Login to your account!"/>
@@ -62,10 +67,10 @@ const LoginModal= () => {
             <Button outline label="Continue with Google" icon={FcGoogle} onClick={() => signIn('google')}/>
             <div className="justify-center flex flex-row items-center gap-2">
                 <div>
-                    Already have an account?
+                    First time using AdrenL?
                 </div>
-                <div onClick={RegisterModal.onClose} className="text-neutral-800 cursor-pointer hover:underline">
-                    Log in
+                <div onClick={toggle} className="text-neutral-800 cursor-pointer hover:underline">
+                    Create an account
                 </div>
             </div>
         </div>

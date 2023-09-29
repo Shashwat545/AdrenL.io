@@ -16,67 +16,67 @@ export const categories = [
     {
         label: 'Water',
         icon: TbBeach,
-        description: 'This property is close to the beach!'
+        description: 'Experience water adventures!'
     },
     {
         label: 'Mountain',
         icon: GiWindmill,
-        description: 'This property has windmills!'
+        description: 'Experience mountain and hill adventures!'
     },
     {
         label: 'Air',
         icon: MdOutlineVilla,
-        description: 'This property is modern!'
+        description: 'Experience airborne adventures!'
     },
     {
         label: 'Winter',
         icon: TbMountain,
-        description: 'This property is in the countryside!'
+        description: 'Experience winter and snow adventures!'
       },
       {
         label: 'Desert',
         icon: TbPool,
-        description: 'This is property has a beautiful pool!'
+        description: 'Experience desert adventures!'
       },
       {
-        label: 'Jungle & Wildlife',
+        label: 'Jungle',
         icon: GiIsland,
-        description: 'This property is on an island!'
+        description: 'Experience jungle and wildlife adventures!'
       },
       {
-        label: 'Extreme Sports',
+        label: 'Extreme',
         icon: GiBoatFishing,
-        description: 'This property is near a lake!'
+        description: 'Experience extreme sports and activities!'
       },
       {
         label: 'Underground',
         icon: FaSkiing,
-        description: 'This property has skiing activies!'
+        description: 'Experience underground adventures!'
       },
       {
         label: 'Cultural',
         icon: GiCastle,
-        description: 'This property is an ancient castle!'
+        description: 'Experience cultural activities!'
       },
       {
         label: 'Multi-day',
         icon: GiCaveEntrance,
-        description: 'This property is in a spooky cave!'
+        description: 'Experience multi-day adventures!'
       },
       {
         label: 'Motorized',
         icon: GiForestCamp,
-        description: 'This property offers camping activities!'
+        description: 'Experience Quad-bike and off-road adventures!'
       },
       {
         label: 'Family-Friendly',
         icon: BsSnow,
-        description: 'This property is in arctic environment!'
+        description: 'Experience family-friendly adventures!'
       },
       {
         label: 'Photography & Film',
         icon: GiCactus,
-        description: 'This property is in the desert!'
+        description: 'Experience scenic and photographic adventures!'
       },
 ]
 
