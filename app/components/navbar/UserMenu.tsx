@@ -6,6 +6,7 @@ import {useCallback, useState} from "react";
 import MenuItem from "./MenuItem";
 import useLoginModal from "../../hooks/useLoginModal";
 import useRegisterModal from "../../hooks/useRegisterModal";
+import useHostModal from "../../hooks/useHostModal";
 import {User} from "@prisma/client";
 import {signOut} from "next-auth/react";
 
@@ -15,26 +16,27 @@ interface UserMenuProps {
 
 const UserMenu:React.FC<UserMenuProps> = ({currentUser}) => {
 
-    const LoginModal=useLoginModal();
-    const RegisterModal=useRegisterModal();
+    const LoginModalHook=useLoginModal();
+    const RegisterModalHook=useRegisterModal();
+    const HostModalHook=useHostModal();
     const [isOpen, setIsOpen]=useState(false);
     
     const toggleOpen=useCallback(() => {
         setIsOpen((value) => !value);
     }, []);
 
-    const onRent=useCallback(() => {
+    const onHost=useCallback(() => {
         if(!currentUser) {
-            return LoginModal.onOpen();
+            return LoginModalHook.onOpen();
         }
 
-        //Open Host model here
-    }, [currentUser, LoginModal]);
+        HostModalHook.onOpen();
+    }, [currentUser, LoginModalHook, HostModalHook]);
 
     return (
         <div className="relative">
             <div className="flex flex-row items-center gap-3">
-                <div onClick={onRent} className="hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer">
+                <div onClick={onHost} className="hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer">
                     Host your own adventure!
                 </div>
                 <div onClick={toggleOpen} className="p-4 md:py-1 md:px-2 border-[1px] border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition">
@@ -55,14 +57,14 @@ const UserMenu:React.FC<UserMenuProps> = ({currentUser}) => {
                                 <MenuItem onClick={()=>{}} label="Notifications" fontBold/>
                                 <hr />
                                 <MenuItem onClick={()=>{}} label="Contact us"/>
-                                <MenuItem onClick={()=>{}} label="Host your own adventure"/>
+                                <MenuItem onClick={HostModalHook.onOpen} label="Host your own adventure"/>
                                 <hr />
                                 <MenuItem onClick={()=>signOut()} label="Log Out"/>
                             </>
                         ): (
                             <>
-                                <MenuItem onClick={LoginModal.onOpen} label="Login" fontBold/>
-                                <MenuItem onClick={RegisterModal.onOpen} label="Sign Up"/>
+                                <MenuItem onClick={LoginModalHook.onOpen} label="Login" fontBold/>
+                                <MenuItem onClick={RegisterModalHook.onOpen} label="Sign Up"/>
                             </>
                         )
                         }

@@ -20,7 +20,9 @@ const RegisterModal= () => {
     const [isLoading, setIsLoading]=useState(false);
 
     const { register, handleSubmit, formState: { errors, } } = useForm<FieldValues> ({ 
-        defaultValues: {name: '', email: '', password: ''}
+        defaultValues: {
+            name: '', email: '', password: ''
+        }
     });
 
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
