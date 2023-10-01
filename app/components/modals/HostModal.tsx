@@ -1,11 +1,14 @@
 'use client';
 import { useState, useMemo } from "react";
 import { useForm, FieldValues } from "react-hook-form";
+import dynamic from "next/dynamic";
 import useHostModal from "@/app/hooks/useHostModal";
+
 import Modal from "./Modal";
 import Heading from "../Heading";
 import CategoryInput from "../inputs/CategoryInput";
 import CountrySelect from "../inputs/CountrySelect";
+
 import { categories } from "../navbar/Categories";
 
 enum STEPS {
@@ -29,6 +32,8 @@ const HostModal = () => {
 
     const category = watch("category");
     const location = watch("location");
+
+    const Map = useMemo(() => dynamic(() => import('../Map'), {ssr:false}), [location]);
 
     const setCustomValue = (id: string, value: any) => {
         setValue(id, value, {
@@ -76,6 +81,7 @@ const HostModal = () => {
             <div className="flex flex-col gap-8">
                 <Heading title="Where is your adventure located?" subtitle="Help customers find you!"/>
                 <CountrySelect value={location} onChange={(value) => setCustomValue('location', value)}/>
+                <Map center={location?.latlng}/>
             </div>
         )
     }
