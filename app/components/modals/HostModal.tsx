@@ -5,6 +5,7 @@ import useHostModal from "@/app/hooks/useHostModal";
 import Modal from "./Modal";
 import Heading from "../Heading";
 import CategoryInput from "../inputs/CategoryInput";
+import CountrySelect from "../inputs/CountrySelect";
 import { categories } from "../navbar/Categories";
 
 enum STEPS {
@@ -27,6 +28,7 @@ const HostModal = () => {
     })
 
     const category = watch("category");
+    const location = watch("location");
 
     const setCustomValue = (id: string, value: any) => {
         setValue(id, value, {
@@ -69,8 +71,17 @@ const HostModal = () => {
         </div>
     );
 
+    if(step === STEPS.LOCATION) {
+        bodyContent = (
+            <div className="flex flex-col gap-8">
+                <Heading title="Where is your adventure located?" subtitle="Help customers find you!"/>
+                <CountrySelect value={location} onChange={(value) => setCustomValue('location', value)}/>
+            </div>
+        )
+    }
+
     return (
-        <Modal isOpen={HostModalHook.isOpen} onClose={HostModalHook.onClose} onSubmit={HostModalHook.onClose} actionLabel={actionLabel}
+        <Modal isOpen={HostModalHook.isOpen} onClose={HostModalHook.onClose} onSubmit={onNext} actionLabel={actionLabel}
         secondaryActionLabel={secondaryActionLabel} secondaryAction={step===STEPS.CATEGORY ? undefined : onBack} title="Host your adventure!"
         body={bodyContent}/>
     )
