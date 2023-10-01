@@ -8,6 +8,7 @@ import Modal from "./Modal";
 import Heading from "../Heading";
 import CategoryInput from "../inputs/CategoryInput";
 import CountrySelect from "../inputs/CountrySelect";
+import Counter from "../inputs/Counter";
 
 import { categories } from "../navbar/Categories";
 
@@ -32,6 +33,7 @@ const HostModal = () => {
 
     const category = watch("category");
     const location = watch("location");
+    const guestCount = watch("guestCount");
 
     const Map = useMemo(() => dynamic(() => import('../Map'), {ssr:false}), [location]);
 
@@ -83,7 +85,16 @@ const HostModal = () => {
                 <CountrySelect value={location} onChange={(value) => setCustomValue('location', value)}/>
                 <Map center={location?.latlng}/>
             </div>
-        )
+        );
+    }
+
+    if(step === STEPS.INFO) {
+        bodyContent = (
+            <div className="flex flex-col gap-8">
+                <Heading title="Share some basics about your adventure" subtitle="What do you offer?"/>
+                <Counter title="Guests" subtitle="How many guests do you allow?" value={guestCount} onChange={(value) => setCustomValue('guestCount', value)}/>
+            </div>
+        );
     }
 
     return (
