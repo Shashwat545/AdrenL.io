@@ -1,8 +1,12 @@
 'use client';
+
 import { useState, useMemo } from "react";
-import { useForm, FieldValues } from "react-hook-form";
+import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
 import dynamic from "next/dynamic";
 import useHostModal from "@/app/hooks/useHostModal";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 import Modal from "./Modal";
 import Heading from "../Heading";
@@ -10,6 +14,7 @@ import CategoryInput from "../inputs/CategoryInput";
 import CountrySelect from "../inputs/CountrySelect";
 import Counter from "../inputs/Counter";
 import ImageUpload from "../inputs/ImageUpload"
+import Input from "../inputs/Input";
 
 import { categories } from "../navbar/Categories";
 
@@ -24,7 +29,9 @@ enum STEPS {
 
 const HostModal = () => {
     const HostModalHook=useHostModal();
+    const router = useRouter();
     const [step, setStep]=useState(STEPS.CATEGORY);
+    const [isLoading, setIsLoading]=useState(false);
 
     const { register, handleSubmit, setValue, watch, formState: {errors, }, reset} = useForm<FieldValues> ({
         defaultValues: {
@@ -50,15 +57,41 @@ const HostModal = () => {
     const onBack = () => {
         setStep((value) => value-1);
     };
+
     const onNext = () => {
         setStep((value) => value+1);
     }
+
+    const onSubmit: SubmitHandler<FieldValues> = (data) => {
+        if(step !== STEPS.PRICE) {
+            return onNext();
+        }
+
+        setIsLoading(true);
+
+        axios.post('/api/listings', data)
+        .then(() => {
+            toast.success("Listing created!");
+            router.refresh();
+            reset();
+            setStep(STEPS.CATEGORY);
+            HostModalHook.onClose();
+        })
+        .catch(() => {
+            toast.error("Something went wrong.");
+        })
+        .finally(() => {
+            setIsLoading(false);
+        })
+    }
+
     const actionLabel = useMemo(() => {
         if(step === STEPS.PRICE) {
             return "Create";
         }
         return "Next";
     }, [step]);
+
     const secondaryActionLabel = useMemo(() => {
         if(step === STEPS.CATEGORY) {
             return undefined;
@@ -100,7 +133,7 @@ const HostModal = () => {
     }
 
     if(step === STEPS.IMAGES) {
-        bodyContent= (
+        bodyContent = (
             <div className="flex flex-col gap-8">
                 <Heading title="Add a photo of your adventure" subtitle="Show guests what your adventure looks like!"/>
                 <ImageUpload value={imageSrc} onChange={(value) => setCustomValue('imageSrc', value)}/>
@@ -108,8 +141,28 @@ const HostModal = () => {
         );
     }
 
+    if(step === STEPS.DESCRIPTION) {
+        bodyContent = (
+            <div className="flex flex-col gap-8">
+                <Heading title="How would you describe your adventure?" subtitle="Short and crisp works best!"/>
+                <Input id="title" label="Title" disabled={isLoading} register={register} errors={errors} required/>
+                <hr />
+                <Input id="description" label="Description" disabled={isLoading} register={register} errors={errors} required/>
+            </div>
+        );
+    }
+
+    if(step === STEPS.PRICE) {
+        bodyContent = (
+            <div className="flex flex-col gap-8">
+                <Heading title="Now, set your price" subtitle="How much do you charge per adventure?"/>
+                <Input id="price" label="Price" formatPrice type="number" disabled={isLoading} register={register} errors={errors} required/>
+            </div>
+        );
+    }
+
     return (
-        <Modal isOpen={HostModalHook.isOpen} onClose={HostModalHook.onClose} onSubmit={onNext} actionLabel={actionLabel}
+        <Modal isOpen={HostModalHook.isOpen} onClose={HostModalHook.onClose} onSubmit={handleSubmit(onSubmit)} actionLabel={actionLabel}
         secondaryActionLabel={secondaryActionLabel} secondaryAction={step===STEPS.CATEGORY ? undefined : onBack} title="Host your adventure!"
         body={bodyContent}/>
     )
