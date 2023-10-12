@@ -59,10 +59,8 @@ const ListingCard: React.FC<ListingCardProps> = ({ data, reservation, onAction, 
                         <HeartButton listingId={data.id} currentUser={currentUser}/>
                     </div>
                 </div>
-                <div className="flex flex-row items-center gap-1 text-lg">
-                    <div className="font-semibold">
+                <div className="font-semibold">
                     {data.title}
-                    </div>
                 </div>
                 <div className="font-light text-neutral-500">
                         {reservationDate || data.category}
