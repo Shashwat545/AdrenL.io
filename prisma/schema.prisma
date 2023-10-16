@@ -54,6 +54,9 @@ model Listing {
   category String
   guestCount Int
   locationValue String
+  stateValue String
+  cityValue String
+  coordinates String[]
   userId String @db.ObjectId
   price Int
 

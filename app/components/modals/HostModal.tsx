@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import Modal from "./Modal";
 import Heading from "../Heading";
 import CategoryInput from "../inputs/CategoryInput";
-import CountrySelect from "../inputs/CountrySelect";
+import LocationSelect from "../inputs/LocationSelect";
 import Counter from "../inputs/Counter";
 import ImageUpload from "../inputs/ImageUpload"
 import Input from "../inputs/Input";
@@ -35,12 +35,14 @@ const HostModal = () => {
 
     const { register, handleSubmit, setValue, watch, formState: {errors, }, reset} = useForm<FieldValues> ({
         defaultValues: {
-            category: '', location: null, guestCount: 1, imageSrc: '', price: 1, title: '', description: ''
+            category: '', location: null, stateValue: null, cityValue: null, guestCount: 1, imageSrc: '', price: 1, title: '', description: ''
         }
     })
 
     const category = watch("category");
     const location = watch("location");
+    const stateValue = watch("stateValue");
+    const cityValue = watch("cityValue");
     const guestCount = watch("guestCount");
     const imageSrc = watch("imageSrc");
 
@@ -117,8 +119,8 @@ const HostModal = () => {
         bodyContent = (
             <div className="flex flex-col gap-8">
                 <Heading title="Where is your adventure located?" subtitle="Help customers find you!"/>
-                <CountrySelect value={location} onChange={(value) => setCustomValue('location', value)}/>
-                <Map center={location?.latlng}/>
+                <LocationSelect value={location} stateValue={stateValue} cityValue={cityValue} onChange={(value) => setCustomValue('location', value)} onStateChange={(value) => setCustomValue('stateValue', value)} onCityChange={(value) => setCustomValue('cityValue', value)}/>
+                <Map center={cityValue?.latlng || stateValue?.latlng || location?.latlng}/>
             </div>
         );
     }
