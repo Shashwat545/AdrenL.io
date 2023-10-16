@@ -4,80 +4,81 @@ import Container from "../Container";
 import CategoryBox from "../CategoryBox";
 
 import { TbBeach, TbMountain, TbPool } from 'react-icons/tb';
-import { GiBarn, GiBoatFishing, GiCactus, GiCastle, GiCaveEntrance, GiForestCamp, GiIsland, GiWindmill} from 'react-icons/gi';
+import { GiBarn, GiBoatFishing, GiCactus, GiCastle, GiCaveEntrance, GiForestCamp, GiIsland, GiWindmill, GiAirBalloon} from 'react-icons/gi';
 import { FaSkiing } from 'react-icons/fa';
 import { BsSnow } from 'react-icons/bs';
 import { IoDiamond } from 'react-icons/io5';
 import { MdOutlineVilla } from 'react-icons/md';
+import { BiWater } from "react-icons/bi";
 
 import {usePathname, useSearchParams} from "next/navigation";
 
 export const categories = [
     {
         label: 'Water',
-        icon: TbBeach,
+        icon: BiWater,
         description: 'Experience water adventures!'
     },
     {
-        label: 'Mountain',
-        icon: GiWindmill,
+        label: 'Land',
+        icon: GiIsland,
         description: 'Experience mountain and hill adventures!'
     },
     {
         label: 'Air',
-        icon: MdOutlineVilla,
+        icon: GiAirBalloon,
         description: 'Experience airborne adventures!'
     },
-    {
-        label: 'Winter',
-        icon: TbMountain,
-        description: 'Experience winter and snow adventures!'
-      },
-      {
-        label: 'Desert',
-        icon: TbPool,
-        description: 'Experience desert adventures!'
-      },
-      {
-        label: 'Jungle',
-        icon: GiIsland,
-        description: 'Experience jungle and wildlife adventures!'
-      },
-      {
-        label: 'Extreme',
-        icon: GiBoatFishing,
-        description: 'Experience extreme sports and activities!'
-      },
-      {
-        label: 'Underground',
-        icon: FaSkiing,
-        description: 'Experience underground adventures!'
-      },
-      {
-        label: 'Cultural',
-        icon: GiCastle,
-        description: 'Experience cultural activities!'
-      },
-      {
-        label: 'Multi-day',
-        icon: GiCaveEntrance,
-        description: 'Experience multi-day adventures!'
-      },
-      {
-        label: 'Motorized',
-        icon: GiForestCamp,
-        description: 'Experience Quad-bike and off-road adventures!'
-      },
-      {
-        label: 'Family',
-        icon: BsSnow,
-        description: 'Experience family-friendly adventures!'
-      },
-      {
-        label: 'Photography',
-        icon: GiCactus,
-        description: 'Experience scenic and photographic adventures!'
-      },
+    // {
+    //     label: 'Winter',
+    //     icon: TbMountain,
+    //     description: 'Experience winter and snow adventures!'
+    //   },
+    //   {
+    //     label: 'Desert',
+    //     icon: TbPool,
+    //     description: 'Experience desert adventures!'
+    //   },
+    //   {
+    //     label: 'Jungle',
+    //     icon: GiIsland,
+    //     description: 'Experience jungle and wildlife adventures!'
+    //   },
+    //   {
+    //     label: 'Extreme',
+    //     icon: GiBoatFishing,
+    //     description: 'Experience extreme sports and activities!'
+    //   },
+    //   {
+    //     label: 'Underground',
+    //     icon: FaSkiing,
+    //     description: 'Experience underground adventures!'
+    //   },
+    //   {
+    //     label: 'Cultural',
+    //     icon: GiCastle,
+    //     description: 'Experience cultural activities!'
+    //   },
+    //   {
+    //     label: 'Multi-day',
+    //     icon: GiCaveEntrance,
+    //     description: 'Experience multi-day adventures!'
+    //   },
+    //   {
+    //     label: 'Motorized',
+    //     icon: GiForestCamp,
+    //     description: 'Experience Quad-bike and off-road adventures!'
+    //   },
+    //   {
+    //     label: 'Family',
+    //     icon: BsSnow,
+    //     description: 'Experience family-friendly adventures!'
+    //   },
+    //   {
+    //     label: 'Photography',
+    //     icon: GiCactus,
+    //     description: 'Experience scenic and photographic adventures!'
+    //   },
 ]
 
 const Categories = () => {
