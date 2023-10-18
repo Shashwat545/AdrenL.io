@@ -29,10 +29,14 @@ const RegisterModal= () => {
         setIsLoading(true);
         axios.post("/api/register", data)
             .then(() => {
+                toast('Check your email to verify the account!', {
+                    icon: '✅',
+                  });
                 RegisterModalHook.onClose();
             })
             .catch((error) => {
-                toast.error('Something went wrong.');
+                if(error.response.status==409) return toast.error("Email is already registered!")
+                toast.error("Something went wrong");
             })
             .finally(() => {
                 setIsLoading(false);
