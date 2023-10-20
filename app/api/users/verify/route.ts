@@ -7,12 +7,11 @@ interface EmailVerifyRequest{
     userId : string
 }
 
-function isValidObjectId(id:string) {
-    // Check if the id is a string of 24 hexadecimal characters
+function isValidObjectId(id: string) {
     return /^[0-9a-fA-F]{24}$/.test(id);
-  }
+}
 
-export const POST  = async (req: Request) => {
+export async function POST (req: Request) {
     try{
         const {token, userId} = (await req.json()) as EmailVerifyRequest;
 
@@ -20,44 +19,41 @@ export const POST  = async (req: Request) => {
             return NextResponse.json(
                 { error: "Invalid request, userId and token is required!" },
                 { status: 401 }
-              );
+            );
         }
 
         const verifyToken = await prisma.emailVerificationToken.findUnique({
             where: {
-               userId,
-            },
-          })
+               userId
+            }
+        });
         
-          //check the format of verify token over here
+        //check the format of verify token over here
 
         //   if(verifyToken!=token){
         //     return NextResponse.json({error: "Invalid token!"}, {status: 401})
         //   }
 
-       
         await prisma.user.update({
             where:{id:userId},
             data: {
                 emailVerified:true}
-        })
+            }
+        );
     
-
         await prisma.emailVerificationToken.delete({
             where:{userId},
         });
 
         return NextResponse.json({ message: "Your email is verified." });
-    }catch(error){
+    }
+    catch(error) {
         return NextResponse.json(
-            {
-            error: "could not verify email, something went wrong!",
-            },
+            { error: "could not verify email, something went wrong!" },
             { status: 500 }
         );
+    }
 }
-}
-
 
 // export const GET = async (req:Request) => {
 //     try{

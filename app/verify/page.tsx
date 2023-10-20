@@ -1,47 +1,47 @@
-"use client"
+'use client';
+
 import { notFound, useRouter } from "next/navigation";
-import { useEffect } from "react";
 import toast from "react-hot-toast";
 
-interface Props{
-    searchParams : {token:string, userId:string};
+import { useEffect } from "react";
+
+interface SearchParamProps{
+    searchParams : { token:string, userId:string };
 }
 
-export default function Verify(props:Props){
-    const {token, userId} = props.searchParams;
-    const router = useRouter();
+const Verify:React.FC<SearchParamProps> = ({searchParams}) => {
+  const { token, userId } = searchParams;
+  const router = useRouter();
 
-    //verify the token and userId 
+  useEffect(() => {
+    fetch("/api/users/verify", {
+        method: "POST",
+        body: JSON.stringify({token, userId})
+    }).then(async (res) => {
+        const apiRes = await res.json();
+        const { error, message } = apiRes as { message: string; error: string };
 
-    useEffect(()=>{
-        fetch("/api/users/verify",{
-            method: "POST",
-            body: JSON.stringify({token, userId})
-        }).then(async (res)=>{
-            const apiRes = await res.json();
+        if (res.ok) {
+            toast.success(message);
+        }
+        if (!res.ok && error) {
+          console.log(error);
+          toast.error(error);
+        }
+        router.replace("/");
+    });
+  }, []);
 
-            const { error, message } = apiRes as { message: string; error: string };
+  if (!token || !userId) {
+    return notFound();
+  }
 
-            if (res.ok) {
-                // success
-                toast.success(message);
-              }
-        
-              if (!res.ok && error) {
-                console.log(error);
-                toast.error(error);
-              }
-
-              router.replace("/");
-        })
-    },[])
-
-    if (!token || !userId) return notFound();
-
-    return (
-        <div className="text-3xl opacity-70 text-center p-5 animate-pulse">
-          Please wait...
-          <p>We are verifying your email</p>
-        </div>
-      );
+  return (
+    <div className="text-3xl opacity-70 text-center p-5 animate-pulse">
+      Please wait...
+      <p>We are verifying your email</p>
+    </div>
+  );
 }
+
+export default Verify;

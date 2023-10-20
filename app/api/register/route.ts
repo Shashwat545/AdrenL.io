@@ -11,36 +11,33 @@ export async function POST (request: Request) {
 
     const checkUser = await prisma.user.findUnique({
         where: {email}
-    })
-
-    if(checkUser){
-        return NextResponse.json({
-            error : "Email is already registered"
-        },{
-            status : 409
-        })
+    });
+    if(checkUser) {
+        return NextResponse.json(
+            { error : "Email is already registered"},
+            { status : 409}
+        );
     }
 
     const user=await prisma.user.create({
         data: { email, name, hashedPassword }
     });
 
-    //generate a new token for email verification
+    //Generate a new token for email verification below:
     const token = crypto.randomBytes(36).toString("hex");
     const hashedToken = await bcrypt.hash(token,12);
 
     const emailVerificationToken = await prisma.emailVerificationToken.create({
-        data: {token:hashedToken,userId : user.id}
-    })
+        data: {token: hashedToken, userId: user.id}
+    });
 
     const verificationUrl = `http://localhost:3000/verify?token=${token}&userId=${user.id}`;
 
     await sendEmail({
-        profile: { name:user.name,email: user.email },
+        profile: { name: user.name ,email: user.email },
         subject: "verification",
         linkUrl: verificationUrl,
-      });
+    });
 
     return NextResponse.json(token);
 }
-
