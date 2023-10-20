@@ -35,7 +35,7 @@ const HostModal = () => {
 
     const { register, handleSubmit, setValue, watch, formState: {errors, }, reset} = useForm<FieldValues> ({
         defaultValues: {
-            category: '', location: null, stateValue: null, cityValue: null, guestCount: 1, imageSrc: '', price: 1, title: '', description: ''
+            category: '', location: null, stateValue: null, cityValue: null, guestCount: 1, imageSrc: [], price: 1, title: '', description: ''
         }
     })
 
@@ -137,8 +137,12 @@ const HostModal = () => {
     if(step === STEPS.IMAGES) {
         bodyContent = (
             <div className="flex flex-col gap-8">
-                <Heading title="Add a photo of your adventure" subtitle="Show guests what your adventure looks like!"/>
-                <ImageUpload value={imageSrc} onChange={(value) => setCustomValue('imageSrc', value)}/>
+                <Heading title="Add up to 5 photos of your adventure" subtitle="Show guests what your adventure looks like!"/>
+                <ImageUpload value={imageSrc[0]} onChange={(value) => setCustomValue('imageSrc[0]', value)}/>
+                <ImageUpload value={imageSrc[1]} onChange={(value) => setCustomValue('imageSrc[1]', value)}/>
+                <ImageUpload value={imageSrc[2]} onChange={(value) => setCustomValue('imageSrc[2]', value)}/>
+                <ImageUpload value={imageSrc[3]} onChange={(value) => setCustomValue('imageSrc[3]', value)}/>
+                <ImageUpload value={imageSrc[4]} onChange={(value) => setCustomValue('imageSrc[4]', value)}/>
             </div>
         );
     }
