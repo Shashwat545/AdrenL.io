@@ -1,7 +1,6 @@
 'use client';
 
 import Select from "react-select";
-import { useState } from 'react';
 
 import useCountries from "@/app/hooks/useCountries";
 import { State, City } from 'country-state-city';
@@ -36,18 +35,6 @@ interface LocationSelectProps {
 
 const LocationSelect: React.FC<LocationSelectProps> = ({value, stateValue, cityValue, onChange, onStateChange, onCityChange}) => {
     const { getAll } = useCountries();
-    const [selectedState, setSelectedState] = useState<string>('');
-    const [selectedCity, setSelectedCity] = useState<string>('');
-
-    const handleStateChange = (selectedOption: any) => {
-        const stateId = selectedOption.value;
-        setSelectedState(stateId);
-        setSelectedCity('');
-    };
-    
-    const handleCityChange = (selectedOption: any) => {
-        setSelectedCity(selectedOption.value);
-    };
 
     return (
         <div>
