@@ -11,6 +11,7 @@ import useCountries from "@/app/hooks/useCountries";
 const Map = dynamic(() => import("../Map"), {ssr: false});
 
 interface ListingInfoProps {
+    listing: Listing;
     user?: User;
     description: string;
     guestCount: number;
@@ -22,9 +23,9 @@ interface ListingInfoProps {
     locationValue: string;
 }
 
-const ListingInfo: React.FC<ListingInfoProps> = ({ user, description, guestCount, category, locationValue }) => {
+const ListingInfo: React.FC<ListingInfoProps> = ({ listing, user, description, guestCount, category, locationValue }) => {
     const { getByValue } = useCountries();
-    const coordinates = getByValue(locationValue)?.latlng;
+    const coordinates = [parseFloat(listing.coordinates[0]), parseFloat(listing.coordinates[1])];
 
     return (
         <div className="col-span-4 flex flex-col gap-8">

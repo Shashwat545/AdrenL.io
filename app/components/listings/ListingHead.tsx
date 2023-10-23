@@ -1,6 +1,6 @@
 'use client';
 
-import { User } from "@prisma/client";
+import { User, Listing } from "@prisma/client";
 import Heading from "../Heading";
 import HeartButton from "../HeartButton";
 import Image from "next/image";
@@ -8,6 +8,7 @@ import Image from "next/image";
 import useCountries from "@/app/hooks/useCountries";
 
 interface ListingHeadProps {
+    listing: Listing;
     title: string;
     locationValue: string;
     imageSrc: string;
@@ -15,13 +16,13 @@ interface ListingHeadProps {
     currentUser?: User | null;
 }
 
-const ListingHead: React.FC<ListingHeadProps> = ({ title, locationValue, imageSrc, id, currentUser }) => {
+const ListingHead: React.FC<ListingHeadProps> = ({ listing, title, locationValue, imageSrc, id, currentUser }) => {
     const { getByValue } = useCountries();
     const location = getByValue(locationValue);
 
     return (
         <>
-            <Heading title={title} subtitle={`${location?.region}, ${location?.label}`}/>
+            <Heading title={title} subtitle={`${listing.cityValue}, ${location?.label}`}/>
             <div className="w-full h-[60vh] overflow-hidden rounded-xl relative">
                 <Image alt="Image" src={imageSrc[0]} fill className="object-cover w-full"/>
                 <div className="absolute top-5 right-5">

@@ -66,7 +66,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ data, reservation, onAction, 
                         {reservationDate || data.category}
                     </div>
                 <div className="font-semibold ">
-                    {location?.region}, {location?.label}
+                    {data?.cityValue}, {location?.label}
                 </div>
                 <div className="flex flex-row items-center gap-1">
                     <div className="font-semibold">

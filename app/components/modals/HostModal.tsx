@@ -139,10 +139,10 @@ const HostModal = () => {
             <div className="flex flex-col gap-8">
                 <Heading title="Add up to 5 photos of your adventure" subtitle="Show guests what your adventure looks like!"/>
                 <ImageUpload value={imageSrc[0]} onChange={(value) => setCustomValue('imageSrc[0]', value)}/>
-                <ImageUpload value={imageSrc[1]} onChange={(value) => setCustomValue('imageSrc[1]', value)}/>
-                <ImageUpload value={imageSrc[2]} onChange={(value) => setCustomValue('imageSrc[2]', value)}/>
-                <ImageUpload value={imageSrc[3]} onChange={(value) => setCustomValue('imageSrc[3]', value)}/>
-                <ImageUpload value={imageSrc[4]} onChange={(value) => setCustomValue('imageSrc[4]', value)}/>
+                {imageSrc[0] && <ImageUpload value={imageSrc[1]} onChange={(value) => setCustomValue('imageSrc[1]', value)}/>}
+                {imageSrc[1] && <ImageUpload value={imageSrc[2]} onChange={(value) => setCustomValue('imageSrc[2]', value)}/>}
+                {imageSrc[2] && <ImageUpload value={imageSrc[3]} onChange={(value) => setCustomValue('imageSrc[3]', value)}/>}
+                {imageSrc[3] && <ImageUpload value={imageSrc[4]} onChange={(value) => setCustomValue('imageSrc[4]', value)}/>}
             </div>
         );
     }
