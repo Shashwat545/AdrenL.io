@@ -111,7 +111,7 @@ const LocationSelect: React.FC<LocationSelectProps> = ({value, stateValue, cityV
                 />
             )}
             <br />
-            {stateValue && (
+            {value && stateValue && (
             <Select
                 placeholder="Select City"
                 isClearable

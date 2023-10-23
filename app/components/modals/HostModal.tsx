@@ -46,7 +46,7 @@ const HostModal = () => {
     const guestCount = watch("guestCount");
     const imageSrc = watch("imageSrc");
 
-    const Map = useMemo(() => dynamic(() => import('../Map'), {ssr:false}), [location]);
+    const Map = useMemo(() => dynamic(() => import('../Map'), {ssr:false}), [location, stateValue, cityValue]);
 
     const setCustomValue = (id: string, value: any) => {
         setValue(id, value, {
@@ -120,7 +120,7 @@ const HostModal = () => {
             <div className="flex flex-col gap-8">
                 <Heading title="Where is your adventure located?" subtitle="Help customers find you!"/>
                 <LocationSelect value={location} stateValue={stateValue} cityValue={cityValue} onChange={(value) => setCustomValue('location', value)} onStateChange={(value) => setCustomValue('stateValue', value)} onCityChange={(value) => setCustomValue('cityValue', value)}/>
-                <Map center={cityValue?.latlng || stateValue?.latlng || location?.latlng}/>
+                <Map center={cityValue?.latlng || stateValue?.latlng || location?.latlng} zoom={(cityValue && 8) || (stateValue && 6)}/>
             </div>
         );
     }

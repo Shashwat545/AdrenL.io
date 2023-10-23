@@ -49,7 +49,7 @@ const ListingInfo: React.FC<ListingInfoProps> = ({ listing, user, description, g
                 {description}
             </div>
             <hr />
-            <Map center={coordinates}/>
+            <Map center={coordinates} zoom={8} scrollZoom/>
         </div>
     );
 }
