@@ -71,6 +71,7 @@ model Reservation {
   userId String @db.ObjectId
   listingId String @db.ObjectId
   startDate DateTime
+  endDate DateTime
   totalPrice Int
   createAt DateTime @default(now())
 

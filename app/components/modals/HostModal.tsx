@@ -84,7 +84,7 @@ const HostModal = () => {
         })
         .finally(() => {
             setIsLoading(false);
-        })
+        });
     }
 
     const actionLabel = useMemo(() => {
