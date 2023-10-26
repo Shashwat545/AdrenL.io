@@ -9,6 +9,7 @@ import useRegisterModal from "../../hooks/useRegisterModal";
 import useHostModal from "../../hooks/useHostModal";
 import {User} from "@prisma/client";
 import {signOut} from "next-auth/react";
+import {useRouter} from "next/navigation"
 
 interface UserMenuProps {
     currentUser?: User | null
@@ -16,6 +17,8 @@ interface UserMenuProps {
 
 const UserMenu:React.FC<UserMenuProps> = ({currentUser}) => {
 
+    const router = useRouter();
+    
     const LoginModalHook=useLoginModal();
     const RegisterModalHook=useRegisterModal();
     const HostModalHook=useHostModal();
@@ -53,7 +56,7 @@ const UserMenu:React.FC<UserMenuProps> = ({currentUser}) => {
                             <>
                                 <MenuItem onClick={()=>{}} label="Bookings" fontBold/>
                                 <MenuItem onClick={()=>{}} label="My favorites" fontBold/>
-                                <MenuItem onClick={()=>{}} label="My Account" fontBold/>
+                                <MenuItem onClick={()=>{router.push('/account-settings')}} label="My Account" fontBold/>
                                 <MenuItem onClick={()=>{}} label="Notifications" fontBold/>
                                 <hr />
                                 <MenuItem onClick={()=>{}} label="Contact us"/>
