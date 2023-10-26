@@ -15,8 +15,8 @@ export type CountrySelectValue = {
 
 export type StateSelectValue = {
     label: string;
-    value: string,
-    latlng: number[]
+    value: string;
+    latlng: number[];
 }
 
 export type CitySelectValue = {
