@@ -16,7 +16,7 @@ interface SingleFieldFormProps {
 }
 
    
-  export const SingleFieldForm: React.FC<SingleFieldFormProps> = ({label, defaultValue}) => {
+  export const Address: React.FC<SingleFieldFormProps> = ({label, defaultValue}) => {
     const [isEditing, setIsEditing] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [name,setName] = useState(defaultValue);
