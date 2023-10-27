@@ -33,11 +33,12 @@ export async function POST (request: Request) {
 
     const verificationUrl = `http://localhost:3000/verify?token=${token}&userId=${user.id}`;
 
-    await sendEmail({
+    const res = await sendEmail({
         profile: { name: user.name ,email: user.email },
         subject: "verification",
         linkUrl: verificationUrl,
     });
+    console.log(res);
 
     return NextResponse.json(token);
 }

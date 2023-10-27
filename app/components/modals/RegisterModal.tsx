@@ -1,7 +1,6 @@
 'use client';
 
 import axios from 'axios';
-import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { useCallback, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
@@ -32,10 +31,11 @@ const RegisterModal= () => {
                 toast('Check your email to verify the account!', {icon: '✅'});
                 RegisterModalHook.onClose();
             })
-            .catch((error) => {
+            .catch((error) => { 
                 if(error.response.status == 409) {
                     return toast.error("Email is already registered!");   
                 }
+
                 toast.error("Something went wrong");
             })
             .finally(() => {
