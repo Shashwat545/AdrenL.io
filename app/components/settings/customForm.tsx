@@ -1,4 +1,5 @@
 "use client"
+import { updateUserName } from "@/app/actions/updateUserData";
 import {
     Card,
     Input,
@@ -7,16 +8,19 @@ import {
     Typography,
     Avatar
   } from "@material-tailwind/react";
+import axios from "axios";
 
 import { useState } from 'react'
+import toast from "react-hot-toast";
 
 interface SingleFieldFormProps {
+    currentUserId : string;
     label : string;
     defaultValue : string;
 }
 
    
-  export const SingleFieldForm: React.FC<SingleFieldFormProps> = ({label, defaultValue}) => {
+  export const SingleFieldForm: React.FC<SingleFieldFormProps> = ({currentUserId,label, defaultValue}) => {
     const [isEditing, setIsEditing] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [name,setName] = useState(defaultValue);
@@ -29,18 +33,22 @@ interface SingleFieldFormProps {
       setIsEditing(false);
     }
 
-    const handleSaveClick = () => {
+    const handleSaveClick = async () => {
       setIsSubmitting(true);
+      const data = JSON.stringify({name,currentUserId});
+      const res = await axios.post('/api/settings/profile/updateUserName',data);
+      if(res.data=="ok"){
+      console.log(res);
       setName(name);
-
-      setTimeout(() => {
+      setIsSubmitting(false);
+      setIsEditing(false);
+      }else{
+        setName(defaultValue);
         setIsSubmitting(false);
         setIsEditing(false);
-      }, 2000);  
-      
+        toast.error("Something went wrong!")
+      }
     }
-
-
     return (
   
        <div>
@@ -52,7 +60,7 @@ interface SingleFieldFormProps {
                           
 
                         </div>
-                        <div className="text-gray-600">{defaultValue}</div>
+                        <div className="text-gray-600">{name}</div>
                         </div>
                         ):( 
                         <div className="flex justify-between mt-20">
