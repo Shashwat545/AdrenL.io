@@ -16,9 +16,7 @@ interface UserMenuProps {
 }
 
 const UserMenu:React.FC<UserMenuProps> = ({currentUser}) => {
-
     const router = useRouter();
-    
     const LoginModalHook=useLoginModal();
     const RegisterModalHook=useRegisterModal();
     const HostModalHook=useHostModal();
@@ -54,9 +52,9 @@ const UserMenu:React.FC<UserMenuProps> = ({currentUser}) => {
                     <div className="flex flex-col cursor-pointer">
                         { currentUser? (
                             <>
-                                <MenuItem onClick={()=>{}} label="Bookings" fontBold/>
+                                <MenuItem onClick={() => router.push("/trips")} label="My trips" fontBold/>
                                 <MenuItem onClick={()=>{}} label="My favorites" fontBold/>
-                                <MenuItem onClick={()=>{router.push('/account-settings')}} label="My Account" fontBold/>
+                                <MenuItem onClick={() => router.push("/account-settings")} label="My Account" fontBold/>
                                 <MenuItem onClick={()=>{}} label="Notifications" fontBold/>
                                 <hr />
                                 <MenuItem onClick={()=>{}} label="Contact us"/>
