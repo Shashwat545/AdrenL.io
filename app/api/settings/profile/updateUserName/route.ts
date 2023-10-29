@@ -7,6 +7,5 @@ export async function POST (req: Request){
         where:{id:currentUserId},
         data:{name}
     })
-    console.log(res);
     return NextResponse.json('ok')
 }

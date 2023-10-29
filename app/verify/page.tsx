@@ -25,7 +25,6 @@ const Verify:React.FC<SearchParamProps> = ({searchParams}) => {
             toast.success(message);
         }
         if (!res.ok && error) {
-          console.log(error);
           toast.error(error);
         }
         router.replace("/");

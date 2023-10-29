@@ -33,7 +33,6 @@ interface EmailOptions {
 
 const sendEmailVerificationLink = async (profile: profile, linkUrl: string) => {
   const recipients = [{ email: profile.email }];
-  console.log(recipients);
   await client.send({
     from: sender,
     to: recipients,

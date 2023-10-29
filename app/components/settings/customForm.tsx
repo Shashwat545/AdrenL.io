@@ -38,7 +38,6 @@ interface SingleFieldFormProps {
       const data = JSON.stringify({name,currentUserId});
       const res = await axios.post('/api/settings/profile/updateUserName',data);
       if(res.data=="ok"){
-      console.log(res);
       setName(name);
       setIsSubmitting(false);
       setIsEditing(false);

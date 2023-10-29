@@ -38,7 +38,6 @@ export async function POST (request: Request) {
         subject: "verification",
         linkUrl: verificationUrl,
     });
-    console.log(res);
 
     return NextResponse.json(token);
 }
