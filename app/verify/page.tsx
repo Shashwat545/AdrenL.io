@@ -4,6 +4,7 @@ import { notFound, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 import { useEffect } from "react";
+import useLoginModal from "@/app/hooks/useLoginModal";
 
 interface SearchParamProps{
     searchParams : { token:string, userId:string };
@@ -12,6 +13,7 @@ interface SearchParamProps{
 const Verify:React.FC<SearchParamProps> = ({searchParams}) => {
   const { token, userId } = searchParams;
   const router = useRouter();
+  const LoginModalHook = useLoginModal();
 
   useEffect(() => {
     fetch("/api/users/verify", {
@@ -23,6 +25,7 @@ const Verify:React.FC<SearchParamProps> = ({searchParams}) => {
 
         if (res.ok) {
             toast.success(message);
+            LoginModalHook.onOpen();
         }
         if (!res.ok && error) {
           toast.error(error);
