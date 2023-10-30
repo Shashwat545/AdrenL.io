@@ -4,7 +4,6 @@ import React from 'react'
 import { Card } from '@material-tailwind/react'
 import { SingleFieldForm } from '@/app/components/settings/customForm'
 import { UploadProfilePhoto } from '@/app/components/settings/uploadProfile'
-import {Address} from '@/app/components/settings/address'
 
 interface infoProps{
   info : {
@@ -13,6 +12,7 @@ interface infoProps{
     email : string;
     number : string;
     address : string;
+    propName: string;
   }
 }
 
@@ -28,10 +28,11 @@ interface infoProps{
 
     <div className="flex flex-col">
     <UploadProfilePhoto url={info.avatar}/>
-    <SingleFieldForm label="Username" defaultValue={info.name} currentUserId={info.id}/>
-    <SingleFieldForm label="Email" defaultValue={info.email} currentUserId={info.id}/>
-    <SingleFieldForm label="Phone Number" defaultValue={info.number} currentUserId={info.id}/>
-    <Address label="Address" defaultValue={info.address}/>
+    <SingleFieldForm label="Username" defaultValue={info.name} currentUserId={info.id} postURL='/api/settings/profile/updateUserName' propName="name"/>
+    <SingleFieldForm label="Email" defaultValue={info.email} currentUserId={info.id} postURL='/api/settings/profile/updateEmail' propName="email"/>
+    <SingleFieldForm label="Phone Number" defaultValue={info.number} currentUserId={info.id} postURL='/api/settings/profile/updatePhoneNumber' propName="phoneNumber"/>
+    <SingleFieldForm label="Address" defaultValue={info.address} currentUserId={info.id} postURL='/api/settings/profile/updateAddress' propName="address"/>
+
    
     </div>
     
