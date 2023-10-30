@@ -1,5 +1,4 @@
 "use client"
-import { updateUserName } from "@/app/actions/updateUserData";
 import {
     Card,
     Input,
@@ -17,10 +16,12 @@ interface SingleFieldFormProps {
     currentUserId : string;
     label : string;
     defaultValue : string;
+    postURL : string;
+    propName : string;
 }
 
    
-  export const SingleFieldForm: React.FC<SingleFieldFormProps> = ({currentUserId,label, defaultValue}) => {
+  export const SingleFieldForm: React.FC<SingleFieldFormProps> = ({currentUserId,label, defaultValue, postURL,propName}) => {
     const [isEditing, setIsEditing] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [name,setName] = useState(defaultValue);
@@ -35,8 +36,10 @@ interface SingleFieldFormProps {
 
     const handleSaveClick = async () => {
       setIsSubmitting(true);
-      const data = JSON.stringify({name,currentUserId});
-      const res = await axios.post('/api/settings/profile/updateUserName',data);
+      const value = {};
+      value[propName] = name; 
+      const data = JSON.stringify({...value,currentUserId});
+      const res = await axios.post(postURL,data);
       if(res.data=="ok"){
       setName(name);
       setIsSubmitting(false);
@@ -55,7 +58,7 @@ interface SingleFieldFormProps {
                   <div>
                         <div className="flex justify-between mt-20">
                           <div>{label}</div>
-                          <div className="font-bold underline hover:cursor-pointer" onClick={handleEditClick}>Edit</div>    
+                          <div className="font-bold underline hover:cursor-pointer" onClick={handleEditClick}>{defaultValue==''?"Add":"Update"}</div>    
                           
 
                         </div>
@@ -79,7 +82,7 @@ interface SingleFieldFormProps {
                         <div>
                         <div className="flex">
                        <Button className={isSubmitting ? "ml-5 cursor-not-allowed opacity-50 bg-pink-500 text-white" :"ml-5 button-loading bg-pink-500 text-white "} onClick={handleSaveClick} > 
-                          Update
+                          {defaultValue==''?"Add":"Update"}
                        </Button>
                        <Button variant="outlined" className="ml-5 border-pink-500" onClick={handleCancelClick}>Cancel</Button>
                        </div>

@@ -8,8 +8,8 @@ export default async function PersonalDetails() {
   const info = {
     name: currentUser.name,
     email: currentUser.email,
-    number: "9695213912",
-    address: "St Peter Street Navi Mumbai",
+    number: currentUser.phoneNumber || '',
+    address:currentUser.address || '',
     avatar: "https://img.freepik.com/premium-vector/man-character_665280-46970.jpg",
     id : currentUser.id
   }
