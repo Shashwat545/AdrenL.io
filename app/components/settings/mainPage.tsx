@@ -18,7 +18,7 @@ interface mainPageProps {
     <Typography className='block font-bold text-3xl '>Hello {currentUser}</Typography>
     <div className='flex'>
       <CardBlock blockCardIcon={BiIdCard}  cardBlockHeading='Personal Details' cardBlockBody='Personal details related to your account'/>
-      <CardBlock blockCardIcon={AiOutlineEye}  cardBlockHeading='Privacy and Security' cardBlockBody='Manage your personal data and sharing settings'/>
+      {/* <CardBlock blockCardIcon={AiOutlineEye}  cardBlockHeading='Privacy and Security' cardBlockBody='Manage your personal data and sharing settings'/> */}
       
     </div>
    </div>  

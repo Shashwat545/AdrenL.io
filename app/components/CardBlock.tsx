@@ -23,8 +23,8 @@ interface CardBlockProps  {
 const CardBlock:React.FC<CardBlockProps> = ({blockCardIcon:Icon,cardBlockHeading,cardBlockBody}) => {
   const router = useRouter();
     return (
-      <div onClick={()=>{router.push('/account-settings/personal-details')}}>
-        <Card className="mt-6 ml-6 w-96">
+      <div onClick={()=>{router.push('/account-settings/personal-details')}} className='hover:cursor-pointer'>
+        <Card className="mt-6 ml-6 w-96 transform hover:scale-105">
           <CardBody>
           <Icon className='w-8 h-8 mb-4'/>
             <Typography variant='h5' color='blue-gray' className='mb-2 font-bold'>{cardBlockHeading}</Typography>
