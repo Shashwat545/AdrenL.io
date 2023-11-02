@@ -7,7 +7,7 @@ interface DropDownProps{
 }
 export default function Dropdown ({question,answer,index,toggleQuestion,openQuestionIndex}:DropDownProps){
     return (
-        <div className="border-2 border-gray-100 rounded-lg ">
+        <div className="border-2 border-gray-100 rounded-lg transition-all duration-1000">
                 <button className="flex items-center justify-between w-full p-8" onClick={()=>{
                     console.log("this is not working")
                     toggleQuestion(index)}}>
@@ -25,7 +25,7 @@ export default function Dropdown ({question,answer,index,toggleQuestion,openQues
                     </span>}
                 </button>
                 
-                {openQuestionIndex===index?<div>
+                {openQuestionIndex===index?<div >
                     <hr className="border-gray-200"/>
 
                     <p className="p-8 text-sm text-gray-500">
@@ -35,3 +35,4 @@ export default function Dropdown ({question,answer,index,toggleQuestion,openQues
             </div>
     )
 }
+
