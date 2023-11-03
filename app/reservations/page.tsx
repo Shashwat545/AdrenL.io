@@ -23,7 +23,7 @@ const ReservationsPage = async () => {
     if(reservations.length === 0) {
         return (
             <ClientOnly>
-                <EmptyState title="No reservations found" subtitle="Looks like you have no reservations on your adventure(s) yet"/>
+                <EmptyState title="No reservations found" subtitle="Looks like you have no reservations on your listing(s) yet"/>
             </ClientOnly>
         );
     }

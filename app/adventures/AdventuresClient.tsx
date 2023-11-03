@@ -37,7 +37,7 @@ const AdventuresClient: React.FC<AdventuresClientProps> = ({ listings, currentUs
 
     return (
         <Container>
-            <Heading title="Adventures" subtitle="List of your adventures"/>
+            <Heading title="Adventures" subtitle="Manage your listings"/>
             <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-8">
                 {listings?.map((listing) => (
                     <ListingCard key={listing.id} data={listing} actionId={listing.id} onAction={onCancel} 
