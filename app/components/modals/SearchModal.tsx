@@ -38,7 +38,7 @@ const SearchModal = () => {
         key: 'selection'
     });
 
-    const Map = useMemo(() => dynamic(() => import('../Map'), {ssr: false}), [location]);
+    const Map = useMemo(() => dynamic(() => import('../Map'), {ssr: false}), [location, stateValue, cityValue]);
 
     const onBack = useCallback(() => {
         setStep((value) => value-1);
@@ -98,7 +98,7 @@ const SearchModal = () => {
             <LocationSelect value={location} stateValue={stateValue} cityValue={cityValue} onChange={(value) => setLocation(value as CountrySelectValue)}
             onStateChange={(value) => setStateValue(value as StateSelectValue)} onCityChange={(value) => setCityValue(value as CitySelectValue)}/>
             <hr />
-            <Map center={location?.latlng} />
+            <Map center={cityValue?.latlng || stateValue?.latlng || location?.latlng} zoom={(cityValue && 8) || (stateValue && 6)}/>
         </div>
     );
 
