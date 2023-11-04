@@ -1,12 +1,15 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import {Nunito} from "next/font/google";
+
 import Navbar from "./components/navbar/Navbar";
 import ClientOnly from "./components/ClientOnly";
 import LoginModal from "./components/modals/LoginModal";
 import RegisterModal from "./components/modals/RegisterModal";
 import HostModal from "./components/modals/HostModal";
 import ToasterProvider from "./providers/ToasterProvider";
+import SearchModal from './components/modals/SearchModal';
+
 import getCurrentUser from './actions/getCurrentUser';
 
 const font=Nunito({
@@ -29,6 +32,7 @@ export default async function RootLayout({
       <body className={font.className}>
         <ClientOnly>
           <ToasterProvider />
+          <SearchModal />
           <HostModal />
           <LoginModal />
           <RegisterModal />
