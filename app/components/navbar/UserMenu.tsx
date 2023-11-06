@@ -2,7 +2,7 @@
 
 import {AiOutlineMenu} from "react-icons/ai";
 import Avatar from "../Avatar";
-import {useCallback, useState} from "react";
+import {useCallback, useState, useEffect, useRef} from "react";
 import MenuItem from "./MenuItem";
 import useLoginModal from "../../hooks/useLoginModal";
 import useRegisterModal from "../../hooks/useRegisterModal";
@@ -34,8 +34,28 @@ const UserMenu:React.FC<UserMenuProps> = ({currentUser}) => {
         HostModalHook.onOpen();
     }, [currentUser, LoginModalHook, HostModalHook]);
 
+    const menuRef = useRef(null);
+
+    const closeMenu = () => {
+      setIsOpen(false);
+    };
+  
+    useEffect(() => {
+        const handleClickOutside = (event: { target: any; }) => {
+            if (menuRef.current && !(menuRef.current as HTMLElement).contains(event.target)) {
+                closeMenu();
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
     return (
-        <div className="relative">
+        <div className="relative" ref={menuRef}>
             <div className="flex flex-row items-center gap-3">
                 <div onClick={onHost} className="hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer">
                     Host your own adventure!
@@ -52,22 +72,22 @@ const UserMenu:React.FC<UserMenuProps> = ({currentUser}) => {
                     <div className="flex flex-col cursor-pointer">
                         { currentUser? (
                             <>
-                                <MenuItem onClick={() => router.push("/trips")} label="My trips" fontBold/>
-                                <MenuItem onClick={() => router.push("/favorites")} label="My favorites" fontBold/>
-                                <MenuItem onClick={() => router.push("/reservations")} label="My reservations" fontBold/>
-                                <MenuItem onClick={() => router.push("/adventures")} label="My Adventures" fontBold/>
-                                <MenuItem onClick={() => router.push("/account-settings")} label="My Account" fontBold/>
-                                <MenuItem onClick={()=>{}} label="Notifications" fontBold/>
+                                <MenuItem onClick={() => { toggleOpen(); router.push("/trips"); }} label="My trips" fontBold/>
+                                <MenuItem onClick={() => { toggleOpen(); router.push("/favorites"); }} label="My favorites" fontBold/>
+                                <MenuItem onClick={() => { toggleOpen(); router.push("/reservations"); }} label="My reservations" fontBold/>
+                                <MenuItem onClick={() => { toggleOpen(); router.push("/adventures"); }} label="My Adventures" fontBold/>
+                                <MenuItem onClick={() => { toggleOpen(); router.push("/account-settings"); }} label="My Account" fontBold/>
+                                <MenuItem onClick={() => { toggleOpen(); }} label="Notifications" fontBold/>
                                 <hr />
-                                <MenuItem onClick={()=>{}} label="Contact us"/>
-                                <MenuItem onClick={HostModalHook.onOpen} label="Host your own adventure"/>
+                                <MenuItem onClick={() => { toggleOpen(); router.push("/contact-us"); }} label="Contact us"/>
+                                <MenuItem onClick={() => { toggleOpen(); HostModalHook.onOpen(); }} label="Host your own adventure"/>
                                 <hr />
                                 <MenuItem onClick={()=>signOut()} label="Log Out"/>
                             </>
                         ): (
                             <>
-                                <MenuItem onClick={LoginModalHook.onOpen} label="Login" fontBold/>
-                                <MenuItem onClick={RegisterModalHook.onOpen} label="Sign Up"/>
+                                <MenuItem onClick={() => { LoginModalHook.onOpen(); toggleOpen(); }} label="Login" fontBold/>
+                                <MenuItem onClick={() => { RegisterModalHook.onOpen(); toggleOpen(); }} label="Sign Up"/>
                             </>
                         )
                         }
