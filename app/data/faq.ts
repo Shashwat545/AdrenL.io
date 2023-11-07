@@ -1,7 +1,7 @@
 const faqData = [
     {
-      question: "What is an adventure sports aggregator platform?",
-      answer: "An adventure sports aggregator platform is a website or app that gathers information and offerings related to various adventure sports and outdoor activities in one place for users to explore and book."
+      question: "What is an Adrenl platform ?",
+      answer: "Adrenl is adventure booking platform that provides information and offerings related to various adventure sports and outdoor activities in one place for users to explore and book."
     },
     {
       question: "How can I use the platform to find adventure activities?",
