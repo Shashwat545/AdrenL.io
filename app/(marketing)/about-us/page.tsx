@@ -1,4 +1,4 @@
-"use client"
+"use client "
 import React from 'react'
 
 export default function AboutUs() {
@@ -20,7 +20,7 @@ export default function AboutUs() {
                                 <path
                                     d="M12 12a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1h-1.388c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 9 7.558V11a1 1 0 0 0 1 1h2Zm-6 0a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1H4.612c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 3 7.558V11a1 1 0 0 0 1 1h2Z">
                                 </path>
-                            </svg> Successfully Providing business solutions from 25 years
+                            </svg>Adrenl, one place for all adventures
                         </p>
                     </div>
                 </div>
@@ -33,16 +33,9 @@ export default function AboutUs() {
                     </h1>
                 </div>
                 <p className="mb-6 text-base leading-7 text-gray-500 ">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam Lorem ipsum dolor sit
-                    amet. labore et dolore magna aliqua. Ut enim ad minim veniam Lorem ipsum dolor sit
-                    amet. amet. labore et dolore magna aliqua. Ut enim ad minim veniam Lorem ipsum dolor sit
-                    amet.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                    Lorem ipsum dolor sit amet.
+                Adrenl is your go-to platform for finding and planning exciting adventures. We've gathered a wide range of thrilling experiences, from outdoor activities to cultural encounters, all in one place. Whether you're an experienced adventurer or just starting out, our platform helps you discover and book your next adventure. Plus, it's a community where you can connect with others who share your passion for exploration. Join us and get ready for an unforgettable journey!
                 </p>
-                <a href="#"
+                <a href="#" 
                     className="px-4 py-2 text-gray-100 bg-rose-500 rounded">
                     Learn more
                 </a>

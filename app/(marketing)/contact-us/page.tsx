@@ -40,7 +40,8 @@ export default function ContactUs() {
 
                 <h2 className="mt-4 text-lg font-medium text-gray-800 ">Office</h2>
                 <p className="mt-2 text-gray-500 ">Come say hello at our office HQ.</p>
-                <p className="mt-2 text-rose-500 ">100 Smith Street Collingwood VIC 3066 AU</p>
+                <p className="mt-2 text-rose-500 ">ZUBD Technologies Pvt. Ltd <br/>
+                G-904, Ramson Plaza 95, Sector 95, Gurgaon -122505, Haryana</p>
             </div>
 
 
