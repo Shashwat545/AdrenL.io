@@ -1,7 +1,6 @@
 'use client';
 
 import { User } from "@prisma/client";
-import { Range } from "react-date-range";
 import Calendar from "../inputs/Calendar";
 import Button from "../Button";
 
@@ -9,15 +8,15 @@ interface ListingReservationProps {
     host: User | null | undefined;
     user: User | null | undefined;
     price: number;
-    dateRange: Range;
+    dateValue: Date;
     totalPrice: number;
-    onChangeDate: (value: Range) => void;
+    onChangeDate: (value: Date) => void;
     onSubmit: () => void;
     disabled?: boolean;
     disabledDates: Date[]
 }
 
-const ListingReservation: React.FC<ListingReservationProps> = ({ host, user, price, dateRange, totalPrice, onChangeDate, onSubmit, disabled, disabledDates }) => {
+const ListingReservation: React.FC<ListingReservationProps> = ({ host, user, price, dateValue, totalPrice, onChangeDate, onSubmit, disabled, disabledDates }) => {
     const compareUserToHost = (JSON.stringify(host) === JSON.stringify(user));
 
     return (
@@ -31,7 +30,7 @@ const ListingReservation: React.FC<ListingReservationProps> = ({ host, user, pri
                 </div>
             </div>
             <hr />
-            <Calendar value={dateRange} disabledDates={disabledDates} onChange={(value) => onChangeDate(value.selection)}/>
+            <Calendar value={dateValue} disabledDates={disabledDates} onChange={(value) => onChangeDate(value)}/>
             <hr />
             <div className="p-4">
                 <Button disabled={(compareUserToHost || disabled)} label="Reserve" onClick={onSubmit}/>

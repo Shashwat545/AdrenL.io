@@ -9,7 +9,6 @@ import Counter from "../inputs/Counter";
 import dynamic from "next/dynamic";
 import qs from "query-string";
 import { formatISO } from "date-fns";
-import { Range } from "react-date-range";
 import { CountrySelectValue, StateSelectValue, CitySelectValue } from "../inputs/LocationSelect";
 
 import useSearchModal from "@/app/hooks/useSearchModal";
@@ -32,11 +31,7 @@ const SearchModal = () => {
     const [stateValue, setStateValue] = useState<StateSelectValue>();
     const [cityValue, setCityValue] = useState<CitySelectValue>();
     const [guestCount, setGuestCount] = useState(1);
-    const [dateRange, setDateRange] = useState<Range>({
-        startDate: new Date(),
-        endDate: new Date(),
-        key: 'selection'
-    });
+    const [dateValue, setDateValue] = useState<Date>(new Date());
 
     const Map = useMemo(() => dynamic(() => import('../Map'), {ssr: false}), [location, stateValue, cityValue]);
 
@@ -63,11 +58,11 @@ const SearchModal = () => {
             cityValue: cityValue?.label,
             guestCount
         };
-        if(dateRange.startDate) {
-            updatedQuery.startDate = formatISO(dateRange.startDate);
+        if(dateValue) {
+            updatedQuery.startDate = formatISO(dateValue);
         }
-        if(dateRange.endDate) {
-            updatedQuery.endDate = formatISO(dateRange.endDate);
+        if(dateValue) {
+            updatedQuery.endDate = formatISO(dateValue);
         }
         const url = qs.stringifyUrl({
             url: '/',
@@ -76,7 +71,7 @@ const SearchModal = () => {
         setStep(STEPS.LOCATION);
         SearchModalHook.onClose();
         router.push(url);
-    }, [step, SearchModalHook, location, router, guestCount, dateRange, onNext, params]);
+    }, [step, SearchModalHook, location, router, guestCount, dateValue, onNext, params]);
 
     const actionLabel = useMemo(() => {
         if(step === STEPS.INFO) {
@@ -106,7 +101,7 @@ const SearchModal = () => {
         bodyContent = (
             <div className="flex flex-col gap-8">
                 <Heading title="When do you plan to go?" subtitle="Make sure everyone is free!"/>
-                <Calendar value={dateRange} onChange={(value) => setDateRange(value.selection)}/>
+                <Calendar value={dateValue} onChange={(value) => setDateValue(value)}/>
             </div>
         );
     }
