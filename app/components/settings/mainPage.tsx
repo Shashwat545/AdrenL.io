@@ -18,7 +18,7 @@ interface mainPageProps {
     <Typography className='block font-bold text-3xl '>Hello {currentUser}</Typography>
     <div className='flex flex-col md:flex-row'>
       <CardBlock blockCardIcon={BiIdCard}  cardBlockHeading='Personal Details' cardBlockBody='Personal details related to your account' url="/account-settings/personal-details"/>
-      <CardBlock blockCardIcon={BiIdCard}  cardBlockHeading='Your Adventure' cardBlockBody='Delete yout adventure' url="/adventures"/>
+      <CardBlock blockCardIcon={BiIdCard}  cardBlockHeading='Your Adventures' cardBlockBody='Manage your listings' url="/adventures"/>
       {/* <CardBlock blockCardIcon={AiOutlineEye}  cardBlockHeading='Privacy and Security' cardBlockBody='Manage your personal data and sharing settings'/> */}
       </div>
     </div>  
