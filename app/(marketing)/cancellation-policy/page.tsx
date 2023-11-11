@@ -81,13 +81,16 @@ export default function CancellationPolicy(){
 
         <p className="text-base leading-8 my-5">
         Extenuating Circumstances refer to unforeseen, significant events that are beyond your control and make it impossible for you to attend the adventure. These circumstances may include, but are not limited to:
+        </p>
+    
+
         <ol className="list-disc list-inside leading-8">
           <li>Natural disasters or extreme weather conditions that affect the safety of the activity.</li>
           <li>Government-imposed travel restrictions or advisories.</li>
           <li>War, civil unrest, or political instability in the destination.</li>
         </ol>
-        <br/>
         
+        <p className="text-base leading-8 my-5">
         Notify our customer support team as soon as you become aware of the circumstances preventing your participation.
         Our team will review your request and the provided documentation to determine if your situation qualifies as Extenuating Circumstances. This review process may take some time, so please be patient.
         If your request is approved, you will be eligible for a full or partial refund, as per our standard cancellation policy.
@@ -104,6 +107,7 @@ export default function CancellationPolicy(){
 
         <br/>
         Trip Issues encompass various unforeseen situations that may disrupt your adventure, such as:
+        </p>
 
         <ol className="list-disc list-inside leading-8">
           <li>Equipment Failure: If essential adventure equipment malfunctions or becomes unsafe for use, affecting your experience..</li>
@@ -111,6 +115,7 @@ export default function CancellationPolicy(){
           <li>Unexpected Route or Activity Changes: When substantial deviations from the initially promised adventure itinerary occur, leading to a less satisfactory experience.</li>
         </ol>
         <br/>
+        <p className="text-base leading-8">
         If you encounter any of the mentioned Trip Issues during your adventure, Notify our customer support within 24 hours.
         Our team will review your request and provide the service accordingly
         </p>
