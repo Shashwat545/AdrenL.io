@@ -75,7 +75,6 @@ const UserMenu:React.FC<UserMenuProps> = ({currentUser}) => {
                                 <MenuItem onClick={() => { toggleOpen(); router.push("/trips"); }} label="My trips" fontBold/>
                                 <MenuItem onClick={() => { toggleOpen(); router.push("/favorites"); }} label="My favorites" fontBold/>
                                 <MenuItem onClick={() => { toggleOpen(); router.push("/reservations"); }} label="My reservations" fontBold/>
-                                <MenuItem onClick={() => { toggleOpen(); router.push("/adventures"); }} label="My Adventures" fontBold/>
                                 <MenuItem onClick={() => { toggleOpen(); router.push("/account-settings"); }} label="My Account" fontBold/>
                                 <MenuItem onClick={() => { toggleOpen(); }} label="Notifications" fontBold/>
                                 <hr />

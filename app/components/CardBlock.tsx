@@ -15,15 +15,16 @@ interface CardBlockProps  {
     blockCardIcon : IconType;
     cardBlockHeading : string;
     cardBlockBody : string;
+    url:string;
 }
 
 
 
 
-const CardBlock:React.FC<CardBlockProps> = ({blockCardIcon:Icon,cardBlockHeading,cardBlockBody}) => {
+const CardBlock:React.FC<CardBlockProps> = ({blockCardIcon:Icon,cardBlockHeading,cardBlockBody,url}) => {
   const router = useRouter();
     return (
-      <div onClick={()=>{router.push('/account-settings/personal-details')}} className='cursor-pointer'>
+      <div onClick={()=>{router.push(url)}} className='cursor-pointer'>
         <Card className="mt-6 ml-6 w-96 transform hover:scale-105 transition">
           <CardBody>
           <Icon className='w-8 h-8 mb-4'/>
