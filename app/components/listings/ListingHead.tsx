@@ -3,7 +3,7 @@
 import { User, Listing } from "@prisma/client";
 import Heading from "../Heading";
 import HeartButton from "../HeartButton";
-import Image from "next/image";
+import Carousel from "../Carousel";
 
 import useCountries from "@/app/hooks/useCountries";
 
@@ -24,7 +24,7 @@ const ListingHead: React.FC<ListingHeadProps> = ({ listing, title, locationValue
         <>
             <Heading title={title} subtitle={`${listing.cityValue}, ${location?.label}`}/>
             <div className="w-full h-[60vh] overflow-hidden rounded-xl relative">
-                <Image alt="Image" src={imageSrc[0]} fill className="object-cover w-full"/>
+                <Carousel imageSrc={imageSrc}/>
                 <div className="absolute top-5 right-5">
                     <HeartButton listingId={id} currentUser={currentUser}/>
                 </div>
