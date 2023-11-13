@@ -22,6 +22,7 @@ model User {
   favoriteIds String[] @db.ObjectId
   phoneNumber String? 
   address String?
+  isTakingReservation Boolean? @default(true)
 
   accounts Account[]
   listings Listing[]
@@ -62,6 +63,7 @@ model Listing {
   coordinates String[]
   userId String @db.ObjectId
   price Int
+  isTakingReservation Boolean @default(true)
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
