@@ -27,7 +27,7 @@ interface infoProps{
     <div>
 
     <div className="flex flex-col">
-    <UploadProfilePhoto url={info.avatar}/>
+    <UploadProfilePhoto url={info.avatar} name={info.name}/>
     <SingleFieldForm label="Username" defaultValue={info.name} currentUserId={info.id} postURL='/api/settings/profile/updateUserName' propName="name"/>
     <SingleFieldForm label="Email" defaultValue={info.email} currentUserId={info.id} postURL='/api/settings/profile/updateEmail' propName="email"/>
     <SingleFieldForm label="Phone Number" defaultValue={info.number} currentUserId={info.id} postURL='/api/settings/profile/updatePhoneNumber' propName="phoneNumber"/>

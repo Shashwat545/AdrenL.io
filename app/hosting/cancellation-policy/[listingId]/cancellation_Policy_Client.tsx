@@ -57,8 +57,8 @@ export default function Cancellation_Policy_Client({params}:{params:IParams}) {
           <RadioBtn label="Flexible" setSelectedOption={setSelectedOption} />
           <RadioBtn label="Moderate"  setSelectedOption={setSelectedOption} />
           <RadioBtn label="Strict"  setSelectedOption={setSelectedOption} />
-          <RadioBtn label="Super-Strict"  setSelectedOption={setSelectedOption} />
-          <RadioBtn label="Non-refundable" setSelectedOption={setSelectedOption}  />
+          <RadioBtn label="SuperStrict"  setSelectedOption={setSelectedOption} />
+          <RadioBtn label="NonRefundable" setSelectedOption={setSelectedOption}  />
     
           
     

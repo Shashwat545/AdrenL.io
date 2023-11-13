@@ -2,9 +2,10 @@
 
 interface uploadAvatarProps{
     url:string;
+    name:string;
 }
 
-export const UploadProfilePhoto:React.FC<uploadAvatarProps> = ({url}) => {
+export const UploadProfilePhoto:React.FC<uploadAvatarProps> = ({url, name}) => {
     return (
         <div className="w-16 inline mt-5">
             <div className="flex flex-row">
@@ -15,7 +16,7 @@ export const UploadProfilePhoto:React.FC<uploadAvatarProps> = ({url}) => {
                     </div>
                 </div>
                 <div className="flex flex-col">
-                <div className="pt-1 ml-4">Abhay</div>
+                <div className="pt-1 ml-4">{name}</div>
                 <div className="ml-4 whitespace-nowrap hover:underline cursor-pointer text-blue-500">Update Profile Picture</div>
                 </div>
             </div>
