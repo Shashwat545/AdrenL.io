@@ -7,6 +7,11 @@ interface IParams {
     value: string;
 }
 
+export async function GET (){
+    console.log("hello");
+    return NextResponse.json("true");
+}
+
 export async function POST (request: Request, {params}: {params: IParams}) {
     const currentUser = await getCurrentUser();
     if(!currentUser) {

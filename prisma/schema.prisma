@@ -64,10 +64,19 @@ model Listing {
   userId String @db.ObjectId
   price Int
   isTakingReservation Boolean @default(true)
+  cancellationPolicy OPTIONS @default(Flexible)
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   reservations Reservation[]
+}
+
+enum OPTIONS{
+  Flexible
+  Moderate
+  Strict
+  SuperStrict
+  NonRefundable
 }
 
 model Reservation {

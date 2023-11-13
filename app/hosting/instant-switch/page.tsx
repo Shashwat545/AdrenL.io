@@ -1,14 +1,16 @@
 "use client";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function InstantSwitchPage() {
   const router = useRouter();
   const [isChecked, setisChecked] = useState(false);
   const handleSubmitButton = async () => {
     try {
-      await axios.post(`/api/hosting/toggleReservation/${isChecked}`);
+      const res = await axios.post(`/api/hosting/toggleReservation/${isChecked}`);
+      if(res.status==200) toast.success("Updated!")
     } catch (error) {
       console.error("Error:", error);
     }
@@ -18,6 +20,21 @@ export default function InstantSwitchPage() {
     console.log(isChecked);
     setisChecked((prevState) => !prevState);
   };
+
+  // useEffect(()=>{
+  //   const fetchData = async ()=>{
+  //     try{
+  //     const response = axios.get(`/api/hosting/toogleReservation/${isChecked}`)
+  //     console.log(response);
+  //     }catch(e){
+  //       throw new Error
+  //     }
+  //   }
+
+  //   fetchData();
+  // },[])
+
+  
 
   return (
     <div className="flex flex-col max-h-screen max-w-2xl mx-auto">
@@ -31,12 +48,12 @@ export default function InstantSwitchPage() {
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            stroke-width="1.5"
+            strokeWidth="1.5"
             stroke="currentColor"
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
             />
           </svg>
