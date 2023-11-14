@@ -25,6 +25,14 @@ const ListingClient: React.FC<ListingClientProps> = ({ currentUser, listing, res
     const loginModal = useLoginModal();
     const router = useRouter();
 
+    useEffect(() => {
+        if(!listing.user?.isTakingReservation){
+            toast.error("The adventure is currently not taking reservations!")
+        }
+    }, [])
+
+   
+
     const disabledDates = useMemo(() => {
         let dates: Date[] = [];
         reservations.forEach((reservation) => {

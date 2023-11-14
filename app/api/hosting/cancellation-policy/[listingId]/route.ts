@@ -20,10 +20,11 @@ export async function POST (req: Request,{params}:{params:IParams}) {
     if(!listingId || typeof listingId !== 'string') {
         throw new Error('Invalid ID');
     }
-
+    
     const listing = await prisma.listing.update({
         where: {
-            id: listingId
+            id: listingId,
+            userId:currentUser.id
         },
         data: {
             cancellationPolicy:data

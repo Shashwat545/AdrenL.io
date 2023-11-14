@@ -6,12 +6,15 @@ import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 
 interface IParams{
+  params:{
     listingId? : string;
+  }
+    defaultPolicy? : string;
 }
 
-export default function Cancellation_Policy_Client({params}:{params:IParams}) {
+export default function Cancellation_Policy_Client({params,defaultPolicy}:IParams) {
     const router = useRouter();
-    const [selectedOption,setSelectedOption] = useState(); 
+    const [selectedOption,setSelectedOption] = useState(defaultPolicy); 
     const id = params.listingId;
     const handleonClick = async () => {
         try {
@@ -21,6 +24,7 @@ export default function Cancellation_Policy_Client({params}:{params:IParams}) {
             if(res.status==200){
               toast.success("Updated Successfully")
             }
+            router.push('/hosting/cancellationPolicy')
           } catch (error) {
             console.error("Error:", error);
           }
@@ -54,11 +58,11 @@ export default function Cancellation_Policy_Client({params}:{params:IParams}) {
             Choose your cancellation Policy!
           </h1>
     
-          <RadioBtn label="Flexible" setSelectedOption={setSelectedOption} />
-          <RadioBtn label="Moderate"  setSelectedOption={setSelectedOption} />
-          <RadioBtn label="Strict"  setSelectedOption={setSelectedOption} />
-          <RadioBtn label="SuperStrict"  setSelectedOption={setSelectedOption} />
-          <RadioBtn label="NonRefundable" setSelectedOption={setSelectedOption}  />
+          <RadioBtn label="Flexible" setSelectedOption={setSelectedOption} selectedOption={selectedOption}/>
+          <RadioBtn label="Moderate"  setSelectedOption={setSelectedOption}  selectedOption={selectedOption}/>
+          <RadioBtn label="Strict"  setSelectedOption={setSelectedOption}  selectedOption={selectedOption}/>
+          <RadioBtn label="SuperStrict"  setSelectedOption={setSelectedOption}  selectedOption={selectedOption}/>
+          <RadioBtn label="NonRefundable" setSelectedOption={setSelectedOption}   selectedOption={selectedOption}/>
     
           
     

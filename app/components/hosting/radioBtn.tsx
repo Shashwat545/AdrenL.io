@@ -3,9 +3,12 @@ import React from 'react'
 interface radioBtnProps{
     label : String;
     setSelectedOption : Function;
+    selectedOption: String
 }
 
-export default function RadioBtn({label,setSelectedOption}:radioBtnProps) {
+export default function RadioBtn({label,setSelectedOption, selectedOption}:radioBtnProps) {
+  const isChecked = label == selectedOption;
+  console.log(isChecked);
   return (
 
     <div className="inline-flex items-center">
@@ -18,6 +21,7 @@ export default function RadioBtn({label,setSelectedOption}:radioBtnProps) {
                 id="html"
                 name="type"
                 type="radio"
+                checked={isChecked}
                 onChange={()=>setSelectedOption(label)}
                 className="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border border-blue-gray-200 text-gray-500 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-gray-100 checked:before:bg-gray-500 hover:before:opacity-10"
               />
