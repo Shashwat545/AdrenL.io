@@ -22,9 +22,10 @@ export default function Cancellation_Policy_Client({params,defaultPolicy}:IParam
           
             const res = await axios.post(`/api/hosting/cancellation-policy/${id}`,data);
             if(res.status==200){
-              toast.success("Updated Successfully")
+              toast.success("Updated Successfully");
             }
-            router.push('/hosting/cancellationPolicy')
+            router.push('/hosting/cancellationPolicy');
+            router.refresh();
           } catch (error) {
             console.error("Error:", error);
           }
