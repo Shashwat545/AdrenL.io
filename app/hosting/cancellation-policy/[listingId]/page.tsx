@@ -27,6 +27,6 @@ export default async function UpdateCancellationPolicy({params}:{params:IParams}
 
 
   return(
-    <Cancellation_Policy_Client params={params}/>
+    <Cancellation_Policy_Client params={params} defaultPolicy={listing?.cancellationPolicy}/>
   );
 }
