@@ -12,13 +12,15 @@ interface IParams {
 }
 
 export default async function UpdateCancellationPolicy({params}:{params:IParams}) {
-  const user = getCurrentUser();
+  const user = await getCurrentUser();
   const listing = await getListingById(params);
+
+  const Authorized = listing?.userId === user?.id
   
-    if(!user||!listing) {
+    if(!Authorized) {
       return (
           <ClientOnly>
-              <EmptyState />
+              <EmptyState title="Not Found" subtitle="Make sure you have access!"/>
           </ClientOnly>
       );
   }
