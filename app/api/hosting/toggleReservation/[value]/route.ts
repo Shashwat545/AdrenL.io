@@ -8,7 +8,6 @@ interface IParams {
 }
 
 export async function GET (){
-    console.log("hello");
     return NextResponse.json("true");
 }
 
@@ -21,8 +20,7 @@ export async function POST (request: Request, {params}: {params: IParams}) {
     const {value} = params;
     var booleanVal = false;
     booleanVal = value == "true";
-   
-    console.log(booleanVal)
+
 
     const user = await prisma.user.update({
         where:{

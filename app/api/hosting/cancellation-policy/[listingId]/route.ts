@@ -21,6 +21,8 @@ export async function POST (req: Request,{params}:{params:IParams}) {
         throw new Error('Invalid ID');
     }
 
+    
+
     const listing = await prisma.listing.update({
         where: {
             id: listingId

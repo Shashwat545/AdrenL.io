@@ -17,7 +17,6 @@ export default function InstantSwitchPage() {
   };
 
   const handleToggle = () => {
-    console.log(isChecked);
     setisChecked((prevState) => !prevState);
   };
 
