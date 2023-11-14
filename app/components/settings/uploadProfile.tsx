@@ -25,13 +25,7 @@ export const UploadProfilePhoto:React.FC<uploadAvatarProps> = ({url, name, curre
 
     return (
         <div className="w-16 inline mt-5">
-            <div className="flex flex-row">
-                <UpdateProfilePhoto onChange={handleImageUpload} url={url}/>
-                <div className="flex flex-col">
-                <div className="pt-1 ml-4">{name}</div>
-                <div className="ml-4 whitespace-nowrap hover:underline cursor-pointer text-blue-500">Update Profile Picture</div>
-                </div>
-            </div>
+                <UpdateProfilePhoto onChange={handleImageUpload} url={url} name={name}/>
         </div>
     )
   }
