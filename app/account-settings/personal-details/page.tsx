@@ -10,12 +10,12 @@ export default async function PersonalDetails() {
     email: currentUser.email,
     number: currentUser.phoneNumber || '',
     address:currentUser.address || '',
-    avatar: "https://img.freepik.com/premium-vector/man-character_665280-46970.jpg",
+    avatar: currentUser.image,
     id : currentUser.id
   }
   return (
     <div>
-      <PersonalDetailsForm info={info}/>
+      <PersonalDetailsForm info={info} currentUser={currentUser}/>
     </div>
   )
 }
