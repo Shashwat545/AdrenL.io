@@ -22,7 +22,7 @@ model User {
   favoriteIds String[] @db.ObjectId
   phoneNumber String? 
   address String?
-  isTakingReservation Boolean? @default(true)
+  isTakingReservation Boolean @default(true)
 
   accounts Account[]
   listings Listing[]
