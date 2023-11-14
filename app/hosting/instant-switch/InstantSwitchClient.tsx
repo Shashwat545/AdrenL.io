@@ -11,6 +11,8 @@ export default function InstantSwitchClient({isTakingReservation}:{isTakingReser
     try {
       const res = await axios.post(`/api/hosting/toggleReservation/${isChecked}`);
       if(res.status==200) toast.success("Updated!")
+      router.push("/hosting");
+      router.refresh();
     } catch (error) {
       console.error("Error:", error);
     }
