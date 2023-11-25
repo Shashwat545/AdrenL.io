@@ -9,6 +9,7 @@ import RegisterModal from "./components/modals/RegisterModal";
 import HostModal from "./components/modals/HostModal";
 import ToasterProvider from "./providers/ToasterProvider";
 import SearchModal from './components/modals/SearchModal';
+import Footer from "./components/Footer";
 
 import getCurrentUser from './actions/getCurrentUser';
 
@@ -41,6 +42,9 @@ export default async function RootLayout({
         <div className="pb-20 pt-28">
           {children}
         </div>
+        <ClientOnly>
+          <Footer />
+        </ClientOnly>
       </body>
     </html>
   )
