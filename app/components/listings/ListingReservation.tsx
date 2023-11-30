@@ -18,7 +18,7 @@ interface ListingReservationProps {
 
 const ListingReservation: React.FC<ListingReservationProps> = ({ host, user, price, dateValue, totalPrice, onChangeDate, onSubmit, disabled, disabledDates }) => {
     const compareUserToHost = (JSON.stringify(host) === JSON.stringify(user));
-
+    const isTakingReservation = !(host?.isTakingReservation);
     return (
         <div className="bg-white rounded-xl border-[1px] border-neutral-200 overflow-hidden">
             <div className="flex flex-row items-center gap-1 p-4">
@@ -33,7 +33,7 @@ const ListingReservation: React.FC<ListingReservationProps> = ({ host, user, pri
             <Calendar value={dateValue} disabledDates={disabledDates} onChange={(value) => onChangeDate(value)}/>
             <hr />
             <div className="p-4">
-                <Button disabled={(compareUserToHost || disabled)} label="Reserve" onClick={onSubmit}/>
+                <Button disabled={(isTakingReservation || compareUserToHost || disabled)} label="Reserve" onClick={onSubmit}/>
             </div>
             <div className="p-4 flex flex-row items-center justify-between font-semibold text-lg">
                 <div>

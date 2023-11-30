@@ -31,7 +31,6 @@ export default async function ProfileAvatarInput({nameInitial,avatar}:ProfileAva
             onChange={async({ target }) => {
               const { files } = target;
               if (files) setAvatarFile && setAvatarFile(files[0]);
-              console.log("done");
 
               const formData = new FormData();
               formData.append('file', avatarFile);

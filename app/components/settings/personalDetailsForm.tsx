@@ -4,6 +4,7 @@ import React from 'react'
 import { Card } from '@material-tailwind/react'
 import { SingleFieldForm } from '@/app/components/settings/customForm'
 import { UploadProfilePhoto } from '@/app/components/settings/uploadProfile'
+import { User } from '@prisma/client';
 
 interface infoProps{
   info : {
@@ -13,10 +14,11 @@ interface infoProps{
     number : string;
     address : string;
     propName: string;
-  }
+  };
+  currentUser: User;
 }
 
- const PersonalDetailsForm: React.FC<infoProps> = ({info}) => {
+ const PersonalDetailsForm: React.FC<infoProps> = ({info, currentUser}) => {
   return (
     <div className="w-3/4  mx-auto my-auto">
     <Card>   
@@ -27,7 +29,7 @@ interface infoProps{
     <div>
 
     <div className="flex flex-col">
-    <UploadProfilePhoto url={info.avatar}/>
+    <UploadProfilePhoto url={info.avatar} name={info.name} currentUser={currentUser}/>
     <SingleFieldForm label="Username" defaultValue={info.name} currentUserId={info.id} postURL='/api/settings/profile/updateUserName' propName="name"/>
     <SingleFieldForm label="Email" defaultValue={info.email} currentUserId={info.id} postURL='/api/settings/profile/updateEmail' propName="email"/>
     <SingleFieldForm label="Phone Number" defaultValue={info.number} currentUserId={info.id} postURL='/api/settings/profile/updatePhoneNumber' propName="phoneNumber"/>

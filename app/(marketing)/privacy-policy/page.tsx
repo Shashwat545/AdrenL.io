@@ -6,7 +6,7 @@ export default function PrivacyPolicy(){
         <div className="mb-5 max-w-2xl mx-auto">
         <div className="flex flex-col md:flex-row mb-2 items-center justify-between">
           <h1 className="text-gray-900 font-bold text-3xl ">Privacy Policy</h1>
-          <blockquote className="text-md text-indigo-600  text-center">Effective Date: 11/02/2023</blockquote>
+          <blockquote className="text-md text-indigo-600  text-center">Effective Date: 2nd November, 2023</blockquote>
           </div>
           <p className="text-gray-400 mt-5">This Privacy Policy is meant to help you understand what information we collect, why we collect it, and how you can update, manage, export, and delete your information.</p>
         

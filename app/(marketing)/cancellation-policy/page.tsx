@@ -6,7 +6,7 @@ export default function CancellationPolicy(){
       <div className="mb-5 max-w-2xl mx-auto">
       <div className="flex flex-col md:flex-row mb-2 items-center justify-between">
         <h1 className="text-gray-900 font-bold text-3xl ">Cancellation and Refund Policy</h1>
-        <blockquote className="text-md text-indigo-600 text-center">Effective Date: 11/02/2023</blockquote>
+        <blockquote className="text-md text-indigo-600 text-center">Effective Date: 02/11/2023</blockquote>
         </div>
       
       
@@ -102,22 +102,22 @@ export default function CancellationPolicy(){
 
 
         <p className="text-base leading-8 my-5">
-        At Adrenl, we strive to ensure that your adventure experience is enjoyable and trouble-free. However, we understand that unexpected issues may sometimes arise during a trip that can affect your ability to continue or complete your adventure
-        To address such situations, we have a Cancellation Policy for Trip Issues
+        At Adrenl, we strive to ensure that your adventure experience is enjoyable and trouble-free. However, we understand that unexpected issues may sometimes arise during a trip that can affect your ability to continue or complete your adventure.
+        To address such situations, we have a Cancellation Policy for Trip Issues.
 
         <br/>
         Trip Issues encompass various unforeseen situations that may disrupt your adventure, such as:
         </p>
 
         <ol className="list-disc list-inside leading-8">
-          <li>Equipment Failure: If essential adventure equipment malfunctions or becomes unsafe for use, affecting your experience..</li>
+          <li>Equipment Failure: If essential adventure equipment malfunctions or becomes unsafe for use, affecting your experience.</li>
           <li>Guide or Operator Misconduct: In cases where the behavior or actions of the adventure guide or operator significantly impacts your safety or the quality of your adventure.</li>
           <li>Unexpected Route or Activity Changes: When substantial deviations from the initially promised adventure itinerary occur, leading to a less satisfactory experience.</li>
         </ol>
         <br/>
         <p className="text-base leading-8">
         If you encounter any of the mentioned Trip Issues during your adventure, Notify our customer support within 24 hours.
-        Our team will review your request and provide the service accordingly
+        Our team will review your request and provide the service accordingly.
         </p>
 
         <hr className="mt-10"/>

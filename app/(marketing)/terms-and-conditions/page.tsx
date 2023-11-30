@@ -5,8 +5,8 @@ export default function TSC(){
         <div className="max-w-screen-xl mx-auto p-5 sm:p-10 md:p-16 relative">   
         <div className="mb-5 max-w-2xl mx-auto">
         <div className="flex flex-col md:flex-row mb-2 items-center justify-between">
-          <h1 className="text-gray-900 font-bold text-3xl ">Privacy Policy</h1>
-          <blockquote className="text-md text-indigo-600 text-center">Effective Date: 11/02/2023</blockquote>
+          <h1 className="text-gray-900 font-bold text-3xl ">Terms and Conditions</h1>
+          <blockquote className="text-md text-indigo-600 text-center">Effective Date: 2nd November, 2023</blockquote>
           </div>
         
         
