@@ -10,7 +10,7 @@ interface ClientOnlyProps {
 const ClientOnly: React.FC<ClientOnlyProps> = ({children}) => {
     const pathName = usePathname();
 
-    const excludePath = ['/hosting'];
+    const excludePath = ['/hosting','/chat'];
 
     if (excludePath.includes(pathName)) {
         return (
