@@ -12,6 +12,8 @@ import SearchModal from './components/modals/SearchModal';
 import Footer from "./components/Footer";
 
 import getCurrentUser from './actions/getCurrentUser';
+import { useRouter } from 'next/navigation';
+import { NextRouter } from 'next/router';
 
 const font=Nunito({
   subsets: ["latin"],
@@ -21,13 +23,18 @@ export const metadata: Metadata = {
   title: 'AdrenL',
   description: 'Book your adventure today!',
 }
+interface LayoutProps {
+  children: React.ReactNode;
+  router: NextRouter;
+}
+
 
 export default async function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+  children, router
+}: LayoutProps) {
   const currentUser=await getCurrentUser();
+
+
   return (
     <html lang="en">
       <body className={font.className}>

@@ -1,5 +1,6 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import {useState, useEffect} from 'react';
 
 interface ClientOnlyProps {
@@ -7,10 +8,22 @@ interface ClientOnlyProps {
 }
 
 const ClientOnly: React.FC<ClientOnlyProps> = ({children}) => {
-    const [hasMounted, setHasMounted]=useState(false);
-    useEffect(()=> {
+    const pathName = usePathname();
+
+    const excludePath = ['/hosting'];
+
+    if (excludePath.includes(pathName)) {
+        return (
+            <>
+            </>
+        );
+    }
+
+    const [hasMounted, setHasMounted] = useState(false);
+    useEffect(() => {
         setHasMounted(true);
     }, []);
+
     if(!hasMounted) {
         return null;
     }
