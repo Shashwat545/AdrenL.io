@@ -12,8 +12,8 @@ import SearchModal from './components/modals/SearchModal';
 import Footer from "./components/Footer";
 
 import getCurrentUser from './actions/getCurrentUser';
-import { useRouter } from 'next/navigation';
 import { NextRouter } from 'next/router';
+import AuthContext from './providers/AuthProvider';
 
 const font=Nunito({
   subsets: ["latin"],
@@ -33,8 +33,6 @@ export default async function RootLayout({
   children, router
 }: LayoutProps) {
   const currentUser=await getCurrentUser();
-
-
   return (
     <html lang="en">
       <body className={font.className}>
@@ -46,9 +44,11 @@ export default async function RootLayout({
           <RegisterModal />
           <Navbar currentUser={currentUser}/>
         </ClientOnly>
-        <div className="pb-20 pt-28">
+        {/* <div className="pb-20 pt-28"> */}
+          <AuthContext>
           {children}
-        </div>
+          </AuthContext>
+        {/* </div> */}
         <ClientOnly>
           <Footer />
         </ClientOnly>

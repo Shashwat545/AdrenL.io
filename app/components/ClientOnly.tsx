@@ -2,22 +2,25 @@
 
 import { usePathname } from 'next/navigation';
 import {useState, useEffect} from 'react';
+import AuthContext from '@/app/providers/AuthProvider';
 
 interface ClientOnlyProps {
     children: React.ReactNode;
 }
 
 const ClientOnly: React.FC<ClientOnlyProps> = ({children}) => {
-    const pathName = usePathname();
+    const pathName = usePathname() || '';
 
-    const excludePath = ['/hosting','/inbox'];
+    const excludePath = ['/hosting', '/inbox'];
 
-    if (excludePath.includes(pathName)) {
+    if (excludePath.some(substring => pathName.includes(substring))) {
         return (
-            <>
-            </>
+            <></>
         );
     }
+
+   
+
 
     const [hasMounted, setHasMounted] = useState(false);
     useEffect(() => {
