@@ -56,6 +56,9 @@ const ListingClient: React.FC<ListingClientProps> = ({ currentUser, listing, res
             endDate: dateValue,
             listingId: listing?.id
         })
+        .then(()=>{
+            return axios.post('/api/conversations',{userId:listing.userId})
+        })
         .then(() => {
             toast.success("Adventure reserved!");
             setDateValue(new Date());
