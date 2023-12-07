@@ -7,7 +7,7 @@ import { Conversation, User } from '@prisma/client';
 import { format } from 'date-fns';
 
 import useOtherUser from '@/app/hooks/chat/useOtherUser';
-// import useActiveList from '@/app/hooks/chat/useActiveList';
+import useActiveList from '@/app/hooks/useActiveList';
 
 import Avatar from '@/app/components/chat/Avatar';
 import ConfirmModal from './ConfirmModal';
@@ -36,16 +36,16 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
     return data.name || otherUser.name;
   }, [data.name, otherUser.name]);
 
-//   const { members } = useActiveList();
-//   const isActive = members.indexOf(otherUser?.email!) !== -1;
+  const { members } = useActiveList();
+  const isActive = members.indexOf(otherUser?.email!) !== -1;
 
-//   const statusText = useMemo(() => {
-//     if (data.isGroup) {
-//       return `${data.users.length} members`;
-//     }
+  const statusText = useMemo(() => {
+    if (data.isGroup) {
+      return `${data.users.length} members`;
+    }
 
-//     return isActive ? 'Active' : 'Offline'
-//   }, [data, isActive]);
+    return isActive ? 'Active' : 'Offline'
+  }, [data, isActive]);
 
   return (
     <>
@@ -104,7 +104,7 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                             {title}
                           </div>
                           <div className="text-sm text-gray-500">
-                            Status Text
+                            {statusText}
                           </div>
                           <div className="flex gap-10 my-8">
                             <div onClick={() => setConfirmOpen(true)} className="flex flex-col gap-3 items-center cursor-pointer hover:opacity-75">

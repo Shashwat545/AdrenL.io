@@ -10,6 +10,7 @@ import useOtherUser from "@/app/hooks/chat/useOtherUser";
 
 import Avatar from "@/app/components/chat/Avatar";
 import ProfileDrawer from './ProfileDrawer';
+import useActiveList from '@/app/hooks/useActiveList';
 
 interface HeaderProps {
   conversation: Conversation & {
@@ -21,15 +22,15 @@ const Header: React.FC<HeaderProps> = ({ conversation }) => {
   const otherUser = useOtherUser(conversation);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-//   const { members } = useActiveList();
-//   const isActive = members.indexOf(otherUser?.email!) !== -1;
-//   const statusText = useMemo(() => {
-//     if (conversation.isGroup) {
-//       return `${conversation.users.length} members`;
-//     }
+  const { members } = useActiveList();
+  const isActive = members.indexOf(otherUser?.email!) !== -1;
+  const statusText = useMemo(() => {
+    if (conversation.isGroup) {
+      return `${conversation.users.length} members`;
+    }
 
-//     return isActive ? 'Active' : 'Offline'
-//   }, [conversation, isActive]);
+    return isActive ? 'Active' : 'Offline'
+  }, [conversation, isActive]);
 
   return (
   <>
@@ -71,7 +72,7 @@ const Header: React.FC<HeaderProps> = ({ conversation }) => {
         <div className="flex flex-col">
           <div>{conversation.name || otherUser.name}</div>
           <div className="text-sm font-light text-neutral-500">
-            Status Text
+            {statusText}
           </div>
         </div>
       </div>

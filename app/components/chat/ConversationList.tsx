@@ -15,13 +15,11 @@ import { FullConversationType } from "@/app/types";
 
 interface ConversationListProps {
   initialItems: FullConversationType[];
-  users: User[];
   title?: string;
 }
 
 const ConversationList: React.FC<ConversationListProps> = ({ 
-  initialItems, 
-  users
+  initialItems
 }) => {
   const [items, setItems] = useState(initialItems);
   const [isModalOpen, setIsModalOpen] = useState(false);
