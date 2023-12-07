@@ -55,7 +55,7 @@ const Header: React.FC<HeaderProps> = ({ conversation }) => {
     >
       <div className="flex gap-3 items-center">
         <Link
-          href="/conversations" 
+          href="/inbox" 
           className="
             lg:hidden 
             block 

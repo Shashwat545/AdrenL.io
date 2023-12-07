@@ -9,7 +9,6 @@ export default function Dropdown ({question,answer,index,toggleQuestion,openQues
     return (
         <div className="border-2 border-gray-100 rounded-lg transition-all duration-1000">
                 <button className="flex items-center justify-between w-full p-8" onClick={()=>{
-                    console.log("this is not working")
                     toggleQuestion(index)}}>
                     <h1 className="font-semibold text-gray-700">{question}</h1>
 
