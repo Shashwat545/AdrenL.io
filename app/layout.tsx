@@ -14,6 +14,7 @@ import Footer from "./components/Footer";
 import getCurrentUser from './actions/getCurrentUser';
 import { NextRouter } from 'next/router';
 import AuthContext from './providers/AuthProvider';
+import LayoutHelper from "@/app/helper/index"
 
 const font=Nunito({
   subsets: ["latin"],
@@ -44,11 +45,11 @@ export default async function RootLayout({
           <RegisterModal />
           <Navbar currentUser={currentUser}/>
         </ClientOnly>
-        {/* <div className="pb-20 pt-28"> */}
+        <LayoutHelper>
           <AuthContext>
           {children}
           </AuthContext>
-        {/* </div> */}
+        </LayoutHelper>
         <ClientOnly>
           <Footer />
         </ClientOnly>
