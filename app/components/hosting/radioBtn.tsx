@@ -8,7 +8,6 @@ interface radioBtnProps{
 
 export default function RadioBtn({label,setSelectedOption, selectedOption}:radioBtnProps) {
   const isChecked = label == selectedOption;
-  console.log(isChecked);
   return (
 
     <div className="inline-flex items-center">
