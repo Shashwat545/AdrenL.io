@@ -6,6 +6,11 @@ export const config = {
         "/favorites",
         "/reservations",
         "/adventures",
-        "/account-settings"
+        "/account-settings",
+        "/hosting",
+        "/hosting/:path*",
+        "/inbox",
+        "/inbox/:path*"
+
     ]
 }

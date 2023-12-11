@@ -12,6 +12,9 @@ import SearchModal from './components/modals/SearchModal';
 import Footer from "./components/Footer";
 
 import getCurrentUser from './actions/getCurrentUser';
+import { NextRouter } from 'next/router';
+import AuthContext from './providers/AuthProvider';
+import LayoutHelper from "@/app/helper/index"
 
 const font=Nunito({
   subsets: ["latin"],
@@ -21,12 +24,15 @@ export const metadata: Metadata = {
   title: 'AdrenL',
   description: 'Book your adventure today!',
 }
+interface LayoutProps {
+  children: React.ReactNode;
+  router: NextRouter;
+}
+
 
 export default async function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+  children, router
+}: LayoutProps) {
   const currentUser=await getCurrentUser();
   return (
     <html lang="en">
@@ -39,9 +45,11 @@ export default async function RootLayout({
           <RegisterModal />
           <Navbar currentUser={currentUser}/>
         </ClientOnly>
-        <div className="pb-20 pt-28">
+        <LayoutHelper>
+          <AuthContext>
           {children}
-        </div>
+          </AuthContext>
+        </LayoutHelper>
         <ClientOnly>
           <Footer />
         </ClientOnly>

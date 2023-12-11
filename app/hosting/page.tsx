@@ -16,10 +16,11 @@ export default function SellerPage() {
     </div>
 
     <div className="flex flex-col justify-evenly items-center md:flex-row h-64 md:h-96 lg:h-128 bg-cover bg-center bg-no-repeat justify-content  bg-[url('https://images.unsplash.com/photo-1618083707368-b3823daa2726?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')]">
-      <HostingCard heading="Instant Switch" redirectUrl="instant-switch" />
-      <HostingCard heading="Cancellation Policy" redirectUrl="cancellationPolicy" />
-      <HostingCard heading="Promotions" redirectUrl="" />
-      <HostingCard heading="Calendar Settings" redirectUrl="" />
+      <HostingCard heading="Calendar" redirectUrl="calendar" subtitle="Manage dynamic pricing"/>
+      <HostingCard heading="Listing Status" redirectUrl="instant-switch" subtitle="Make your listing live"/>
+      <HostingCard heading="Cancellation Policy" redirectUrl="cancellationPolicy" subtitle="Change cancellation policies"/>
+      <HostingCard heading="My Account" redirectUrl="" subtitle="Update your bio"/>
+      <HostingCard heading="Inbox" redirectUrl="" subtitle="Check messages"/>
     </div>
   </div>
   );
