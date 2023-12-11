@@ -11,7 +11,7 @@ interface ClientOnlyProps {
 const ClientOnly: React.FC<ClientOnlyProps> = ({children}) => {
     const pathName = usePathname() || '';
 
-    const excludePath = ['/hosting', '/inbox'];
+    const excludePath = ['/inbox'];
 
     if (excludePath.some(substring => pathName.includes(substring))) {
         return (
