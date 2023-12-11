@@ -14,7 +14,7 @@ export async function POST (request: Request) {
     const { title, description, imageSrc, category, guestCount, location, stateValue, cityValue, price } = body;
 
     const listing = await prisma.listing.create({
-        data: {title, description, imageSrc, category, guestCount, locationValue: location.value, stateValue: stateValue.value, cityValue:cityValue.label, coordinates:cityValue.latlng ,price: parseInt(price, 10), userId: currentUser.id}
+        data: {title, description, imageSrc, category, guestCount, locationValue: location.value, stateValue: stateValue.value, cityValue:cityValue.label, coordinates:cityValue.latlng ,price: parseInt(price, 10), userId: currentUser.id, discountCoupons: []}
     });
 
     return NextResponse.json(listing);
