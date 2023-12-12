@@ -22,8 +22,8 @@ export default function TSC(){
           <p className="text-base leading-8 my-5">
             Welcome to AdrenL, a technology company dedicated to providing adventure
             enthusiasts with a seamless platform to explore and book adventure sports activities.
-            By accessing or using AdrenL's platform, you ("User" or "You") acknowledge and
-            agree to abide by these comprehensive Terms and Conditions ("T&C"). These T&C
+            By accessing or using AdrenL&apos;s platform, you (&quot;User&quot; or &quot;You&quot;) acknowledge and
+            agree to abide by these comprehensive Terms and Conditions (&quot;T&C&quot;). These T&C
             govern your use of the AdrenL platform, including all its features and services. If you
             do not agree with these terms, please refrain from using our platform.</p>
        
@@ -52,7 +52,7 @@ export default function TSC(){
         <h3 className="text-xl font-bold my-5">3.1. Adventure booking platform</h3>
         <p className="text-base leading-8 my-5">
         AdrenL is a technology platform that connects Customers with adventure service
-        providers ("Suppliers' '). Our platform facilitates the booking and management of
+        providers (&quot;Suppliers&apos; &apos;). Our platform facilitates the booking and management of
         adventure sports activities, including but not limited to rafting, trekking, skydiving,
         and more.</p>
 
@@ -89,7 +89,7 @@ export default function TSC(){
         <h3 className="text-xl font-bold my-5">6.1. Total Transaction Amount</h3>
         <p className="text-base leading-8 my-5">
         Customers agree to pay the total transaction amount, including adventure fees,
-        AdrenL's commission, and any additional services, as communicated on the
+        AdrenL&apos;s commission, and any additional services, as communicated on the
         platform.</p>
 
         <h3 className="text-xl font-bold my-5">6.2. Cancellations and Refunds</h3>
@@ -126,7 +126,7 @@ export default function TSC(){
 
         <h3 className="text-xl font-bold my-5">8.2. Termination</h3>
         <p className="text-base leading-8 my-5">
-        AdrenL reserves the right to suspend or terminate any User's
+        AdrenL reserves the right to suspend or terminate any User&apos;s
         access to the platform at its discretion, without notice.</p>
 
         <h2 className="text-2xl font-bold my-5">9. Intellectual Property
@@ -173,7 +173,7 @@ export default function TSC(){
         </h3>
         <p className="text-base leading-8 my-5">
         For any questions or concerns regarding these T&C or the platform, please contact
-        AdrenL's customer support at Contact Us Page.</p>
+        AdrenL&apos;s customer support at Contact Us Page.</p>
         <blockquote className="text-md mt-12 text-indigo-600 italic font-semibold">By using AdrenL, you acknowledge that you have read, understood, and agreed to
         these Terms and Conditions. These terms constitute a legally binding agreement
         between you and AdrenL</blockquote>

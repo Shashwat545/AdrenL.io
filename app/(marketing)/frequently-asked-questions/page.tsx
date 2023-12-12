@@ -18,7 +18,7 @@ export default function FAQ(){
         <div className="mt-12 space-y-8">
        
         {faqData.map(function({question,answer},index){
-            return <Dropdown index={index} toggleQuestion={toggleQuestion} openQuestionIndex={openQuestionIndex} question={question} answer={answer}/>
+            return <Dropdown key={index} index={index} toggleQuestion={toggleQuestion} openQuestionIndex={openQuestionIndex} question={question} answer={answer}/>
         })}
             
         </div>

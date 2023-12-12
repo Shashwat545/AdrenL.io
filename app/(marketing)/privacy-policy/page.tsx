@@ -17,8 +17,8 @@ export default function PrivacyPolicy(){
         <div className="">
         
               <p className="text-base text-black leading-8 my-5">
-              Welcome to Adrenl, the adventure-seeking platform that connects adventure
-              enthusiasts with adventure service providers. At Adrenl, we are committed to
+              Welcome to AdrenL, the adventure-seeking platform that connects adventure
+              enthusiasts with adventure service providers. At AdrenL, we are committed to
               protecting your privacy and ensuring the security of your personal information. This
               Privacy Policy explains how we collect, use, disclose, and safeguard your personal
               data in accordance with the laws of India. Please read this policy carefully to
@@ -40,9 +40,9 @@ export default function PrivacyPolicy(){
             </li>
             <li>  Booking Information: when you book an adventure or make a reservation, we collect the details related to your booking, including the date, duration, and number of participants
             </li>
-            <li>  Payment Information: when making payments on Adrenl, we collect your payment card details or other financial information.
+            <li>  Payment Information: when making payments on AdrenL, we collect your payment card details or other financial information.
             </li>
-            <li> Communications: any messages, reviews, feedback, or other content you send or receive through Adrenl, and interactions with our support team. 
+            <li> Communications: any messages, reviews, feedback, or other content you send or receive through AdrenL, and interactions with our support team. 
             </li>
             <li> Identity Verification: government-issued ID, address verification, or other documentation required for identity verification
             </li>
@@ -52,12 +52,12 @@ export default function PrivacyPolicy(){
           <h3 className="text-xl font-bold my-5">1.1 Information We Collect Automatically</h3>
           <p className="text-base leading-8 my-5">
           We also collect certain information automatically as you navigate and interact with
-          Adrenl. This may include: </p>
+          AdrenL. This may include: </p>
 
           <ol className="list-decimal list-inside leading-8">
             <li>Device Information: details about the devices you use to access our platform,
             including IP address, device type, browser information, and operating system.</li>
-            <li>Usage Information: data on how you use Adrenl, including your search queries,
+            <li>Usage Information: data on how you use AdrenL, including your search queries,
             views of listings, interactions with other users, and the content you access.
             </li>
             <li>Location Information: if you enable location services, we may collect precise
@@ -69,7 +69,7 @@ export default function PrivacyPolicy(){
           <h3 className="text-xl font-bold my-5">1.3 . Cookies and Similar Technologies</h3>
           <p className="text-base leading-8 my-5">
           We use cookies and similar technologies to track your preferences and improve your
-          user experience on Adrenl. These technologies help us collect information about
+          user experience on AdrenL. These technologies help us collect information about
           your browsing activities and provide personalised services. You can control the use
           of cookies through your browser settings.
           </p>
@@ -79,7 +79,7 @@ export default function PrivacyPolicy(){
           We use your information for various purposes, including:</p>
 
           <ol className="list-decimal list-inside leading-8">
-            <li>To provide and maintain the Adrenl platform, including facilitating bookings
+            <li>To provide and maintain the AdrenL platform, including facilitating bookings
             and communication between users.</li>
             <li>To improve and customise our services, develop new features, and conduct
             research and analysis
@@ -112,7 +112,7 @@ export default function PrivacyPolicy(){
             <li>Legal and Safety: We may disclose your information to comply with legal
             obligations, respond to lawful requests, protect our rights, or in case of
             emergencies</li>
-            <li>Business Transfers: In the event of a merger, acquisition, or sale of Adrenl,
+            <li>Business Transfers: In the event of a merger, acquisition, or sale of AdrenL,
             your information may be transferred to the new entity.</li>
             <li> Aggregated and Anonymized Data: We may share aggregated or anonymized
             data that does not identify you personally.</li>
@@ -127,7 +127,7 @@ export default function PrivacyPolicy(){
 
           <ol className="list-decimal list-inside leading-8">
             <li> Traffic Analysis: We analyze user traffic patterns to improve the performance
-            and usability of the Adrenl platform</li>
+            and usability of the AdrenL platform</li>
             <li>Personalized Recommendations: We use your activity on the platform to
             provide you with tailored adventure recommendations and relevant content.
             </li>
@@ -138,7 +138,7 @@ export default function PrivacyPolicy(){
 
           <h3 className="text-xl font-bold my-5">2.3 Your Choices</h3>
           <p className="text-base leading-8 my-5">
-          You have control over your personal information on Adrenl. You can:</p>
+          You have control over your personal information on AdrenL. You can:</p>
           <ol className="list-decimal list-inside leading-8">
             <li>Edit your account information and manage your privacy settings.</li>
             <li> Disable location services on your device.
@@ -155,9 +155,9 @@ export default function PrivacyPolicy(){
           your information. However, no method of data transmission over the internet is
           entirely secure, and we cannot guarantee the security of your data.</p>
           
-          <h3 className="text-xl font-bold my-5">2.5 Children's Privacy</h3>
+          <h3 className="text-xl font-bold my-5">2.5 Children&apos;s Privacy</h3>
           <p className="text-base leading-8 my-5">
-          Adrenl is not intended for use by individuals under the age of 18. If you believe a
+          AdrenL is not intended for use by individuals under the age of 18. If you believe a
           minor has provided us with their personal information, please contact us, and we will
           take appropriate action.</p>
                     
@@ -165,7 +165,7 @@ export default function PrivacyPolicy(){
           <p className="text-base leading-8 my-5">
           We may update this Privacy Policy from time to time to reflect changes in our
           practices or for legal compliance. We will notify you of any material changes, and the
-          updated policy will be effective upon the "Effective Date" stated at the beginning.</p>
+          updated policy will be effective upon the &quot;Effective Date&quot; stated at the beginning.</p>
 
 
           <hr className="mt-10"/>

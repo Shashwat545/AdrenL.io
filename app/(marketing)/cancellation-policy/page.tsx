@@ -16,7 +16,7 @@ export default function CancellationPolicy(){
   <div className="mt-3 bg-white rounded-b lg:rounded-b-none lg:rounded-r flex flex-col justify-between leading-normal">
       <div className="">
 
-      <h3 className="text-md my-5">Reservation booked on the Adrenl platform can be cancelled online, and refunds will be provided in accordance with Adrenl's refund policies as outlined below:
+      <h3 className="text-md my-5">Reservation booked on the AdrenL platform can be cancelled online, and refunds will be provided in accordance with AdrenL&apos;s refund policies as outlined below:
 </h3>
 
         <h2 className="text-2xl font-bold my-5">Cancellation Options:</h2>
@@ -102,7 +102,7 @@ export default function CancellationPolicy(){
 
 
         <p className="text-base leading-8 my-5">
-        At Adrenl, we strive to ensure that your adventure experience is enjoyable and trouble-free. However, we understand that unexpected issues may sometimes arise during a trip that can affect your ability to continue or complete your adventure.
+        At AdrenL, we strive to ensure that your adventure experience is enjoyable and trouble-free. However, we understand that unexpected issues may sometimes arise during a trip that can affect your ability to continue or complete your adventure.
         To address such situations, we have a Cancellation Policy for Trip Issues.
 
         <br/>
