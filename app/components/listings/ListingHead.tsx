@@ -13,7 +13,7 @@ interface ListingHeadProps {
     locationValue: string;
     imageSrc: string[];
     id: string;
-    currentUser?: User | null;
+    currentUser: User | null;
 }
 
 const ListingHead: React.FC<ListingHeadProps> = ({ listing, title, locationValue, imageSrc, id, currentUser }) => {

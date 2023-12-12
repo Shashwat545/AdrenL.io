@@ -3,7 +3,7 @@ import nodemailer from "nodemailer";
 
 const client = new MailtrapClient({ 
   endpoint: "https://send.api.mailtrap.io/",
-  token: process.env.MAILTRAP_TOKEN
+  token: process.env.MAILTRAP_TOKEN || ''
 });
 
 let transport = nodemailer.createTransport({

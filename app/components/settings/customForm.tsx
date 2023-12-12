@@ -36,7 +36,7 @@ interface SingleFieldFormProps {
 
     const handleSaveClick = async () => {
       setIsSubmitting(true);
-      const value = {};
+      const value: {[key: string]: string} = {};
       value[propName] = name; 
       const data = JSON.stringify({...value,currentUserId});
       const res = await axios.post(postURL,data);

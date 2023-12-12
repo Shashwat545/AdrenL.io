@@ -3,7 +3,7 @@ import React from 'react'
 interface radioBtnProps{
     label : String;
     setSelectedOption : Function;
-    selectedOption: String
+    selectedOption: String | undefined;
 }
 
 export default function RadioBtn({label,setSelectedOption, selectedOption}:radioBtnProps) {

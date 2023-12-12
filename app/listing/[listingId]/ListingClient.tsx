@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation";
 import useLoginModal from "@/app/hooks/useLoginModal";
 
 interface ListingClientProps {
-    currentUser?: User | null;
+    currentUser: User | null;
     listing: Listing & {user: User};
     reservations?: Reservation[];
 }

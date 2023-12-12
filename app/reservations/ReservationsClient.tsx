@@ -40,7 +40,8 @@ const ReservationsClient: React.FC<ReservationClientProps> = ({ reservations, cu
         <Container>
             <Heading title="Reservations" subtitle="Bookings on your adventure listings"/>
             <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-8">
-                {reservations.map((reservation) => (
+                {reservations && reservations.map((reservation) => (
+                    //@ts-ignore
                     <ListingCard key={reservation.id} data={reservation.listing} reservation={reservation} 
                     actionId={reservation.id} onAction={onCancel} disabled={deletingId === reservation.id} actionLabel="Cancel guest reservation"
                     currentUser={currentUser}/>

@@ -8,7 +8,7 @@ import {AiOutlineEye} from 'react-icons/ai'
 import CardBlock from '@/app/components/CardBlock'
 
 interface mainPageProps {
-    currentUser:string
+    currentUser: string | null;
 }
 
 

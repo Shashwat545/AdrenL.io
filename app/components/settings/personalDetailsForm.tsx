@@ -13,7 +13,8 @@ interface infoProps{
     email : string;
     number : string;
     address : string;
-    propName: string;
+    propName?: string;
+    id: string;
   };
   currentUser: User;
 }
