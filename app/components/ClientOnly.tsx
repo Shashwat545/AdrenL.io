@@ -10,22 +10,18 @@ interface ClientOnlyProps {
 
 const ClientOnly: React.FC<ClientOnlyProps> = ({children}) => {
     const pathName = usePathname() || '';
-
     const excludePath = ['/inbox'];
+
+    const [hasMounted, setHasMounted] = useState(false);
+    useEffect(() => {
+        setHasMounted(true);
+    }, []);
 
     if (excludePath.some(substring => pathName.includes(substring))) {
         return (
             <></>
         );
     }
-
-   
-
-
-    const [hasMounted, setHasMounted] = useState(false);
-    useEffect(() => {
-        setHasMounted(true);
-    }, []);
 
     if(!hasMounted) {
         return null;
