@@ -49,6 +49,16 @@ const ListingClient: React.FC<ListingClientProps> = ({
   const [totalPrice, setTotalPrice] = useState(listing.price);
   const [dateValue, setDateValue] = useState<Date>(new Date());
 
+  const onCreateEnquiry = useCallback(() => {
+    if (!currentUser) {
+      return loginModal.onOpen();
+    }
+    axios.post("/api/conversations", { userId: listing.userId })
+    .then(() => {
+      router.push("/inbox");
+    })
+  },[])
+
   const onCreateReservation = useCallback(() => {
     if (!currentUser) {
       return loginModal.onOpen();
@@ -116,6 +126,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
               description={listing.description}
               guestCount={listing.guestCount}
               locationValue={listing.locationValue}
+              onSubmit={onCreateEnquiry}
             />
             <div className="order-first mb-10 md:order-last md:col-span-3">
               <ListingReservation
