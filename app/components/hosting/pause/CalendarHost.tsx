@@ -18,8 +18,8 @@ interface CalendarHostProps {
 }
 
 const CalendarHost: React.FC<CalendarHostProps> = ({ value, onChange, pausedDates}) => {
-    const NinetyDaysFromNow = new Date();
-    NinetyDaysFromNow.setDate(new Date().getDate() + 150);
+    const OneFiftyDaysFromNow = new Date();
+    OneFiftyDaysFromNow.setDate(new Date().getDate() + 150);
 
     const customDayContent = (day: Date) => {
         const pausedDateObject = pausedDates.find((item) => format(item.date, 'yyyy-MM-dd') === format(day, 'yyyy-MM-dd'));
@@ -43,7 +43,7 @@ const CalendarHost: React.FC<CalendarHostProps> = ({ value, onChange, pausedDate
 
     return (
         <ReactCalendar color="#262626" date={value} onChange={onChange}
-        direction="vertical" showDateDisplay={false} minDate={new Date()} disabledDay={(date) => date > NinetyDaysFromNow} 
+        direction="vertical" showDateDisplay={false} minDate={new Date()} disabledDay={(date) => date > OneFiftyDaysFromNow} 
         dayContentRenderer={customDayContent}/>
     );
 }
