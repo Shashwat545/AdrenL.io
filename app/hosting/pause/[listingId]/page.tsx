@@ -1,12 +1,18 @@
 import EmptyState from "@/app/components/EmptyState";
 import ClientOnly from "@/app/components/ClientOnly";
-import ListingSelectorClient from "./ListingSelectorClient";
+import PauseClient from "./PauseClient";
 
 import getCurrentUser from "@/app/actions/getCurrentUser";
-import getListings from "../../actions/getListings";
+import getListingById from "@/app/actions/getListingById";
+import getPausedDates from "@/app/actions/getPausedDates";
 
-const ListingSelectorPage = async () => {
+interface IParams {
+    listingId?: string;
+}
+
+const PausePage = async ({ params }: {params: IParams}) => {
     const currentUser = await getCurrentUser();
+    const pausedDates = await getPausedDates(params);
     
     if(!currentUser) {
         return (
@@ -16,21 +22,21 @@ const ListingSelectorPage = async () => {
         );
     }
 
-    const listings = await getListings({ userId: currentUser.id });
+    const listing = await getListingById(params);
 
-    if(listings.length === 0) {
+    if(!listing) {
         return (
             <ClientOnly>
-                <EmptyState title="No listings found" subtitle="Looks like you have no adventures hosted with us."/>
+                <EmptyState />
             </ClientOnly>
         );
     }
 
     return (
         <ClientOnly>
-            <ListingSelectorClient currentUser={currentUser} listings={listings}/>
+            <PauseClient currentUser={currentUser} listing={listing} pausedDates={pausedDates}/>
         </ClientOnly>
     )
 }
 
-export default ListingSelectorPage;
+export default PausePage;

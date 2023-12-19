@@ -1,12 +1,11 @@
 import ClientOnly from "@/app/components/ClientOnly";
 import EmptyState from "@/app/components/EmptyState";
-import ListingClient from "./ListingClient";
+import PaymentClient from "./PaymentClient";
 
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import getListingById from "@/app/actions/getListingById";
-import getReview from "@/app/actions/getReview";
+import getReservations from "@/app/actions/getReservations";
 import getPayload from "@/app/actions/payment/getPayload";
-import getPausedDates from "@/app/actions/getPausedDates";
 
 interface IParams {
     listingId?: string;
@@ -14,12 +13,10 @@ interface IParams {
 
 const ListingPage = async ({ params }: {params: IParams}) => {
     const listing = await getListingById(params);
+    const reservations = await getReservations(params);
     const currentUser = await getCurrentUser();
-    const reviews = await getReview(listing?.id as string);
-    
-    const pausedDates = await getPausedDates(params);
     const { data, payloadMain, checksum } = getPayload({ currentUser });
-        
+
     if(!listing) {
         return (
             <ClientOnly>
@@ -30,7 +27,7 @@ const ListingPage = async ({ params }: {params: IParams}) => {
 
     return (
         <ClientOnly>
-            <ListingClient listing={listing} pausedDates={pausedDates} currentUser={currentUser} reviews={reviews} data={data} payloadMain={payloadMain} checksum={checksum}/>
+            <PaymentClient listing={listing} reservations={reservations} currentUser={currentUser} data={data} payloadMain={payloadMain} checksum={checksum}/>
         </ClientOnly>
     );
 }
