@@ -35,6 +35,7 @@ model User {
   seenMessages Message[] @relation("Seen", fields: [seenMessageIds], references: [id])
 
   messages Message[]
+  review Review[]
 
   emailVerificationToken EmailVerificationToken?
 }
@@ -79,6 +80,8 @@ model Listing {
 
   reservations Reservation[]
   futurePricings FuturePricing[]
+  reviewIds String[] @db.ObjectId
+  reviews Review[]
   pausedDates PausedDates[]
 }
 
@@ -173,6 +176,20 @@ model Message{
   sender User @relation(fields: [senderId], references: [id])
 }
 
+  model Review{
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+    rating Int
+    comment String?
+    createdAt DateTime @default(now())
+    
+    userId String @db.ObjectId
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    
+    listingId String @db.ObjectId
+    listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+
+  }
+  
 model DiscountCoupons {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   userId String @db.ObjectId
