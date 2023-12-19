@@ -21,8 +21,8 @@ interface CalendarHostProps {
 }
 
 const CalendarHost: React.FC<CalendarHostProps> = ({ value, onChange, price, futurePrices }) => {
-    const NinetyDaysFromNow = new Date();
-    NinetyDaysFromNow.setDate(new Date().getDate() + 90);
+    const OneFiftyDaysFromNow = new Date();
+    OneFiftyDaysFromNow.setDate(new Date().getDate() + 150);
 
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 600);
 
@@ -58,7 +58,7 @@ const CalendarHost: React.FC<CalendarHostProps> = ({ value, onChange, price, fut
 
     return (
         <DateRange rangeColors={["#262626"]} ranges={[value]} date={new Date()} onChange={onChange}
-        direction="vertical" showDateDisplay={false} minDate={new Date()} disabledDay={(date) => date > NinetyDaysFromNow}
+        direction="vertical" showDateDisplay={false} minDate={new Date()} disabledDay={(date) => date > OneFiftyDaysFromNow}
         dayContentRenderer={customDayContent}/>
     );
 }
