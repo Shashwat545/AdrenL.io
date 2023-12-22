@@ -100,16 +100,16 @@ model Reservation {
   startDate DateTime
   endDate DateTime
   totalPrice Int
-  // discountCouponid String @db.ObjectId
-  // numberOfPeople Int
-  // transactionID String
-  // transactionStatus String
-  // cancellationPolicy OPTIONS
+  numberOfPeople Int
+  cancellationPolicy OPTIONS?
+  cancelled Boolean @default(false)
   createdAt DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
   // coupon DiscountCoupons @relation(fields: [discountCouponid], references: [id], onDelete: Cascade)
+
+  transaction Transaction?
 }
 
 model FuturePricing {
@@ -201,7 +201,15 @@ model DiscountCoupons {
   // reservations Reservation[]
 }
 
-// model Transaction {
-//   id String @id @default(auto()) @map("_id") @db.ObjectId
-//   // give fields like reservationid, status, price, etc.
-// }
+model Transaction {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @db.ObjectId
+  merchantTransactionId String @unique
+  totalPrice Int
+  status String
+  callback_triggered Boolean
+  paymentInstrument String 
+
+  reservationId String @db.ObjectId @unique
+  reservation Reservation @relation(fields: [reservationId], references: [id], onDelete: Cascade)
+}
