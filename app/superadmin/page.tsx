@@ -15,7 +15,7 @@ const SuperAdminPage = () => {
         <SuperAdminCard heading="Discount Coupons" redirectUrl="discountcoupons" subtitle="Add and remove discount coupons"/>
         <SuperAdminCard heading="Discount Coupon Statistics" redirectUrl="" subtitle="View the usage statistics"/>
         {/* <SuperAdminCard heading="Inbox" replaceUrl="inbox" subtitle="Check and reply to your messages"/> */}
-        <SuperAdminCard heading="Verify suppliers" replaceUrl="" subtitle="Verify details submitted by suppliers for verification"/>
+        <SuperAdminCard heading="Verify suppliers" redirectUrl="/verify" subtitle="Verify details submitted by suppliers for verification"/>
         <SuperAdminCard heading="Remove Listing" replaceUrl="" subtitle="Delete a listing from AdrenL"/>
       </div>
     </div>

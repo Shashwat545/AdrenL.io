@@ -45,7 +45,8 @@ export default function ReviewForm({ listingId }: Props) {
   };
 
   return (
-
+    <>
+    <div className="flex flex-row">
     <form onSubmit={submitReview} className="space-y-2">
       <div className="">
         <h3 className="font-semibold text-lg mb-1">Overall Rating</h3>
@@ -76,5 +77,8 @@ export default function ReviewForm({ listingId }: Props) {
         </Button>
       </div>
     </form>
+    
+    </div>
+    </>
   );
 }

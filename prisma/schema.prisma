@@ -24,6 +24,8 @@ model User {
   address String?
   isTakingReservation Boolean @default(true)
 
+  host Host?
+
   accounts Account[]
   listings Listing[]
   reservations Reservation[]
@@ -205,3 +207,20 @@ model DiscountCoupons {
 //   id String @id @default(auto()) @map("_id") @db.ObjectId
 //   // give fields like reservationid, status, price, etc.
 // }
+
+model Host{
+   id String @id @default(auto()) @map("_id") @db.ObjectId
+   isVerified Boolean @default(false)
+   userId String @db.ObjectId @unique
+   user User @relation(fields: [userId],references: [id])
+
+   accountNo String?
+   bankingName String?
+   ifscCode String?
+   aadharCard String?
+   panCard String?
+   averageRating String?
+   verificationDate DateTime?
+   totalReviews Int?
+   responseTime Int?
+}
