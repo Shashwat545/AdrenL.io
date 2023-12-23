@@ -8,8 +8,9 @@ import { CldUploadButton } from "next-cloudinary";
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { User } from "@prisma/client";
 
-export default async function HostVerificationFormClient({currentUser}) {
+export default async function HostVerificationFormClient({currentUser}:{currentUser:User}) {
 
   const {
     register,
@@ -19,8 +20,11 @@ export default async function HostVerificationFormClient({currentUser}) {
     setValue,
   } = useForm({
     defaultValues: {
+      bankingName: "",
+      ifscCode: "",
       aadharCard: "",
         panCard: "",
+        accountNo: "",
     },
   });
   const onSubmit = (data: any) => {
@@ -44,7 +48,8 @@ export default async function HostVerificationFormClient({currentUser}) {
     });
   };
 
-  if(currentUser.host.accountNo) {
+  if (currentUser?.host.accountNo) {
+
     return(
         <>
 <div className="flex min-h-[650px] w-full md:mt-24 justify-center px-4">

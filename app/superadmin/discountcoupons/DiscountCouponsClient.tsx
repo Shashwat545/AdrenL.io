@@ -18,6 +18,9 @@ interface CalendarClientProps {
     allDiscountCoupons?: DiscountCoupons[];
 }
 
+ 
+
+
 const CalendarClient: React.FC<CalendarClientProps> = ({ currentUser, allDiscountCoupons }) => {
     const loginModal = useLoginModal();
     const router = useRouter();

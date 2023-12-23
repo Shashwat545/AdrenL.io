@@ -20,6 +20,11 @@ import {
     IconButton,
     Tooltip,
   } from "@material-tailwind/react";
+import TableRow from "./tableRow";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import axios from "axios";
    
   const TABS = [
     {
@@ -87,6 +92,16 @@ import {
   ];
    
   export function SortableTable() {
+    const router = useRouter();
+    useEffect(() => {
+      axios.get("/api/superadmin/login",{
+      }).then((res) => {
+          if(res.data.message !== "ok"){
+              toast.success("Please login!");
+              return router.push("/superadmin/login");
+          }
+      })
+    }, []);
     return (
       <Card className="h-full w-full">
         <CardHeader floated={false} shadow={false} className="rounded-none">
@@ -154,78 +169,8 @@ import {
               {TABLE_ROWS.map(
                 ({ img, name, email, job, org, verified, date }, index) => {
                   const isLast = index === TABLE_ROWS.length - 1;
-                  const classes = isLast
-                    ? "p-4"
-                    : "p-4 border-b border-blue-gray-50";
-   
                   return (
-                    <tr key={name}>
-                      <td className={classes}>
-                        <div className="flex items-center gap-3">
-                          <Avatar src={img} alt={name} size="sm" />
-                          <div className="flex flex-col">
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal"
-                            >
-                              {name}
-                            </Typography>
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal opacity-70"
-                            >
-                              {email}
-                            </Typography>
-                          </div>
-                        </div>
-                      </td>
-                      <td className={classes}>
-                        <div className="flex flex-col">
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal"
-                          >
-                            {job}
-                          </Typography>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal opacity-70"
-                          >
-                            {org}
-                          </Typography>
-                        </div>
-                      </td>
-                      <td className={classes}>
-                        <div className="w-max">
-                          <Chip
-                            variant="ghost"
-                            size="sm"
-                            value={verified ? "Verified" : "Not-Verified"}
-                            color={verified ? "green" : "red"}
-                          />
-                        </div>
-                      </td>
-                      <td className={classes}>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          {date}
-                        </Typography>
-                      </td>
-                      <td className={classes}>
-                        <Tooltip content="Edit User">
-                          <IconButton variant="text">
-                            <PencilIcon className="h-4 w-4" />
-                          </IconButton>
-                        </Tooltip>
-                      </td>
-                    </tr>
+                    <TableRow key={email} {...{ img, name, email, job, org, verified, date, isLast }} />
                   );
                 },
               )}

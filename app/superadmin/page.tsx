@@ -1,8 +1,23 @@
 'use client'
 
+import { useEffect } from "react";
 import { SuperAdminCard } from "../components/hosting/card";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const SuperAdminPage = () => {
+  const router = useRouter();
+  useEffect(() => {
+    axios.get("/api/superadmin/login",{
+    }).then((res) => {
+        if(res.data.message !== "ok"){
+            toast.success("Please login!");
+            return router.push("/superadmin/login");
+        }
+    })
+  }, []);
+  
   return (
     
     <div className="flex flex-col h-auto ">
