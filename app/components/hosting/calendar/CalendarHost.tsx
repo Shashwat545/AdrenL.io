@@ -22,7 +22,7 @@ interface CalendarHostProps {
 
 const CalendarHost: React.FC<CalendarHostProps> = ({ value, onChange, price, futurePrices }) => {
     const NinetyDaysFromNow = new Date();
-    NinetyDaysFromNow.setDate(new Date().getDate() + 90);
+    NinetyDaysFromNow.setDate(new Date().getDate() + 150);
 
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 600);
 

@@ -16,6 +16,7 @@ const SellerPage = () => {
         <HostingCard heading="Complete KYC" redirectUrl="" subtitle="Submit details like PAN Card, Aadhar Card and Bank details for verification"/>
         <HostingCard heading="Calendar" redirectUrl="calendar" subtitle="Manage prices for upcoming dates on your listings"/>
         <HostingCard heading="Listing Status" redirectUrl="instant-switch" subtitle="Start / Stop taking reservations for your listings"/>
+        <HostingCard heading="Pause / Resume Bookings" redirectUrl="pause" subtitle="Pause booking requests on selected dates"/>
         <HostingCard heading="Cancellation Policy" redirectUrl="cancellationPolicy" subtitle="Choose and change cancellation policies for your listings"/>
         <HostingCard heading="Inbox" replaceUrl="inbox" subtitle="Check and reply to your messages"/>
         <HostingCard heading="Remove Listing" replaceUrl="adventures" subtitle="Delete your listing from AdrenL"/>

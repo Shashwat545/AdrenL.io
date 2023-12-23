@@ -1,6 +1,6 @@
 'use client';
 
-import { User, Listing, Reservation } from "@prisma/client";
+import { User, Listing, PausedDates } from "@prisma/client";
 import { categories } from "@/app/components/navbar/Categories";
 import Container from "@/app/components/Container";
 import ListingHead from "@/app/components/listings/ListingHead";
@@ -17,10 +17,13 @@ import useLoginModal from "@/app/hooks/useLoginModal";
 interface ListingClientProps {
     currentUser: User | null;
     listing: Listing & {user: User};
-    reservations?: Reservation[];
+    pausedDates: PausedDates[];
+    data: any;
+    payloadMain: string;
+    checksum: string;
 }
 
-const ListingClient: React.FC<ListingClientProps> = ({ currentUser, listing, reservations=[]}) => {
+const ListingClient: React.FC<ListingClientProps> = ({ currentUser, listing, pausedDates, data, payloadMain, checksum}) => {
     const loginModal = useLoginModal();
     const router = useRouter();
 
@@ -30,15 +33,15 @@ const ListingClient: React.FC<ListingClientProps> = ({ currentUser, listing, res
         }
     }, [])
 
-   
-
     const disabledDates = useMemo(() => {
         let dates: Date[] = [];
-        reservations.forEach((reservation) => {
-            dates = [...dates, reservation.startDate];
+        pausedDates.forEach((pausedDate) => {
+            if(pausedDate.paused == true) {
+                dates = [...dates, pausedDate.startDate];
+            }
         });
         return dates;
-    }, [reservations]);
+    }, [pausedDates]);
 
     const [isLoading, setIsLoading] = useState(false);
     const [totalPrice, setTotalPrice] = useState(listing.price);
@@ -59,10 +62,28 @@ const ListingClient: React.FC<ListingClientProps> = ({ currentUser, listing, res
             return axios.post('/api/conversations',{userId:listing.userId})
         })
         .then(() => {
-            toast.success("Adventure reserved!");
-            setDateValue(new Date());
-            router.push('/trips');
-            router.refresh();
+            const options = {
+                method: 'POST',
+                url: 'https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay',
+                headers: {
+                    'accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-VERIFY': checksum
+                },
+                data: {
+                    request: payloadMain
+                }
+            };
+        
+            axios.request(options)
+            .then((response) => {
+                console.log(response.data);
+                router.replace(response.data.data.instrumentResponse.redirectInfo.url);
+            })
+            .catch((error) => {
+                toast.error("Something went wrong in processing the payment. Please try again.")
+                console.error(error);
+            });
         })
         .catch(() => {
             toast.error("Something went wrong");
@@ -70,7 +91,7 @@ const ListingClient: React.FC<ListingClientProps> = ({ currentUser, listing, res
         .finally(() => {
             setIsLoading(false);
         });
-    }, [totalPrice, dateValue, listing?.id, router, currentUser, loginModal]);
+    }, [totalPrice, dateValue, listing?.id, router, currentUser, loginModal, data, payloadMain, checksum]);
 
     useEffect(() => {
         if(dateValue) {
