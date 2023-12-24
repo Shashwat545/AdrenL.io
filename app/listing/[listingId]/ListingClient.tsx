@@ -1,6 +1,6 @@
 'use client';
 
-import { User, Listing, PausedDates, Review } from "@prisma/client";
+import { User, Listing, PausedDates, Review, FuturePricing } from "@prisma/client";
 
 import { categories } from "@/app/components/navbar/Categories";
 import Container from "@/app/components/Container";
@@ -10,6 +10,8 @@ import ListingReservation from "@/app/components/listings/ListingReservation";
 import ReviewClient from "@/app/components/Review/ReviewClient";
 
 import axios from "axios";
+import qs from "query-string";
+import { formatISO, eachDayOfInterval, format } from "date-fns";
 import { toast } from "react-hot-toast";
 
 import { useState, useMemo, useCallback, useEffect } from "react";
@@ -21,20 +23,40 @@ interface ListingClientProps {
     listing: Listing & {user: User};
     pausedDates: PausedDates[];
     reviews?: Review[];
-    data: any;
-    payloadMain: string;
-    checksum: string;
+    futurePrices: FuturePricing[];
 }
 
-const ListingClient: React.FC<ListingClientProps> = ({ currentUser, listing, pausedDates, reviews, data, payloadMain, checksum}) => {
+interface DateAndPriceObject {
+    date: Date;
+    price: number;
+}
+
+const ListingClient: React.FC<ListingClientProps> = ({ currentUser, listing, pausedDates, reviews, futurePrices }) => {
     const loginModal = useLoginModal();
     const router = useRouter();
 
     useEffect(() => {
         if (!listing.user?.isTakingReservation) {
-        toast.error("The adventure is currently not taking reservations!");
+            toast.error("The adventure is currently not taking reservations!");
         }
     }, []);
+
+    const dynamicPrices = useMemo(() => {
+        let datesAndPrices: DateAndPriceObject[] = [];
+        futurePrices.forEach((futurePrice) => {
+            const range = eachDayOfInterval({
+                start: new Date(futurePrice.startDate),
+                end: new Date(futurePrice.endDate)
+            });
+            range.forEach((date) => {
+                datesAndPrices.push({
+                    date: date,
+                    price: futurePrice.dynamicPrice
+                });
+            });
+        });
+        return datesAndPrices;
+    }, [futurePrices]);
   
     const disabledDates = useMemo(() => {
         let dates: Date[] = [];
@@ -65,38 +87,18 @@ const ListingClient: React.FC<ListingClientProps> = ({ currentUser, listing, pau
             return loginModal.onOpen();
         }
         setIsLoading(true);
-        axios.post('/api/reservations', {
-            totalPrice,
-            startDate: dateValue,
-            endDate: dateValue,
-            listingId: listing?.id
-        })
-        .then(()=>{
-            return axios.post('/api/conversations',{userId:listing.userId})
-        })
+        axios.post('/api/conversations',{ userId: listing.userId })
         .then(() => {
-            const options = {
-                method: 'POST',
-                url: 'https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay',
-                headers: {
-                    'accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'X-VERIFY': checksum
-                },
-                data: {
-                    request: payloadMain
-                }
+            const query: any = {
+                startDate: formatISO(dateValue),
+                endDate: formatISO(dateValue),
             };
-        
-            axios.request(options)
-            .then((response) => {
-                console.log(response.data);
-                router.replace(response.data.data.instrumentResponse.redirectInfo.url);
-            })
-            .catch((error) => {
-                toast.error("Something went wrong in processing the payment. Please try again.")
-                console.error(error);
-            });
+            setDateValue(new Date());
+            const url = qs.stringifyUrl({
+                url: `/listing/${listing.id}/payment`,
+                query: query
+            }, { skipNull: true });
+            router.push(url);
         })
         .catch(() => {
             toast.error("Something went wrong");
@@ -104,18 +106,12 @@ const ListingClient: React.FC<ListingClientProps> = ({ currentUser, listing, pau
         .finally(() => {
             setIsLoading(false);
         });
-    }, [totalPrice, dateValue, listing?.id, router, currentUser, loginModal, data, payloadMain, checksum]);
+    }, [dateValue, listing?.id, router, currentUser, loginModal ]);
 
     useEffect(() => {
-        if (dateValue) {
-            const dayCount = 1;
-            if (dayCount && listing.price) {
-                setTotalPrice(dayCount * listing.price);
-            } else {
-                setTotalPrice(listing.price);
-            }
-        }
-    }, [dateValue, listing.price]);
+        const futurePriceObject = dynamicPrices.find((item) => format(item.date, 'yyyy-MM-dd') === format(dateValue, 'yyyy-MM-dd'));
+        setTotalPrice(futurePriceObject ? futurePriceObject.price : listing.price);
+    }, [listing.user, listing.price, dynamicPrices, dateValue]);
 
     const category = useMemo(() => {
         return categories.find((item) => item.label === listing.category);
