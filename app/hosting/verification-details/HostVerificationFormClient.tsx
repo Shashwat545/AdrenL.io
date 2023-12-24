@@ -10,8 +10,11 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { User } from "@prisma/client";
 
-export default async function HostVerificationFormClient({currentUser}:{currentUser:User}) {
-
+export default async function HostVerificationFormClient({
+  currentUser,
+}: {
+  currentUser: User;
+}) {
   const {
     register,
     handleSubmit,
@@ -23,15 +26,19 @@ export default async function HostVerificationFormClient({currentUser}:{currentU
       bankingName: "",
       ifscCode: "",
       aadharCard: "",
-        panCard: "",
-        accountNo: "",
+      panCard: "",
+      accountNo: "",
     },
   });
   const onSubmit = (data: any) => {
-        axios.post("/api/hosting/hostVerificationDetails", {id: currentUser.id,...data})
-    .then(() => {
-      toast.success("Host Verification Details Added Successfully");
-    })
+    axios
+      .post("/api/hosting/hostVerificationDetails", {
+        id: currentUser.id,
+        ...data,
+      })
+      .then(() => {
+        toast.success("Host Verification Details Added Successfully");
+      });
   };
 
   const image = watch("aadharCard");
@@ -48,34 +55,59 @@ export default async function HostVerificationFormClient({currentUser}:{currentU
     });
   };
 
-  if (currentUser?.host.accountNo) {
+  console.log(currentUser)
 
+
+  if (currentUser?.host.isVerified) {
     return(
-        <>
-<div className="flex min-h-[650px] w-full md:mt-24 justify-center px-4">
-  <div className="flex w-[700px] max-w-3xl text-2xl flex-col rounded py-12 px-6 text-black-800 shadow-sm">
-    <h2 className="mb-2 text-bold text-3xl text-red-500">Verification in Progress</h2>
-    <p className="mb-12">
-     It usually takes 2-3 days to verify your account. 
-     <br></br>We will notify you once your account is verified.
-    </p>
-    <div className="mb-2 flex gap-2">
-      <span className="mb-2 h-[15px] flex-1 rounded-xl bg-blue-600"></span>
-      <span className="mb-2 h-[15px] flex-1 rounded-xl bg-blue-500"></span>
-      <span className="mb-2 h-[15px] flex-1 rounded-xl bg-blue-400"></span>
-      <span className="mb-2 h-[15px] flex-1 rounded-xl bg-blue-300"></span>
-      <span className="mb-2 h-[15px] flex-1 rounded-xl bg-blue-200"></span>
-      <span className="mb-2 h-[15px] flex-1 rounded-xl bg-green-200"></span>
-      <span className="mb-2 h-[15px] flex-1 rounded-xl bg-gray-900"></span>
-      <span className="mb-2 h-[15px] flex-1 rounded-xl bg-gray-900"></span>
-      <span className="mb-2 h-[15px] flex-1 rounded-xl bg-gray-900"></span>
+      <div className="flex items-center justify-center h-[640px]">
+      <div className="max-w-2xl bg-white rounded-md overflow-hidden shadow-md">
+        <div className="bg-green-500 p-4">
+          <h1 className="text-white text-2xl font-semibold">
+            Verification Successful
+          </h1>
+        </div>
+        <div className="p-4">
+          <p className="text-gray-700">
+            Congratulations! Your verification was successful.
+          </p>
+        </div>
+      </div>
     </div>
-    <small>Our team is reviewing</small>
-  </div>
-</div>
-</>
+    )    
+  }
+
+  if (currentUser?.host.accountNo) {
+    return (
+      <>
+        <div className="flex min-h-[650px] w-full md:mt-24 justify-center px-4">
+          <div className="flex w-[700px] max-w-3xl text-2xl flex-col rounded py-12 px-6 text-black-800 shadow-sm">
+            <h2 className="mb-2 text-bold text-3xl text-red-500">
+              Verification in Progress
+            </h2>
+            <p className="mb-12">
+              It usually takes 2-3 days to verify your account.
+              <br></br>We will notify you once your account is verified.
+            </p>
+            <div className="mb-2 flex gap-2">
+              <span className="mb-2 h-[15px] flex-1 rounded-xl bg-blue-600"></span>
+              <span className="mb-2 h-[15px] flex-1 rounded-xl bg-blue-500"></span>
+              <span className="mb-2 h-[15px] flex-1 rounded-xl bg-blue-400"></span>
+              <span className="mb-2 h-[15px] flex-1 rounded-xl bg-blue-300"></span>
+              <span className="mb-2 h-[15px] flex-1 rounded-xl bg-blue-200"></span>
+              <span className="mb-2 h-[15px] flex-1 rounded-xl bg-green-200"></span>
+              <span className="mb-2 h-[15px] flex-1 rounded-xl bg-gray-900"></span>
+              <span className="mb-2 h-[15px] flex-1 rounded-xl bg-gray-900"></span>
+              <span className="mb-2 h-[15px] flex-1 rounded-xl bg-gray-900"></span>
+            </div>
+            <small>Our team is reviewing</small>
+          </div>
+        </div>
+      </>
     );
-}
+  }
+
+
 
   return (
     <div className="m-auto flex w-1/2 flex-col gap-4">

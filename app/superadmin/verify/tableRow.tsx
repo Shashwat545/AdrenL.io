@@ -1,19 +1,23 @@
+"use client"
 import { PencilIcon } from "@heroicons/react/24/solid";
 import { Avatar, Chip, IconButton, Tooltip, Typography } from "@material-tailwind/react";
+import { useRouter } from "next/navigation";
 
 interface TableRowProps {
     img: string;   
     name: string;
     email: string;
-    job: string;
-    org: string;
+    job?: string;
+    org?: string;
     verified: boolean;
     date: string;
-    isLast: boolean;
+    isLast?: boolean;
+    id:string;
 }
 
-const TableRow: React.FC<TableRowProps> = ({ img, name, email, job, org, verified, date, isLast  }) => {
-   
+const TableRow: React.FC<TableRowProps> = ({ img, name, email, job, org, verified, date, isLast, id  }) => {
+        const router = useRouter(); 
+
         const classes = isLast
                     ? "p-4"
                     : "p-4 border-b border-blue-gray-50";
@@ -74,15 +78,18 @@ const TableRow: React.FC<TableRowProps> = ({ img, name, email, job, org, verifie
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {date}
+                          {date.toLocaleString()}
                         </Typography>
                       </td>
                       <td className={classes}>
-                        <Tooltip content="Edit User">
+                        <div  onClick={()=>{
+                          router.push(`/superadmin/verify/${id}`)}}>
+                        <Tooltip content="Verify User">
                           <IconButton variant="text">
                             <PencilIcon className="h-4 w-4" />
                           </IconButton>
                         </Tooltip>
+                        </div>
                       </td>
                     </tr>
     )
