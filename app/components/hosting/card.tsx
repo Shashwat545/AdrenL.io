@@ -1,3 +1,4 @@
+"use client"
 import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
 import { BsArrowUpRightCircleFill } from "react-icons/bs";

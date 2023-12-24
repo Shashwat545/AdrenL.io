@@ -10,6 +10,7 @@ import useHostModal from "../../hooks/useHostModal";
 import {User} from "@prisma/client";
 import {signOut} from "next-auth/react";
 import {useRouter} from "next/navigation"
+import toast from "react-hot-toast";
 
 interface UserMenuProps {
     currentUser?: User | null
@@ -29,6 +30,10 @@ const UserMenu:React.FC<UserMenuProps> = ({currentUser}) => {
     const onHost=useCallback(() => {
         if(!currentUser) {
             return LoginModalHook.onOpen();
+        }
+        if(!currentUser?.host) {
+            router.push("/hosting/become-a-host");
+            return toast.error("You are not a host yet!");
         }
 
         HostModalHook.onOpen();

@@ -1,8 +1,23 @@
 'use client'
 
+import { useEffect } from "react";
 import { SuperAdminCard } from "../components/hosting/card";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const SuperAdminPage = () => {
+  const router = useRouter();
+  useEffect(() => {
+    axios.get("/api/superadmin/login",{
+    }).then((res) => {
+        if(res.data.message !== "ok"){
+            toast.success("Please login!");
+            return router.push("/superadmin/login");
+        }
+    })
+  }, []);
+  
   return (
     
     <div className="flex flex-col h-auto ">
@@ -15,7 +30,7 @@ const SuperAdminPage = () => {
         <SuperAdminCard heading="Discount Coupons" redirectUrl="discountcoupons" subtitle="Add and remove discount coupons"/>
         <SuperAdminCard heading="Discount Coupon Statistics" redirectUrl="" subtitle="View the usage statistics"/>
         {/* <SuperAdminCard heading="Inbox" replaceUrl="inbox" subtitle="Check and reply to your messages"/> */}
-        <SuperAdminCard heading="Verify suppliers" replaceUrl="" subtitle="Verify details submitted by suppliers for verification"/>
+        <SuperAdminCard heading="Verify suppliers" redirectUrl="/verify" subtitle="Verify details submitted by suppliers for verification"/>
         <SuperAdminCard heading="Remove Listing" replaceUrl="" subtitle="Delete a listing from AdrenL"/>
       </div>
     </div>

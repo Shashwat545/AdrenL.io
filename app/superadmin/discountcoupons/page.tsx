@@ -4,10 +4,20 @@ import DiscountCouponsClient from "./DiscountCouponsClient";
 
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import getAllDiscountCoupons from "@/app/actions/getAllDiscountCoupons";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { redirect } from "next/navigation";
+import isAdminAuthenticated from "@/app/actions/isAdminAuthenticated";
+
 
 const CalendarPage = async () => {
+    const isAdmin = await isAdminAuthenticated();
+    if(!isAdmin){
+        return redirect("/superadmin/login");
+    }
     const currentUser = await getCurrentUser();
     const allDiscountCoupons = await getAllDiscountCoupons();
+      
     
     if(!currentUser) {
         return (
