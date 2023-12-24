@@ -1,10 +1,23 @@
 'use client';
 
-import Link from "next/link"
+import { Listing, User } from "@prisma/client";
 import { CardTitle, CardHeader, CardContent, Card } from "@/app/components/shadcn/Card";
 import Button from "@/app/components/Button";
 
-export default function Component() {
+import { format } from "date-fns";
+
+interface PaymentConfirmationProps {
+  onSubmit: () => void;
+  dateValue: Date;
+  listing: Listing & {user: User};
+  disabled: boolean;
+  price: number;
+  totalPrice: number;
+  totalPeople: number;
+  onChangePeople: (value: number) => void;
+}
+
+const PaymentConfirmation: React.FC<PaymentConfirmationProps> = ({onSubmit, dateValue, listing, disabled, price, totalPrice, totalPeople, onChangePeople}) => {
   return (
     <>
       <main className="p-6 md:p-12">
@@ -16,41 +29,26 @@ export default function Component() {
             </CardHeader>
             <CardContent>
               <div className="flex items-center justify-between mb-2">
-                <span>Item Name:</span>
-                <span className="font-medium">Item 1</span>
+                <span>Name:</span>
+                <span className="font-medium">{listing.title}</span>
               </div>
               <div className="flex items-center justify-between mb-2">
-                <span>Quantity:</span>
-                <span className="font-medium">2</span>
+                <span>Hosted By:</span>
+                <span className="font-medium">{listing.user.name}</span>
               </div>
               <div className="flex items-center justify-between mb-2">
-                <span>Price:</span>
-                <span className="font-medium">$100.00</span>
+                <span>Price per person:</span>
+                <span className="font-medium">₹{price}.00</span>
+              </div>
+              <div className="flex items-center justify-between mb-2">
+                <span>Booking Date:</span>
+                <span className="font-medium">{format(dateValue, 'eee do MMM, yyyy')}</span>
               </div>
             </CardContent>
           </Card>
           <Card>
             <CardHeader>
-              <CardTitle>Order Summary</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex items-center justify-between mb-2">
-                <span>Subtotal:</span>
-                <span className="font-medium">$200.00</span>
-              </div>
-              <div className="flex items-center justify-between mb-2">
-                <span>Tax:</span>
-                <span className="font-medium">$40.00</span>
-              </div>
-              <div className="flex items-center justify-between mb-2">
-                <span>Total:</span>
-                <span className="font-medium">$240.00</span>
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle>Select Number of People</CardTitle>
+              <CardTitle>Number of Persons</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex items-center justify-between mb-2">
@@ -60,7 +58,26 @@ export default function Component() {
           </Card>
           <Card>
             <CardHeader>
-              <CardTitle>Enter Discount Coupon</CardTitle>
+              <CardTitle>Order Summary</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center justify-between mb-2">
+                <span>Price per person (after discount):</span>
+                <span className="font-medium">₹{price}.00</span>
+              </div>
+              <div className="flex items-center justify-between mb-2">
+                <span>Number of persons:</span>
+                <span className="font-medium">{totalPeople}</span>
+              </div>
+              <div className="flex items-center justify-between mb-2">
+                <span>Total:</span>
+                <span className="font-medium">₹{totalPrice}.00</span>
+              </div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Apply Coupon</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex items-center justify-between mb-2">
@@ -70,9 +87,11 @@ export default function Component() {
           </Card>
         </div>
         <div className="mt-6">
-          <Button label="Proceed to payment" onClick={() => {}}/>
+          <Button disabled={disabled} label="Proceed to payment" onClick={onSubmit}/>
         </div>
       </main>
     </>
   )
 }
+
+export default PaymentConfirmation;
