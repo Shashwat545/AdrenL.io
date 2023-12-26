@@ -28,6 +28,8 @@ const ReviewModal: React.FC<ReviewsComponentProps> = ({
     return { rating, percentage };
   });
 
+  console.log(reviews.length)
+
   return (
     <div>
       <Modal
@@ -38,13 +40,19 @@ const ReviewModal: React.FC<ReviewsComponentProps> = ({
         customWidth="sm:max-w-5xl"
       >
         <div className="p-8">
-          {/* Display Average Rating */}
-          <div className="mb-8">
-            <h2 className="text-2xl font-semibold">
-              Average Rating: {averageRating.toFixed(1)}
-            </h2>
-            <p>Total Ratings: {reviews.length}</p>
-          </div>
+          {reviews.length > 0 ? (
+            <div className="mb-8">
+              <h2 className="text-2xl font-semibold">
+                Average Rating: {averageRating.toFixed(1)}
+              </h2>
+              <p>Total Ratings: {reviews.length}</p>
+            </div>
+          ) : (
+            <div className="mb-8">
+              <h2 className="text-2xl font-semibold">No Rating Yet</h2>
+              <p>Be the first to leave a rating!</p>
+            </div>
+          )}
 
           {/* Display Rating Percentage using Responsive Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
