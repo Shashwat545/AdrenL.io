@@ -24,6 +24,8 @@ model User {
   address String?
   isTakingReservation Boolean @default(true)
 
+  host Host?
+
   accounts Account[]
   listings Listing[]
   reservations Reservation[]
@@ -35,6 +37,7 @@ model User {
   seenMessages Message[] @relation("Seen", fields: [seenMessageIds], references: [id])
 
   messages Message[]
+  review Review[]
 
   emailVerificationToken EmailVerificationToken?
 }
@@ -74,12 +77,14 @@ model Listing {
   price Int
   isTakingReservation Boolean @default(true)
   cancellationPolicy OPTIONS @default(Flexible)
-  discountCoupons String[]
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   reservations Reservation[]
   futurePricings FuturePricing[]
+  reviewIds String[] @db.ObjectId
+  reviews Review[]
+  pausedDates PausedDates[]
 }
 
 enum OPTIONS{
@@ -97,10 +102,16 @@ model Reservation {
   startDate DateTime
   endDate DateTime
   totalPrice Int
+  numberOfPeople Int
+  cancellationPolicy OPTIONS?
+  cancelled Boolean @default(false)
   createdAt DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  // coupon DiscountCoupons @relation(fields: [discountCouponid], references: [id], onDelete: Cascade)
+
+  transaction Transaction?
 }
 
 model FuturePricing {
@@ -110,6 +121,17 @@ model FuturePricing {
   startDate DateTime
   endDate DateTime
   dynamicPrice Int
+  createdAt DateTime @default(now())
+  
+  listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+}
+
+model PausedDates {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @db.ObjectId
+  listingId String @db.ObjectId
+  startDate DateTime
+  paused Boolean
   createdAt DateTime @default(now())
   
   listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
@@ -155,3 +177,62 @@ model Message{
   senderId String @db.ObjectId
   sender User @relation(fields: [senderId], references: [id])
 }
+
+model Review{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  rating Int
+  comment String?
+  createdAt DateTime @default(now())
+    
+  userId String @db.ObjectId
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    
+  listingId String @db.ObjectId
+  listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+}
+  
+model DiscountCoupons {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @db.ObjectId
+  coupon String
+  percentageOff Int
+  totalTimesUsed Int
+  maxPerUser Int
+  trackingInfo String
+
+  // reservations Reservation[]
+}
+
+
+
+model Host{
+   id String @id @default(auto()) @map("_id") @db.ObjectId
+   isVerified Boolean @default(false)
+   userId String @db.ObjectId @unique
+   user User @relation(fields: [userId],references: [id])
+
+   accountNo String?
+   bankingName String?
+   ifscCode String?
+   aadharCard String?
+   panCard String?
+   averageRating String?
+   verificationDate DateTime?
+   totalReviews Int?
+   responseTime Int?
+}
+
+model Transaction {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @db.ObjectId
+  merchantTransactionId String @unique
+  totalPrice Int
+  status String
+  callback_triggered Boolean
+  paymentInstrument String
+  createdAt DateTime @default(now())
+
+  reservationId String @db.ObjectId @unique
+  reservation Reservation @relation(fields: [reservationId], references: [id], onDelete: Cascade)
+}
+

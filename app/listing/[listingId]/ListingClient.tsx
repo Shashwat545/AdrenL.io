@@ -1,13 +1,17 @@
 'use client';
 
-import { User, Listing, Reservation } from "@prisma/client";
+import { User, Listing, PausedDates, Review, FuturePricing } from "@prisma/client";
+
 import { categories } from "@/app/components/navbar/Categories";
 import Container from "@/app/components/Container";
 import ListingHead from "@/app/components/listings/ListingHead";
 import ListingInfo from "@/app/components/listings/ListingInfo";
 import ListingReservation from "@/app/components/listings/ListingReservation";
+import ReviewClient from "@/app/components/Review/ReviewClient";
 
 import axios from "axios";
+import qs from "query-string";
+import { formatISO, eachDayOfInterval, format } from "date-fns";
 import { toast } from "react-hot-toast";
 
 import { useState, useMemo, useCallback, useEffect } from "react";
@@ -17,52 +21,84 @@ import useLoginModal from "@/app/hooks/useLoginModal";
 interface ListingClientProps {
     currentUser: User | null;
     listing: Listing & {user: User};
-    reservations?: Reservation[];
+    pausedDates: PausedDates[];
+    reviews?: Review[];
+    futurePrices: FuturePricing[];
 }
 
-const ListingClient: React.FC<ListingClientProps> = ({ currentUser, listing, reservations=[]}) => {
+interface DateAndPriceObject {
+    date: Date;
+    price: number;
+}
+
+const ListingClient: React.FC<ListingClientProps> = ({ currentUser, listing, pausedDates, reviews, futurePrices }) => {
     const loginModal = useLoginModal();
     const router = useRouter();
 
     useEffect(() => {
-        if(!listing.user?.isTakingReservation){
-            toast.error("The adventure is currently not taking reservations!")
+        if (!listing.user?.isTakingReservation) {
+            toast.error("The adventure is currently not taking reservations!");
         }
-    }, [])
+    }, []);
 
-   
-
+    const dynamicPrices = useMemo(() => {
+        let datesAndPrices: DateAndPriceObject[] = [];
+        futurePrices.forEach((futurePrice) => {
+            const range = eachDayOfInterval({
+                start: new Date(futurePrice.startDate),
+                end: new Date(futurePrice.endDate)
+            });
+            range.forEach((date) => {
+                datesAndPrices.push({
+                    date: date,
+                    price: futurePrice.dynamicPrice
+                });
+            });
+        });
+        return datesAndPrices;
+    }, [futurePrices]);
+  
     const disabledDates = useMemo(() => {
         let dates: Date[] = [];
-        reservations.forEach((reservation) => {
-            dates = [...dates, reservation.startDate];
+        pausedDates.forEach((pausedDate) => {
+            if(pausedDate.paused == true) {
+                dates = [...dates, pausedDate.startDate];
+            }
         });
         return dates;
-    }, [reservations]);
-
+    }, [pausedDates]);
+    
     const [isLoading, setIsLoading] = useState(false);
     const [totalPrice, setTotalPrice] = useState(listing.price);
     const [dateValue, setDateValue] = useState<Date>(new Date());
+
+    const onCreateEnquiry = useCallback(() => {
+        if (!currentUser) {
+            return loginModal.onOpen();
+        }
+        axios.post("/api/conversations", { userId: listing.userId })
+        .then(() => {
+            router.push("/inbox");
+        })
+    },[])
 
     const onCreateReservation = useCallback(() => {
         if(!currentUser) {
             return loginModal.onOpen();
         }
         setIsLoading(true);
-        axios.post('/api/reservations', {
-            totalPrice,
-            startDate: dateValue,
-            endDate: dateValue,
-            listingId: listing?.id
-        })
-        .then(()=>{
-            return axios.post('/api/conversations',{userId:listing.userId})
-        })
+        axios.post('/api/conversations',{ userId: listing.userId })
         .then(() => {
-            toast.success("Adventure reserved!");
+            const query: any = {
+                startDate: formatISO(dateValue),
+                endDate: formatISO(dateValue),
+            };
             setDateValue(new Date());
-            router.push('/trips');
-            router.refresh();
+            const url = qs.stringifyUrl({
+                url: `/listing/${listing.id}/payment`,
+                query: query
+            }, { skipNull: true });
+            router.push(url);
         })
         .catch(() => {
             toast.error("Something went wrong");
@@ -70,41 +106,48 @@ const ListingClient: React.FC<ListingClientProps> = ({ currentUser, listing, res
         .finally(() => {
             setIsLoading(false);
         });
-    }, [totalPrice, dateValue, listing?.id, router, currentUser, loginModal]);
+    }, [dateValue, listing?.id, router, currentUser, loginModal ]);
 
     useEffect(() => {
-        if(dateValue) {
-            const dayCount = 1;
-            if(dayCount && listing.price) {
-                setTotalPrice(dayCount * listing.price);
-            } else {
-                setTotalPrice(listing.price);
-            }
-        }
-    }, [dateValue, listing.price]);
+        const futurePriceObject = dynamicPrices.find((item) => format(item.date, 'yyyy-MM-dd') === format(dateValue, 'yyyy-MM-dd'));
+        setTotalPrice(futurePriceObject ? futurePriceObject.price : listing.price);
+    }, [listing.user, listing.price, dynamicPrices, dateValue]);
 
     const category = useMemo(() => {
-        return categories.find( (item) => item.label === listing.category );
+        return categories.find((item) => item.label === listing.category);
     }, [listing.category]);
+
+    const averageRating = reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length ;
+    const totalRatings = reviews.length;
 
     return (
         <Container>
             <div className="max-w-screen-lg mx-auto">
                 <div className="flex flex-col gap-6">
                     <ListingHead listing={listing} title={listing.title} imageSrc={listing.imageSrc} locationValue={listing.locationValue}
-                    id={listing.id} currentUser={currentUser}/>
+                    id={listing.id} currentUser={currentUser} />
                     <div className="grid grid-cols-1 md:grid-cols-7 md:gap-10 mt-6">
-                        <ListingInfo listing={listing} user={listing.user} category={category} description={listing.description} guestCount={listing.guestCount}
-                        locationValue={listing.locationValue}/>
+                        <ListingInfo listing={listing} user={listing.user} category={category} description={listing.description} 
+                        guestCount={listing.guestCount} locationValue={listing.locationValue} onSubmit={onCreateEnquiry} />
                         <div className="order-first mb-10 md:order-last md:col-span-3">
                             <ListingReservation host={listing.user} user={currentUser} price={listing.price} totalPrice={totalPrice} onChangeDate={(value) => setDateValue(value)}
-                            dateValue={dateValue} onSubmit={onCreateReservation} disabled={isLoading} disabledDates={disabledDates}/>
+                            dateValue={dateValue} onSubmit={onCreateReservation} disabled={isLoading} disabledDates={disabledDates} />
                         </div>
+                    </div>    
+                    <div className="text-center bg-gray-100 p-6 rounded-lg shadow-md">
+                        <p className="text-3xl font-bold text-gray-800">
+                            {averageRating.toFixed(1)} <span className="text-gray-500">/ 5.0</span>
+                        </p>
+                        <p className="text-gray-600 text-sm">Average Rating</p>
+                        <p className="text-gray-600 text-sm mt-2">Based on {totalRatings} reviews</p>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-12 md:gap-10 mt-6">
+                        <ReviewClient reviews={reviews ?? []} />
                     </div>
                 </div>
             </div>
         </Container>
     );
-}
+};
 
 export default ListingClient;

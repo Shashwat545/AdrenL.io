@@ -35,7 +35,7 @@ const HostModal = () => {
 
     const { register, handleSubmit, setValue, watch, formState: {errors, }, reset} = useForm<FieldValues> ({
         defaultValues: {
-            category: '', location: null, stateValue: null, cityValue: null, guestCount: 1, imageSrc: [], price: 1, title: '', description: ''
+            category: '', location: null, stateValue: null, cityValue: null, guestCount: 1, imageSrc: [], price: 1500, title: '', description: ''
         }
     })
 
@@ -67,6 +67,10 @@ const HostModal = () => {
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
         if(step !== STEPS.PRICE) {
             return onNext();
+        }
+
+        if(data.price <1500) {
+            return toast.error("The listing price needs to be above ₹1500");
         }
 
         setIsLoading(true);

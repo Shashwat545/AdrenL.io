@@ -17,13 +17,13 @@ interface ListingReservationProps {
 }
 
 const ListingReservation: React.FC<ListingReservationProps> = ({ host, user, price, dateValue, totalPrice, onChangeDate, onSubmit, disabled, disabledDates }) => {
-    const compareUserToHost = (JSON.stringify(host) === JSON.stringify(user));
+    const compareUserToHost = (host?.id === user?.id);
     const isTakingReservation = !(host?.isTakingReservation);
     return (
         <div className="bg-white rounded-xl border-[1px] border-neutral-200 overflow-hidden">
             <div className="flex flex-row items-center gap-1 p-4">
                 <div className="text-2xl font-semibold">
-                    ₹ {price}
+                    ₹ {totalPrice}
                 </div>
                 <div className="font-light text-neutral-600">
                     per person
@@ -40,7 +40,7 @@ const ListingReservation: React.FC<ListingReservationProps> = ({ host, user, pri
                     Total
                 </div>
                 <div>
-                    ₹ {price}
+                    ₹ {totalPrice}
                 </div>
             </div>
         </div>

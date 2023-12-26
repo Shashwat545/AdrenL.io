@@ -10,6 +10,7 @@ import useHostModal from "../../hooks/useHostModal";
 import {User} from "@prisma/client";
 import {signOut} from "next-auth/react";
 import {useRouter} from "next/navigation"
+import toast from "react-hot-toast";
 
 interface UserMenuProps {
     currentUser?: User | null
@@ -29,6 +30,10 @@ const UserMenu:React.FC<UserMenuProps> = ({currentUser}) => {
     const onHost=useCallback(() => {
         if(!currentUser) {
             return LoginModalHook.onOpen();
+        }
+        if(!currentUser?.host) {
+            router.push("/hosting/become-a-host");
+            return toast.error("You are not a host yet!");
         }
 
         HostModalHook.onOpen();
@@ -58,7 +63,7 @@ const UserMenu:React.FC<UserMenuProps> = ({currentUser}) => {
         <div className="relative" ref={menuRef}>
             <div className="flex flex-row items-center gap-3">
                 <div onClick={onHost} className="hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer">
-                    Host your own adventure!
+                    Host your adventure with us!
                 </div>
                 <div onClick={toggleOpen} className="p-4 md:py-1 md:px-2 border-[1px] border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition">
                     <AiOutlineMenu />
@@ -79,7 +84,7 @@ const UserMenu:React.FC<UserMenuProps> = ({currentUser}) => {
                                 <MenuItem onClick={() => { toggleOpen(); }} label="Notifications" fontBold/>
                                 <hr />
                                 <MenuItem onClick={() => { toggleOpen(); router.push("/contact-us"); }} label="Contact us"/>
-                                <MenuItem onClick={() => { toggleOpen(); HostModalHook.onOpen(); }} label="Host your own adventure"/>
+                                <MenuItem onClick={() => { toggleOpen(); onHost(); }} label="Host your adventure with us"/>
                                 <hr />
                                 <MenuItem onClick={()=>signOut()} label="Log Out"/>
                             </>

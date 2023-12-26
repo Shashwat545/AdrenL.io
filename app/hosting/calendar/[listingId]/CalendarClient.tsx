@@ -64,6 +64,13 @@ const CalendarClient: React.FC<CalendarClientProps> = ({ currentUser, listing, f
         if(!currentUser) {
             return loginModal.onOpen();
         }
+        if(data.priceBox < 1500) {
+            return toast.error("The listing price cannot be below ₹1500");
+        }
+        const basePrice = (listing.price)/2;
+        if(data.priceBox < basePrice) {
+            return toast.error("The price cannot be reduced by more than 50% of the initial listing value.");
+        }
         setIsLoading(true);
         axios.post('/api/hosting/calendar', {
             ...data,
