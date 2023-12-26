@@ -1,11 +1,15 @@
 "use client";
 
-import { Review } from "@prisma/client";
+import { Review, User } from "@prisma/client";
 import Avatar from "../Avatar";
 import { Rating } from "@material-tailwind/react";
 
+interface ReviewIncludesUserProps extends Review{
+  user: User
+}
+
 interface Props {
-    review : Review;
+    review : ReviewIncludesUserProps;
     formatPostedTime: Function;
 }
 

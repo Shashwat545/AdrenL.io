@@ -1,11 +1,16 @@
 'use client'
 
+import { Host, User } from "@prisma/client";
 import axios from "axios";
 import { redirect, useRouter } from "next/navigation";
 
 import toast from "react-hot-toast";
 
-const BecomeAHostClient = ({currentUser}) =>{
+interface UserIncludesHostProps extends User{
+  host : Host
+}
+
+const BecomeAHostClient = ({currentUser} : {currentUser:UserIncludesHostProps} ) =>{
     const router = useRouter();
     const handleClick = () => {
         if(!currentUser){

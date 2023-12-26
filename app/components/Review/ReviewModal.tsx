@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, } from "react";
 import ReviewCard from "./ReviewCard";
-import { Review } from "@prisma/client";
+import { Review, User } from "@prisma/client";
 import Modal from "../chat/Modal";
+
+interface ReviewIncludesUserProps extends Review{
+  user: User
+}
 
 interface ReviewsComponentProps {
   isModalOpen: boolean;
-  setIsModalOpen: () => void;
-  reviews: Review[];
+  setIsModalOpen: Dispatch<SetStateAction<boolean>>;
+  reviews: ReviewIncludesUserProps[];
   formatPostedTime: Function;
 }
 

@@ -1,14 +1,18 @@
 "use client"
 import React, { useState } from "react";
-import { Review } from "@prisma/client";
+import { Review, User } from "@prisma/client";
 import Avatar from "../Avatar";
 import { Rating } from "@material-tailwind/react";
 import Button from "../Button";
 import ReviewCard from "./ReviewCard";
 import ReviewModal from "./ReviewModal";
 
+interface ReviewIncludesUserProps extends Review{
+  user: User
+}
+
 interface Props {
-  reviews: Review[];
+  reviews: ReviewIncludesUserProps[];
 }
 
 const ReviewClient: React.FC<Props> = ({ reviews }) => {
@@ -40,7 +44,7 @@ const ReviewClient: React.FC<Props> = ({ reviews }) => {
   return (
     <>
       {reviews.slice(0, 4).map((review) => (
-        <ReviewCard review={review} formatPostedTime={formatPostedTime} />
+        <ReviewCard key={review.id} review={review} formatPostedTime={formatPostedTime} />
       ))}
 
       {showMoreButton && (

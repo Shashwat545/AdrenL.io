@@ -18,11 +18,15 @@ import { useState, useMemo, useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import useLoginModal from "@/app/hooks/useLoginModal";
 
+interface ReviewIncludesUserProps extends Review{
+    user: User
+}
+
 interface ListingClientProps {
     currentUser: User | null;
     listing: Listing & {user: User};
     pausedDates: PausedDates[];
-    reviews?: Review[];
+    reviews: ReviewIncludesUserProps[];
     futurePrices: FuturePricing[];
 }
 
@@ -117,8 +121,10 @@ const ListingClient: React.FC<ListingClientProps> = ({ currentUser, listing, pau
         return categories.find((item) => item.label === listing.category);
     }, [listing.category]);
 
-    const averageRating = reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length ;
-    const totalRatings = reviews.length;
+    const averageRating = reviews?.length
+    ? reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length : 0;
+
+    const totalRatings = reviews?.length ?? 0;
 
     return (
         <Container>

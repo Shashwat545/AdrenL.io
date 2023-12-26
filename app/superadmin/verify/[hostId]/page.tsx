@@ -4,19 +4,28 @@ import axios from "axios";
 import { redirect } from "next/navigation";
 import toast from "react-hot-toast";
 import HostVerificationClient from "./HostVerificationClient";
+import { Host, User } from "@prisma/client";
 
-const VerifyHost = async ({ params }) => {
+interface IParams {
+  hostId: string;
+}
+
+interface HostsIncludeUser extends Host {
+  user: User;
+}
+
+const VerifyHost = async ({ params }:{params: IParams}) => {
   const isAdmin = await isAdminAuthenticated();
   if (!isAdmin) {
     return redirect("/superadmin/login");
   }
 
-  const host = await getHostById(params.hostId);
+  const host = await getHostById(params.hostId) as HostsIncludeUser;
   const leftTableData = [
     { label: 'Name', value: host?.user.name },
     { label: 'Email', value: host?.user.email },
     { label: 'Phone Number', value: host?.user.phoneNumber },
-    { label: 'Verified', value: host?.verified ? 'Yes' : 'No' },
+    { label: 'Verified', value: host?.isVerified ? 'Yes' : 'No' },
     { label: 'Address', value: host?.user.address },
   ];
 

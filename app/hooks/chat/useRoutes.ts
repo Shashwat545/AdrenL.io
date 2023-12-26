@@ -13,13 +13,15 @@ const useRoutes = () => {
       label: 'Chat', 
       href: '/inbox', 
       icon: HiChat,
-      active: pathname === '/inbox' || !!conversationId
+      active: pathname === '/inbox' || !!conversationId,
+      onClick: () => {}
     },
     { 
       label: 'Users', 
       href: '/users', 
       icon: HiUsers, 
-      active: pathname === '/users'
+      active: pathname === '/users',
+      onClick: () => {}
     },
   ], [pathname, conversationId]);
 

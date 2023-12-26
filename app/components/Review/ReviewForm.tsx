@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
 interface Props {
-  listingId: string;
+  listingId?: string;
 }
 
 export default function ReviewForm({ listingId }: Props) {

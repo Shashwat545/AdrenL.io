@@ -41,7 +41,7 @@ const getUnverifiedHosts = () => {
     }
 }
 
-const getHostById = (hostId) =>{
+const getHostById = (hostId: string) =>{
     try{
         const host = prisma?.host.findUnique({
             where:{

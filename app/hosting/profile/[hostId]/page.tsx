@@ -13,7 +13,11 @@ import axios from "axios";
 import getListingsByHostId from "@/app/actions/getListingByHostId";
 import getUserById from "@/app/actions/getUserById";
 
-export default async function Component({ params }) {
+interface IParams {
+  hostId: string;
+}
+
+export default async function Component({ params } : {params: IParams}) {
   const listings = await getListingsByHostId(params.hostId);
   const host = await getUserById(params.hostId);
   return (
@@ -29,13 +33,13 @@ export default async function Component({ params }) {
               <div className="absolute -bottom-12 flex h-[87px] w-[87px] items-center justify-center rounded-full border-[4px] border-white bg-pink-400">
                 <img
                   className="h-full w-full rounded-full"
-                  src={host?.image}
+                  src={host?.image || "/images/placeholder.jpg"}
                   alt=""
                 />
               </div>
             </div>
             <div className="mt-16 flex flex-col items-center">
-              <h4 className="text-xl font-bold text-navy-700">{host.name}</h4>
+              <h4 className="text-xl font-bold text-navy-700">{host?.name}</h4>
               <p className="text-base font-normal text-gray-600">
                 Listing Host
               </p>

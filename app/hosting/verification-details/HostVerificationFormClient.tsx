@@ -8,12 +8,16 @@ import { CldUploadButton } from "next-cloudinary";
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { User } from "@prisma/client";
+import { User, Host } from "@prisma/client";
+
+interface UserIncludesHost extends User{
+  host : Host
+}
 
 export default async function HostVerificationFormClient({
   currentUser,
 }: {
-  currentUser: User;
+  currentUser: UserIncludesHost;
 }) {
   const {
     register,
