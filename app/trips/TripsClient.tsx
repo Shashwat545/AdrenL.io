@@ -2,7 +2,7 @@
 
 import Container from "../components/Container";
 import Heading from "../components/Heading";
-import ListingCard from "../components/listings/ListingCard";
+import ReservationCard from "../components/reservation/ReservationCard";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
@@ -38,13 +38,18 @@ const TripsClient: React.FC<TripsClientProps> = ({ reservations, currentUser }) 
     return (
         <Container>
             <Heading title="Trips" subtitle="Where you've been and where you're going"/>
-            <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-8">
+            {/* <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-8">
                 {reservations?.map((reservation) => (
                     //@ts-ignore
-                    <ListingCard key={reservation.id} data={reservation.listing} reservation={reservation} actionId={reservation.id}
-                    onAction={onCancel} disabled={deletingId === reservation.id} actionLabel="Cancel Reservation" currentUser={currentUser}/>
+                    // <ReservationCard key={reservation.id} data={reservation.listing} reservation={reservation} actionId={reservation.id}
+                    // onAction={onCancel} disabled={deletingId === reservation.id} actionLabel="Cancel Reservation" currentUser={currentUser}
+                    // transaction={reservation.transaction}/>
                 ))}
-            </div>
+            </div> */}
+            {reservations?.map((reservation) => (
+                //@ts-ignore
+                <ReservationCard reservation={reservation} currentUser={currentUser} listing={reservation.listing} transaction={reservation.transaction}/>
+            ))}
         </Container>
     );
 }

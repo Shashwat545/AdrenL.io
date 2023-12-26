@@ -10,9 +10,9 @@ export async function POST (request: Request) {
     }
 
     const body = await request.json();
-    const { listingId, startDate, endDate, totalPrice } = body;
+    const { listingId, startDate, endDate, totalPrice, totalPeople, cancellationPolicy } = body;
 
-    if(!listingId || !startDate || !endDate || !totalPrice) {
+    if(!listingId || !startDate || !endDate || !totalPrice || !cancellationPolicy) {
         return NextResponse.error();
     }
     
@@ -26,11 +26,22 @@ export async function POST (request: Request) {
                     userId: currentUser.id,
                     startDate,
                     endDate,
-                    totalPrice
+                    totalPrice,
+                    numberOfPeople: totalPeople,
+                    cancellationPolicy
                 }
             }
         }
     });
 
-    return NextResponse.json(listingAndReservation);
+    const newReservation = await prisma.reservation.findMany({
+        where: {
+            listingId: listingId,
+            userId: currentUser.id,
+            startDate: startDate,
+            endDate: endDate
+        }
+    });
+
+    return NextResponse.json(newReservation[newReservation.length-1]);
 }

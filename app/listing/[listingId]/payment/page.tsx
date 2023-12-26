@@ -4,8 +4,8 @@ import PaymentClient from "./PaymentClient";
 
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import getListingById from "@/app/actions/getListingById";
-import getReservations from "@/app/actions/getReservations";
-import getPayload from "@/app/actions/payment/getPayload";
+import getFuturePricings from "@/app/actions/getFuturePricings";
+import getAllDiscountCoupons from "@/app/actions/getAllDiscountCoupons";
 
 interface IParams {
     listingId?: string;
@@ -13,9 +13,9 @@ interface IParams {
 
 const ListingPage = async ({ params }: {params: IParams}) => {
     const listing = await getListingById(params);
-    const reservations = await getReservations(params);
     const currentUser = await getCurrentUser();
-    const { data, payloadMain, checksum } = getPayload({ currentUser });
+    const futurePrices = await getFuturePricings(params);
+    const allDiscountCoupons = await getAllDiscountCoupons();
 
     if(!listing) {
         return (
@@ -27,7 +27,7 @@ const ListingPage = async ({ params }: {params: IParams}) => {
 
     return (
         <ClientOnly>
-            <PaymentClient listing={listing} reservations={reservations} currentUser={currentUser} data={data} payloadMain={payloadMain} checksum={checksum}/>
+            <PaymentClient currentUser={currentUser} listing={listing} futurePrices={futurePrices}/>
         </ClientOnly>
     );
 }
