@@ -1,6 +1,6 @@
-'use client'
+'use client';
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { SuperAdminCard } from "../components/hosting/card";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -8,15 +8,26 @@ import { useRouter } from "next/navigation";
 
 const SuperAdminPage = () => {
   const router = useRouter();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   useEffect(() => {
     axios.get("/api/superadmin/login",{
     }).then((res) => {
         if(res.data.message !== "ok"){
             toast.success("Please login!");
-            return router.push("/superadmin/login");
+            router.push("/superadmin/login");
+        } else {
+            setIsLoggedIn(true);
         }
     })
+    .catch((error) => {
+      console.error('Login check failed at superadmin route:', error);
+    });
   }, []);
+
+  if (!isLoggedIn) {
+    return <div>Authenticating...</div>;
+  }
   
   return (
     

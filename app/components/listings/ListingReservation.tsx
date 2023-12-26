@@ -17,7 +17,7 @@ interface ListingReservationProps {
 }
 
 const ListingReservation: React.FC<ListingReservationProps> = ({ host, user, price, dateValue, totalPrice, onChangeDate, onSubmit, disabled, disabledDates }) => {
-    const compareUserToHost = (JSON.stringify(host) === JSON.stringify(user));
+    const compareUserToHost = (host?.id === user?.id);
     const isTakingReservation = !(host?.isTakingReservation);
     return (
         <div className="bg-white rounded-xl border-[1px] border-neutral-200 overflow-hidden">

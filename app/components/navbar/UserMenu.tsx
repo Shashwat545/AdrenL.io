@@ -84,7 +84,7 @@ const UserMenu:React.FC<UserMenuProps> = ({currentUser}) => {
                                 <MenuItem onClick={() => { toggleOpen(); }} label="Notifications" fontBold/>
                                 <hr />
                                 <MenuItem onClick={() => { toggleOpen(); router.push("/contact-us"); }} label="Contact us"/>
-                                <MenuItem onClick={() => { toggleOpen(); HostModalHook.onOpen(); }} label="Host your adventure with us"/>
+                                <MenuItem onClick={() => { toggleOpen(); onHost(); }} label="Host your adventure with us"/>
                                 <hr />
                                 <MenuItem onClick={()=>signOut()} label="Log Out"/>
                             </>

@@ -229,7 +229,8 @@ model Transaction {
   totalPrice Int
   status String
   callback_triggered Boolean
-  paymentInstrument String 
+  paymentInstrument String
+  createdAt DateTime @default(now())
 
   reservationId String @db.ObjectId @unique
   reservation Reservation @relation(fields: [reservationId], references: [id], onDelete: Cascade)

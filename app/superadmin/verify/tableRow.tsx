@@ -1,4 +1,5 @@
-"use client"
+'use client';
+
 import { PencilIcon } from "@heroicons/react/24/solid";
 import { Avatar, Chip, IconButton, Tooltip, Typography } from "@material-tailwind/react";
 import { useRouter } from "next/navigation";
@@ -25,7 +26,7 @@ const TableRow: React.FC<TableRowProps> = ({ img, name, email, job, org, verifie
         <tr key={name}>
                       <td className={classes}>
                         <div className="flex items-center gap-3">
-                          <Avatar src={img} alt={name} size="sm" />
+                          <Avatar src={img || "/images/placeholder.jpg"} alt={name} size="sm" />
                           <div className="flex flex-col">
                             <Typography
                               variant="small"
@@ -78,7 +79,7 @@ const TableRow: React.FC<TableRowProps> = ({ img, name, email, job, org, verifie
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {date.toLocaleString()}
+                          {date?.toLocaleString()}
                         </Typography>
                       </td>
                       <td className={classes}>
@@ -96,4 +97,4 @@ const TableRow: React.FC<TableRowProps> = ({ img, name, email, job, org, verifie
 
 }
 
-export default TableRow
+export default TableRow;
