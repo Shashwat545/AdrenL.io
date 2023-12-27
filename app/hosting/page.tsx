@@ -10,7 +10,7 @@ const SellerPage = async () => {
   }
   return (
     <>
-    {currentUser?.host?.isVerified ? "null" : <div
+    {currentUser?.host?.isVerified ? "" : <div
         role="alert"
         className="relative flex w-full px-4 py-4 text-base text-white bg-red-900 rounded-lg font-regular"
       >
