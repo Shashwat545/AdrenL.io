@@ -1,12 +1,6 @@
-"use client";
+'use client';
 
-import {
-  User,
-  Listing,
-  PausedDates,
-  Review,
-  FuturePricing,
-} from "@prisma/client";
+import { User, Listing, PausedDates, Review, FuturePricing } from "@prisma/client";
 
 import { categories } from "@/app/components/navbar/Categories";
 import Container from "@/app/components/Container";
@@ -37,13 +31,7 @@ interface DateAndPriceObject {
   price: number;
 }
 
-const ListingClient: React.FC<ListingClientProps> = ({
-  currentUser,
-  listing,
-  pausedDates,
-  reviews,
-  futurePrices,
-}) => {
+const ListingClient: React.FC<ListingClientProps> = ({ currentUser, listing, pausedDates, reviews, futurePrices }) => {
   const loginModal = useLoginModal();
   const router = useRouter();
 
@@ -88,9 +76,10 @@ const ListingClient: React.FC<ListingClientProps> = ({
     if (!currentUser) {
       return loginModal.onOpen();
     }
-    axios.post("/api/conversations", { userId: listing.userId }).then(() => {
+    axios.post("/api/conversations", { userId: listing.userId })
+    .then(() => {
       router.push("/inbox");
-    });
+    })
   }, []);
 
   const onCreateReservation = useCallback(() => {
@@ -106,13 +95,10 @@ const ListingClient: React.FC<ListingClientProps> = ({
           endDate: formatISO(dateValue),
         };
         setDateValue(new Date());
-        const url = qs.stringifyUrl(
-          {
-            url: `/listing/${listing.id}/payment`,
-            query: query,
-          },
-          { skipNull: true }
-        );
+        const url = qs.stringifyUrl({
+          url: `/listing/${listing.id}/payment`,
+          query: query
+        }, { skipNull: true });
         router.push(url);
       })
       .catch(() => {
@@ -124,10 +110,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
   }, [dateValue, listing?.id, router, currentUser, loginModal]);
 
   useEffect(() => {
-    const futurePriceObject = dynamicPrices.find(
-      (item) =>
-        format(item.date, "yyyy-MM-dd") === format(dateValue, "yyyy-MM-dd")
-    );
+    const futurePriceObject = dynamicPrices.find((item) => format(item.date, 'yyyy-MM-dd') === format(dateValue, 'yyyy-MM-dd'));
     setTotalPrice(futurePriceObject ? futurePriceObject.price : listing.price);
   }, [listing.user, listing.price, dynamicPrices, dateValue]);
 
@@ -135,49 +118,26 @@ const ListingClient: React.FC<ListingClientProps> = ({
     return categories.find((item) => item.label === listing.category);
   }, [listing.category]);
 
-  const averageRating =
-    reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length;
+  const averageRating = reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length ;
   const totalRatings = reviews.length;
 
   return (
     <Container>
       <div className="max-w-screen-lg mx-auto">
         <div className="flex flex-col gap-6">
-          <ListingHead
-            listing={listing}
-            title={listing.title}
-            imageSrc={listing.imageSrc}
-            locationValue={listing.locationValue}
-            id={listing.id}
-            currentUser={currentUser}
-          />
+        <ListingHead listing={listing} title={listing.title} imageSrc={listing.imageSrc} locationValue={listing.locationValue}
+        id={listing.id} currentUser={currentUser} />
           <div className="grid grid-cols-1 md:grid-cols-7 md:gap-10 mt-6">
-            <ListingInfo
-              listing={listing}
-              user={listing.user}
-              category={category}
-              description={listing.description}
-              guestCount={listing.guestCount}
-              locationValue={listing.locationValue}
-              onSubmit={onCreateEnquiry}
-            />
+            <ListingInfo listing={listing} user={listing.user} category={category} description={listing.description} 
+            guestCount={listing.guestCount} locationValue={listing.locationValue} onSubmit={onCreateEnquiry} />
             <div className="order-first mb-10 md:order-last md:col-span-3">
-              <ListingReservation
-                host={listing.user}
-                user={currentUser}
-                price={listing.price}
-                totalPrice={totalPrice}
-                onChangeDate={(value) => setDateValue(value)}
-                dateValue={dateValue}
-                onSubmit={onCreateReservation}
-                disabled={isLoading}
-                disabledDates={disabledDates}
-              />
+              <ListingReservation host={listing.user} user={currentUser} price={listing.price} totalPrice={totalPrice} onChangeDate={(value) => setDateValue(value)}
+              dateValue={dateValue} onSubmit={onCreateReservation} disabled={isLoading} disabledDates={disabledDates} />
             </div>
           </div>
+          
           <div className="text-center bg-gray-100 p-6 rounded-lg shadow-md">
             {isNaN(averageRating) ? (
-            
               <div>
                 <p className="text-3xl font-bold text-gray-800">
                   No Ratings Yet
@@ -187,7 +147,6 @@ const ListingClient: React.FC<ListingClientProps> = ({
                 </p>
               </div>
             ) : (
-              
               <div>
                 <p className="text-3xl font-bold text-gray-800">
                   {averageRating.toFixed(1)}{" "}
