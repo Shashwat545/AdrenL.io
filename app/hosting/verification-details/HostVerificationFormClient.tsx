@@ -59,26 +59,25 @@ export default async function HostVerificationFormClient({
     });
   };
 
-  console.log(currentUser)
-
+  console.log(currentUser);
 
   if (currentUser?.host.isVerified) {
-    return(
+    return (
       <div className="flex items-center justify-center h-[640px]">
-      <div className="max-w-2xl bg-white rounded-md overflow-hidden shadow-md">
-        <div className="bg-green-500 p-4">
-          <h1 className="text-white text-2xl font-semibold">
-            Verification Successful
-          </h1>
-        </div>
-        <div className="p-4">
-          <p className="text-gray-700">
-            Congratulations! Your verification was successful.
-          </p>
+        <div className="max-w-2xl bg-white rounded-md overflow-hidden shadow-md">
+          <div className="bg-green-500 p-4">
+            <h1 className="text-white text-2xl font-semibold">
+              Verification Successful
+            </h1>
+          </div>
+          <div className="p-4">
+            <p className="text-gray-700">
+              Congratulations! Your verification was successful.
+            </p>
+          </div>
         </div>
       </div>
-    </div>
-    )    
+    );
   }
 
   if (currentUser?.host.accountNo) {
@@ -111,19 +110,20 @@ export default async function HostVerificationFormClient({
     );
   }
 
-
-
   return (
     <div className="m-auto flex w-1/2 flex-col gap-4">
-      <h1 className="bold text-2xl underline">Registration Form</h1>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
+      <h1 className="font-bold text-2xl underline">Registration Form</h1>
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <div className="input-wrapper flex flex-col">
-          <label htmlFor="bankingName">Banking Name</label>
+          <label htmlFor="bankingName" className="text-sm font-semibold">
+            Banking Name
+          </label>
           <input
             type="text"
             {...register("bankingName", {
               required: "Name is required",
             })}
+            className="border border-gray-300 px-3 py-2 rounded-md"
           />
           {errors.bankingName && (
             <p className="text-xs italic text-red-500">
@@ -133,12 +133,15 @@ export default async function HostVerificationFormClient({
         </div>
 
         <div className="input-wrapper flex flex-col">
-          <label htmlFor="username">IFSC Code</label>
+          <label htmlFor="username" className="text-sm font-semibold">
+            IFSC Code
+          </label>
           <input
             type="text"
             {...register("ifscCode", {
               required: "IFSC Code is required",
             })}
+            className="border border-gray-300 px-3 py-2 rounded-md"
           />
           {errors.ifscCode && (
             <p className="text-xs italic text-red-500">
@@ -147,28 +150,16 @@ export default async function HostVerificationFormClient({
           )}
         </div>
 
-        {/* <div className="input-wrapper flex flex-col">
-        <label htmlFor="email">Email</label>
-        <input
-          type="email"
-          {...register('email', {
-            required: 'Email is required',
-            pattern: {
-              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-              message: 'Invalid email address',
-            },
-          })}
-        />
-        {errors.email && <p className="text-xs italic text-red-500">{errors.email.message}</p>}
-      </div> */}
-
         <div className="input-wrapper flex flex-col">
-          <label htmlFor="accountNo">Account No</label>
+          <label htmlFor="accountNo" className="text-sm font-semibold">
+            Account No
+          </label>
           <input
             type="password"
             {...register("accountNo", {
               required: "Account No is required",
             })}
+            className="border border-gray-300 px-3 py-2 rounded-md"
           />
           {errors.accountNo && (
             <p className="text-xs italic text-red-500">
@@ -176,25 +167,62 @@ export default async function HostVerificationFormClient({
             </p>
           )}
         </div>
-        <CldUploadButton
-          options={{ maxFiles: 1 }}
-          onUpload={handleAadharUpload}
-          uploadPreset="kx4yy8db"
-        >
-          <Button secondary type="button">
-            Change
-          </Button>
-        </CldUploadButton>
+
+        <div className="flex">
+          <CldUploadButton
+            options={{ maxFiles: 1 }}
+            onUpload={handleAadharUpload}
+            uploadPreset="kx4yy8db"
+          >
+            <Button secondary type="button">
+              <span className="mr-2">Upload Aadhar</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                className="h-5 w-5"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                />
+              </svg>
+            </Button>
+          </CldUploadButton>
+        </div>
+        
+        <div className="flex">
         <CldUploadButton
           options={{ maxFiles: 1 }}
           onUpload={handlePANUpload}
           uploadPreset="kx4yy8db"
         >
-          <Button secondary type="button">
-            Change
-          </Button>
-        </CldUploadButton>
-        <input type="submit"></input>
+            <Button secondary type="button">
+              <span className="mr-2">Upload PAN Card</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                className="h-5 w-5"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                />
+              </svg>
+            </Button>
+          </CldUploadButton>
+        </div>
+        <input
+          type="submit"
+          className="bg-red-500 text-white font-semibold px-4 py-2 rounded-md cursor-pointer"
+        />
       </form>
     </div>
   );
