@@ -1,26 +1,30 @@
-import prisma from "@/app/libs/prismadb"
-import getCurrentUser from "./getCurrentUser";
+import prisma from "@/app/libs/prismadb";
 
+interface IReviewParams {
+    listingId: string;
+}
 
-export default async function getReview (listingId : string){
-    try{
-    const currentUser = await getCurrentUser();
-        if(!currentUser) {
+export default async function getReview (params: IReviewParams){
+    try {
+        const { listingId } = params;
+        const reviews = await prisma.review.findMany({
+            where:{
+                listingId: listingId
+            },
+            orderBy: {
+                createdAt: 'desc'
+            },
+            include:{
+                user:true
+            }
+        });
+        if(!reviews) {
             return [];
+        } else {
+            return reviews;
         }
-
-    const reviews = await prisma.review.findMany({
-        where:{
-            listingId: listingId
-        },
-        include:{
-            user:true
-        }
-    })
-
-    return reviews;
-}catch(e){
-    console.log(e);
-    return [];
-}
-}
+    } catch (e) {
+        console.log(e);
+        return [];
+    }
+};

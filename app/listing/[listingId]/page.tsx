@@ -9,13 +9,13 @@ import getPausedDates from "@/app/actions/getPausedDates";
 import getFuturePricings from "@/app/actions/getFuturePricings";
 
 interface IParams {
-    listingId?: string;
+    listingId: string;
 }
 
 const ListingPage = async ({ params }: {params: IParams}) => {
     const listing = await getListingById(params);
     const currentUser = await getCurrentUser();
-    const reviews = await getReview(listing?.id as string);
+    const reviews = await getReview(params);
     const pausedDates = await getPausedDates(params);
     const futurePrices = await getFuturePricings(params);
         
