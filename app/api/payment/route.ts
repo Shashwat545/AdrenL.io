@@ -26,7 +26,7 @@ export async function POST (request: Request) {
 
         const options = {
             method: 'POST',
-            url: 'https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay',
+            url: 'https://api.phonepe.com/apis/hermes/pg/v1/pay',
             headers: {
                 'accept': 'application/json',
                 'Content-Type': 'application/json',
