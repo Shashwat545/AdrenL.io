@@ -15,7 +15,7 @@ export default function getPayload ({ currentUser, priceTotal }: IgetPayload) {
             merchantId: MERCHANT_ID,
             merchantTransactionId: ((currentUser?.id)?.slice(5,15).concat(crypto.randomBytes(4).toString('hex'))) || crypto.randomBytes(4).toString('hex'),
             merchantUserId: currentUser?.id || "NOT_LOGGED_IN",
-            amount: 1, //priceTotal*100
+            amount: 100, //priceTotal*100
             redirectUrl: `https://adrenl.io/trips`,
             redirectMode: 'REDIRECT',
             callbackUrl: `https://adrenl.io/api/payment/callback`,
