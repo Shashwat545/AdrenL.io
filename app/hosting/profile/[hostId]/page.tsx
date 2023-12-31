@@ -10,12 +10,12 @@ import ListingCard from "@/app/components/listings/ListingCard";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import getListingById from "@/app/actions/getListingById";
 import axios from "axios";
-import getListingsByHostId from "@/app/actions/getListingByHostId";
+import getListingsByUserId from "@/app/actions/getListingsByUserId";
 import getUserById from "@/app/actions/getUserById";
 
 export default async function Component({ params }) {
-  const listings = await getListingsByHostId(params.hostId);
-  const host = await getUserById(params.hostId);
+  const listings = await getListingsByUserId({userId: params.hostId});
+  const host = await getUserById({userId: params.hostId});
   return (
     <main className="lg:flex">
       <aside className="lg:w-1/3 space-y-6">

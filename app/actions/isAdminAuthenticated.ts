@@ -1,32 +1,31 @@
-import { cookies } from 'next/headers'
-import jwt from 'jsonwebtoken'
+import { cookies } from 'next/headers';
+import jwt from 'jsonwebtoken';
 
 export default async function isAdminAuthenticated() {
-    try{
+    try {
         const cookie = cookies().get("admin-auth");
-        if (!cookie) {
+        if(!cookie) {
             return false;
         }
 
         const secretOrPublicKey = process.env.JWT_ADMIN_SECRET;
-        if (!secretOrPublicKey) {
+        if(!secretOrPublicKey) {
             return false;
         }
 
         try {
             const claims = jwt.verify(cookie.value, secretOrPublicKey);
-
             if (!claims) {
                 return false;
             }
         } catch (error) {
-            console.log(error);
+            console.log("Error in isAdminAuthenticated.js: ",error);
             return false;
         }
         return true;
 
-    }catch(error){
-        console.log(error);
+    } catch(error) {
+        console.log("Error in isAdminAuthenticated.js: ",error);
         return false;
     }
 }

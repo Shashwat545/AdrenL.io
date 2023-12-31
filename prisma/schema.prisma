@@ -191,7 +191,6 @@ model Review{
   
 model DiscountCoupons {
     id String @id @default(auto()) @map("_id") @db.ObjectId
-    userId String @db.ObjectId
     coupon String
     percentageOff Int
     totalTimesUsed Int
@@ -215,7 +214,7 @@ model Host{
     averageRating String?
     verificationDate DateTime?
     totalReviews Int?
-    responseTime Int?
+    // responseTime Int?
 }
 
 model Transaction {
