@@ -18,7 +18,7 @@ export async function POST (request: Request) {
     }
 
     const discountCoupon = await prisma.discountCoupons.create({
-        data: {coupon: couponCode, percentageOff: parseInt(percentageOff, 10), totalTimesUsed: 0, maxPerUser: parseInt(maxUsability, 10), trackingInfo: trackingInfo, userId: currentUser.id }
+        data: {coupon: couponCode, percentageOff: parseInt(percentageOff, 10), totalTimesUsed: 0, maxPerUser: parseInt(maxUsability, 10), trackingInfo: trackingInfo}
     });
 
     return NextResponse.json(discountCoupon);
