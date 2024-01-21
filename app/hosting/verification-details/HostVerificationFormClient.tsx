@@ -9,6 +9,7 @@ import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { User } from "@prisma/client";
+import { useRouter } from "next/navigation";
 
 interface HostVerificationFormClientProps {
     currentUser: User;
@@ -18,14 +19,18 @@ const HostVerificationFormClient: React.FC<HostVerificationFormClientProps> = as
     const { register, handleSubmit, formState: { errors }, watch, setValue } = useForm({ defaultValues: {
         bankingName: "", ifscCode: "", aadharCard: "", panCard: "", accountNo: "" }
     });
+    const router = useRouter();
+
     const onSubmit = (data: any) => {
         axios.post("/api/hosting/hostVerificationDetails", {
             id: currentUser.id,
             ...data,
         })
         .then(() => {
+            router.refresh();
             toast.success("Your details have been submitted successfully.");
         });
+        
     };
 
     const image = watch("aadharCard");
@@ -37,6 +42,7 @@ const HostVerificationFormClient: React.FC<HostVerificationFormClientProps> = as
     const handlePANUpload = (result: any) => {
         setValue("panCard", result.info.secure_url, { shouldValidate: true });
     };
+
 
     if (currentUser?.host.isVerified) {
         return (
