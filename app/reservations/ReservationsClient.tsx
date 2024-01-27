@@ -1,15 +1,14 @@
 'use client';
 
-import Heading from "../components/Heading";
-import Container from "../components/Container";
-import ListingCard from "../components/listings/ListingCard";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { Reservation, User } from "@prisma/client";
+import ReservationCard from "./Card";
+import EmptyState from "../components/EmptyState";
 
 interface ReservationClientProps {
     reservations?: Reservation[];
@@ -19,11 +18,23 @@ interface ReservationClientProps {
 const ReservationsClient: React.FC<ReservationClientProps> = ({ reservations, currentUser }) => {
     const router = useRouter();
     const [deletingId, setDeletingId] = useState('');
+    const [selectedButton, setSelectedButton] = useState('pending');
+    const [filteredReservations, setFilteredReservations] = useState([]);
+
+    useEffect(() => {
+      // Filter reservations when the selectedState changes
+      const filteredData = reservations?.filter(reservation => reservation?.isConfirmed === selectedButton);
+      setFilteredReservations(filteredData);
+    }, [selectedButton, reservations]);
+
+    const handleButtonClick = (button:any) => {
+        setSelectedButton(button);
+      };
 
     const onCancel = useCallback((id: string) => {
         setDeletingId(id);
 
-        axios.delete(`/api/reservations/${id}`)
+        axios.post(`/api/reservations/${id}`,{status: 'rejected'})
         .then(() => {
             toast.success("Reservation cancelled");
             router.refresh();
@@ -36,18 +47,82 @@ const ReservationsClient: React.FC<ReservationClientProps> = ({ reservations, cu
         });
     }, [router]);
 
+    const onConfirm = useCallback((id: string) => {
+        setDeletingId(id);
+
+        axios.post(`/api/reservations/${id}`,{status: 'confirmed'})
+        .then(() => {
+            toast.success("Reservation confirmed");
+            router.refresh();
+        })
+        .catch(() => {
+            toast.error("Something went wrong.");
+        })
+        .finally(() => {
+            setDeletingId('');
+        });
+    }, [router]);
+
+    console.log(selectedButton);
     return (
-        <Container>
-            <Heading title="Reservations" subtitle="Bookings on your adventure listings"/>
-            <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-8">
-                {reservations && reservations.map((reservation) => (
+       <>
+       <div className="z-20 fixed flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
+  <div className="mb-2 p-4">
+    <h5 className="block antialiased tracking-normal font-sans text-xl font-semibold leading-snug text-gray-900">My Reservations</h5>
+  </div>
+  <nav className="flex flex-col gap-1 min-w-[240px] p-2 font-sans text-base font-normal text-gray-700">
+    <div role="button" 
+    onClick={() => handleButtonClick('pending')}
+    className="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-blue-50 hover:bg-opacity-80 focus:bg-blue-50 focus:bg-opacity-80 active:bg-gray-50 active:bg-opacity-80 hover:text-blue-900 focus:text-blue-900 active:text-blue-900 outline-none">
+      <div className="grid place-items-center mr-4">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="h-5 w-5">
+          <path fillRule="evenodd" d="M2.25 2.25a.75.75 0 000 1.5H3v10.5a3 3 0 003 3h1.21l-1.172 3.513a.75.75 0 001.424.474l.329-.987h8.418l.33.987a.75.75 0 001.422-.474l-1.17-3.513H18a3 3 0 003-3V3.75h.75a.75.75 0 000-1.5H2.25zm6.04 16.5l.5-1.5h6.42l.5 1.5H8.29zm7.46-12a.75.75 0 00-1.5 0v6a.75.75 0 001.5 0v-6zm-3 2.25a.75.75 0 00-1.5 0v3.75a.75.75 0 001.5 0V9zm-3 2.25a.75.75 0 00-1.5 0v1.5a.75.75 0 001.5 0v-1.5z" clip-rule="evenodd"></path>
+        </svg>
+      </div>
+      Pending Reservations
+      <div className="grid place-items-center ml-auto justify-self-end">
+        {/* <div className="relative grid items-center font-sans font-bold uppercase whitespace-nowrap select-none bg-blue-500/20 text-blue-900 py-1 px-2 text-xs rounded-full" >
+          <span className="">2</span>
+        </div> */}
+      </div>
+    </div>
+    <div role="button" 
+    onClick={() => handleButtonClick('confirmed')}
+    className="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-blue-50 hover:bg-opacity-80 focus:bg-blue-50 focus:bg-opacity-80 active:bg-blue-50 active:bg-opacity-80 hover:text-blue-900 focus:text-blue-900 active:text-blue-900 outline-none">
+      <div className="grid place-items-center mr-4">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="h-5 w-5">
+          <path fillRule="evenodd" d="M7.5 6v.75H5.513c-.96 0-1.764.724-1.865 1.679l-1.263 12A1.875 1.875 0 004.25 22.5h15.5a1.875 1.875 0 001.865-2.071l-1.263-12a1.875 1.875 0 00-1.865-1.679H16.5V6a4.5 4.5 0 10-9 0zM12 3a3 3 0 00-3 3v.75h6V6a3 3 0 00-3-3zm-3 8.25a3 3 0 106 0v-.75a.75.75 0 011.5 0v.75a4.5 4.5 0 11-9 0v-.75a.75.75 0 011.5 0v.75z" clip-rule="evenodd"></path>
+        </svg>
+      </div>Upcoming Reservations
+    </div>
+    <div role="button"  
+    onClick={() => handleButtonClick('rejected')}
+    className="flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-blue-50 hover:bg-opacity-80 focus:bg-blue-50 focus:bg-opacity-80 active:bg-blue-50 active:bg-opacity-80 hover:text-blue-900 focus:text-blue-900 active:text-blue-900 outline-none">
+      <div className="grid place-items-center mr-4">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="h-5 w-5">
+          <path fillRule="evenodd" d="M6.912 3a3 3 0 00-2.868 2.118l-2.411 7.838a3 3 0 00-.133.882V18a3 3 0 003 3h15a3 3 0 003-3v-4.162c0-.299-.045-.596-.133-.882l-2.412-7.838A3 3 0 0017.088 3H6.912zm13.823 9.75l-2.213-7.191A1.5 1.5 0 0017.088 4.5H6.912a1.5 1.5 0 00-1.434 1.059L3.265 12.75H6.11a3 3 0 012.684 1.658l.256.513a1.5 1.5 0 001.342.829h3.218a1.5 1.5 0 001.342-.83l.256-.512a3 3 0 012.684-1.658h2.844z" clip-rule="evenodd"></path>
+        </svg>
+      </div>Past Bookings<div className="grid place-items-center ml-auto justify-self-end">
+        {/* <div className="relative grid items-center font-sans font-bold uppercase whitespace-nowrap select-none bg-blue-500/20 text-blue-900 py-1 px-2 text-xs rounded-full" >
+          <span className="">14</span>
+        </div> */}
+      </div>
+    </div>
+  </nav>
+</div>
+
+            <div className="mt-10 ml-[22rem] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-8">
+                {filteredReservations ? filteredReservations.map((reservation) => (
                     //@ts-ignore
-                    <ListingCard key={reservation.id} data={reservation.listing} reservation={reservation} 
-                    actionId={reservation.id} onAction={onCancel} disabled={deletingId === reservation.id} actionLabel="Cancel guest reservation"
+                    <ReservationCard key={reservation.id} data={reservation.listing} reservation={reservation} 
+                    actionId={reservation.id} onConfirm={onConfirm} onCancel={onCancel} disabled={deletingId === reservation.id} 
+                    confirmActionLabel = "Accept guest reservation"
+                    cancelActionLabel="Cancel guest reservation"
                     currentUser={currentUser}/>
-                ))}
+                )): <EmptyState/>}
+
             </div>
-        </Container>
+       </>
     );
 }
 

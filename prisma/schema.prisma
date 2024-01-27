@@ -38,6 +38,7 @@ model User {
 
     messages Message[]
     review Review[]
+    Notification Notification[]
 
     emailVerificationToken EmailVerificationToken?
 }
@@ -98,7 +99,7 @@ enum OPTIONS{
 model Reservation {
     id String @id @default(auto()) @map("_id") @db.ObjectId
     userId String @db.ObjectId
-    isConfirmed boolean @default(false)
+    isConfirmed ReservationState @default(pending)
     listingId String @db.ObjectId
     startDate DateTime
     endDate DateTime
@@ -114,6 +115,12 @@ model Reservation {
 
     transaction Transaction?
 }
+enum ReservationState{
+    pending
+    confirmed
+    rejected
+}
+
 
 model FuturePricing {
     id String @id @default(auto()) @map("_id") @db.ObjectId
