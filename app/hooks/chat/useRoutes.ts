@@ -15,12 +15,7 @@ const useRoutes = () => {
       icon: HiChat,
       active: pathname === '/inbox' || !!conversationId
     },
-    { 
-      label: 'Users', 
-      href: '/users', 
-      icon: HiUsers, 
-      active: pathname === '/users'
-    },
+    
   ], [pathname, conversationId]);
 
   return routes;
