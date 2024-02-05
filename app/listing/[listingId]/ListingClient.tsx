@@ -18,11 +18,15 @@ import { useState, useMemo, useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import useLoginModal from "@/app/hooks/useLoginModal";
 
+interface ReviewIncludesUserProps extends Review{
+    user: User
+}
+
 interface ListingClientProps {
     currentUser: User | null;
     listing: Listing & { user: User };
     pausedDates: PausedDates[];
-    reviews: Review[];
+    reviews: ReviewIncludesUserProps[];
     futurePrices: FuturePricing[];
 }
 

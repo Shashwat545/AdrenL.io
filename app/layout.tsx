@@ -13,7 +13,8 @@ import Footer from "./components/Footer";
 
 import getCurrentUser from './actions/getCurrentUser';
 import AuthContext from './providers/AuthProvider';
-import LayoutHelper from "@/app/helper/index"
+import LayoutHelper from "@/app/helper/index";
+import { Host, User } from '@prisma/client';
 
 const font=Nunito({
     subsets: ["latin"],
@@ -23,13 +24,17 @@ export const metadata: Metadata = {
     title: 'AdrenL',
     description: 'Book your adventure today!',
 }
+
 interface LayoutProps {
     children: React.ReactNode;
 }
 
+interface UserIncludesHostProps extends User{
+  host: Host
+}
 
 export default async function RootLayout({ children }: LayoutProps) {
-    const currentUser=await getCurrentUser();
+    const currentUser=await getCurrentUser() as UserIncludesHostProps;
     
     return (
         <html lang="en">

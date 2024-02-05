@@ -4,10 +4,14 @@ import ReviewCard from "./ReviewCard";
 import Modal from "../chat/Modal";
 import { Review } from "@prisma/client";
 
+interface ReviewIncludesUserProps extends Review{
+    user: User
+}
+
 interface ReviewModalProps {
     isModalOpen: boolean;
-    setIsModalOpen: (value: boolean) => void;
-    reviews: Review[];
+    setIsModalOpen: Dispatch<SetStateAction<boolean>>;
+    reviews: ReviewIncludesUserProps[];
     formatPostedTime: Function;
 }
 

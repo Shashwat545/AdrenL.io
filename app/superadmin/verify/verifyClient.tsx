@@ -4,7 +4,7 @@ import { ChevronUpDownIcon } from "@heroicons/react/24/outline";
 import { Card, CardHeader, Typography, Button, CardBody, CardFooter, Tabs, TabsHeader, Tab } from "@material-tailwind/react";
 import TableRow from "./tableRow";
 import { useState } from "react";
-import { Host } from "@prisma/client";
+import { Host, User } from "@prisma/client";
 
 const TABS = [
     {
@@ -23,16 +23,20 @@ const TABS = [
 
 const TABLE_HEAD = ["Host", "Details", "Status", "KYC Verification Date", "More Info"];
 
+interface HostsIncludeProps extends Host {
+  user?: User | undefined;
+}
+
 interface VerifyClientProps {
-    verifiedHosts: Host[] |null;
-    notVerifiedHosts: Host[];
-    hosts: Host[];
+    verifiedHosts: HostsIncludeProps[];
+    notVerifiedHosts: HostsIncludeProps[];
+    hosts: HostsIncludeProps[];
 }
 
 const VerifyClient: React.FC<VerifyClientProps> = async ({ verifiedHosts, notVerifiedHosts, hosts }) => {
-    const [activeTab, setActiveTab] = useState("all");
+    const [activeTab, setActiveTab] = useState<string>("all");
 
-    const getData = (activeTab: string) => {
+    const getData = (activeTab: any) => {
         if (activeTab === "all") {
             return hosts;
         } else if (activeTab === "verified") {
@@ -44,7 +48,7 @@ const VerifyClient: React.FC<VerifyClientProps> = async ({ verifiedHosts, notVer
         }
     };
 
-    const TABLE_ROWS = await getData(activeTab);
+    const TABLE_ROWS: HostsIncludeProps[] = await getData(activeTab);
 
     return (
         <>
@@ -106,6 +110,6 @@ const VerifyClient: React.FC<VerifyClientProps> = async ({ verifiedHosts, notVer
             </Card>
         </>
     );
-};
+}
 
 export default VerifyClient;

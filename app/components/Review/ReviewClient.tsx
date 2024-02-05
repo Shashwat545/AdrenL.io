@@ -7,8 +7,12 @@ import ReviewCard from "./ReviewCard";
 import ReviewModal from "./ReviewModal";
 import { differenceInDays } from "date-fns";
 
+interface ReviewIncludesUserProps extends Review{
+  user: User
+}
+
 interface ReviewClientProps {
-    reviews: Review[];
+  reviews: ReviewIncludesUserProps[];
 }
 
 const ReviewClient: React.FC<ReviewClientProps> = ({ reviews }) => {
