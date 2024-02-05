@@ -2,7 +2,7 @@
 
 import ReviewCard from "./ReviewCard";
 import Modal from "../chat/Modal";
-import { Review } from "@prisma/client";
+import { User, Review } from "@prisma/client";
 
 interface ReviewIncludesUserProps extends Review{
     user: User
