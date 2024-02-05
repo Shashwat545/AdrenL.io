@@ -101,7 +101,7 @@ const VerifyClient: React.FC<VerifyClientProps> = async ({ verifiedHosts, notVer
                             {TABLE_ROWS?.map((data) => {
                                 return (
                                     <TableRow key={data.id} img={data?.user?.image ?? ""} name={data?.user?.name ?? ""} email={data?.user?.email ?? ""}
-                                    verified={data?.isVerified ?? false} date={data?.verificationDate ?? ""} id={data?.id ?? ""} />
+                                    verified={data?.isVerified ?? false} date={(data?.verificationDate)?.toString() ?? ""} id={data?.id ?? ""} />
                                 );
                             })}
                         </tbody>
