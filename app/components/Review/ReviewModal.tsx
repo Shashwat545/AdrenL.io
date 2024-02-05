@@ -10,7 +10,7 @@ interface ReviewIncludesUserProps extends Review{
 
 interface ReviewModalProps {
     isModalOpen: boolean;
-    setIsModalOpen: Dispatch<SetStateAction<boolean>>;
+    setIsModalOpen: (value: boolean) => void;
     reviews: ReviewIncludesUserProps[];
     formatPostedTime: Function;
 }
