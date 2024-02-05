@@ -1,61 +1,61 @@
-import prisma from "@/app/libs/prismadb"
+import prisma from "@/app/libs/prismadb";
+
 const getHosts = () => {
-    try{
+    try {
         const hosts = prisma?.host.findMany({
-        include:{
-            user:true
-        }}
-        )
+            include: {
+                user: true
+            }
+        });
         return hosts;
-    }catch(e){
-        return [] 
+    } catch (error) {
+        return []; 
     }
-}
+};
 
 const getVerifiedHosts = () => {
-    try{
+    try {
         const hosts = prisma?.host.findMany({
-            where:{
-                isVerified:true,
+            where: {
+                isVerified: true,
             }
-        })
+        });
         return hosts;
-    }catch(e){
-        return [] 
+    } catch (error) {
+        return [];
     }
-}
+};
 
 const getUnverifiedHosts = () => {
-    try{
+    try {
         const hosts = prisma?.host.findMany({
-            where:{
-                isVerified:false,
+            where: {
+                isVerified: false
             },
-            include:{
-                user:true
+            include: {
+                user: true
             }
-        })
+        });
         return hosts;
-    }catch(e){
-        return []  
+    } catch (error) {
+        return [];
     }
-}
+};
 
-const getHostById = (hostId: string) =>{
-    try{
+const getHostById = (hostId: string) => {
+    try {
         const host = prisma?.host.findUnique({
-            where:{
-                id:hostId
+            where: {
+                id: hostId
             },
-            include:{
-                user:true
+            include: {
+                user: true
             }
-        })
+        });
         return host;
-    }catch(e){
-        return []  
+    }catch (error) {
+        return [];
     }
+};
 
-}
-
-export {getHosts, getVerifiedHosts, getUnverifiedHosts, getHostById};
+export { getHosts, getVerifiedHosts, getUnverifiedHosts, getHostById };

@@ -13,13 +13,12 @@ export async function POST (request: Request) {
         }
 
         const body = await request.json();
-        let { reservationId, priceTotal } = body;
+        const { reservationId, priceTotal } = body;
 
         if(!priceTotal) {
             throw new Error('Invalid total price');
         }
 
-        priceTotal = 100 //remove after setup and change let to const above
         const { data, payloadMain, checksum } = getPayload({ currentUser, priceTotal });
 
         const responseToSendBack:any = {};

@@ -1,53 +1,43 @@
 import { NextRequest, NextResponse } from "next/server";
-import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-export async function POST(request: Request,response: Response) {
-  try {
-    const hashedPassword =
-      "$2b$10$lqunPTjNLGGjiMM86jPQOOz7V27MWFWrHAk3gkAFQ.wS5RP0AHo.a";
-    const body = await request.json();
+export async function POST (request: Request, response: Response) {
+    try {
+        const password =process.env.SUPERADMIN_PASS || "";
+        const body = await request.json();
 
-    if (!body.role || body.role !== "admin") {
-      return NextResponse.json(
-        { message: "Invalid role or password" },
-        { status: 403 }
-      );
+        if (!body.role || body.role !== "admin") {
+            return NextResponse.json({ message: "Invalid role or password" }, { status: 403 });
+        }
+
+        const isPasswordValid = (body.password == password);
+
+        if (!body.password || !isPasswordValid) {
+            return NextResponse.json({ message: "Invalid role or password" }, { status: 403 });
+        }
+
+        if (!process.env.JWT_ADMIN_SECRET) {
+            return NextResponse.json({ message: "Invalid secret key" }, { status: 500 });
+        }
+
+        const token = jwt.sign({ role: body.role }, process.env.JWT_ADMIN_SECRET);
+
+        const response = NextResponse.json({ message: "success" }, { status: 200 });
+        response.cookies.set('admin-auth', token, {
+            httpOnly: true,
+            maxAge: 30 * 60 * 1000, // 30 min
+        });
+
+        return response;
+    } catch (error) {
+        return NextResponse.json(JSON.stringify({ message: "error" }), { status: 500 });
     }
+};
 
-    const isPasswordValid = await bcrypt.compare(body.password, hashedPassword);
-
-    if (!body.password || !isPasswordValid) {
-        return NextResponse.json(
-            { message: "Invalid role or password" },
-            { status: 403 }
-        );
-    }
-
-    if (!process.env.JWT_ADMIN_SECRET) {
-        return NextResponse.json({ message: "Invalid secret key" }, { status: 500 });
-    }
-
-    const token = jwt.sign({ role: body.role }, process.env.JWT_ADMIN_SECRET);
-
-    const response = NextResponse.json({ message: "success" }, { status: 200 });
-    response.cookies.set('admin-auth', token, {
-        httpOnly: true,
-        maxAge: 30 * 60 * 1000, // 30 min
-    })
-
-    return response;
-  } catch (e) {
-    return NextResponse.json(JSON.stringify({ message: "error" }), {
-      status: 500,
-    });
-  }
-}
-
-export async function GET(request: NextRequest){
-    try{
+export async function GET (request: NextRequest) {
+    try {
         const cookie = request.cookies.get("admin-auth");
-        if (!cookie) {
+        if(!cookie) {
             return NextResponse.json({ message: "Please login!" }, { status: 200 });
         }
 
@@ -58,18 +48,17 @@ export async function GET(request: NextRequest){
 
         try {
             const claims = jwt.verify(cookie.value, secretOrPublicKey);
-
             if (!claims) {
                 return NextResponse.json({ message: "Unauthenticated" }, { status: 401 });
             }
         } catch (error) {
-            console.log(error);
+            console.log("Error in SuperAdmin Login Route: ",error);
             return NextResponse.json({ message: "Invalid token" }, { status: 500 });
         }
-        return NextResponse.json({message:"ok"},{status:200});
+        return NextResponse.json({ message:"ok" }, { status:200 });
 
-    }catch(error){
-        console.log(error);
-        return NextResponse.json({message:error},{status:500});
+    } catch (error) {
+        console.log("Error in SuperAdmin Login Route: ",error);
+        return NextResponse.json({ message:error }, { status:500 });
     }
-}
+};

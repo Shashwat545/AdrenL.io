@@ -1,7 +1,13 @@
 'use client';
 
+import { Input } from "@/app/components/shadcn/Input";
+import { Button } from "@/app/components/shadcn/Button";
 import { Typography } from "@material-tailwind/react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import axios from 'axios';
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { useState } from "react";
+import {toast} from "react-hot-toast";
  
 const CONTENTS = [
   {
@@ -31,10 +37,74 @@ const currentYear = new Date().getFullYear();
  
 const FooterWithSitemap = () => {
     const router = useRouter();
+    const pathname=usePathname();
+    const isMainPage=(pathname==='/');
+
+    const [isLoading, setIsLoading]=useState(false);
+
+    const { register, handleSubmit, formState: { errors } } = useForm<FieldValues> ({ 
+        defaultValues: {
+            email: ''
+        }
+    });
+
+    const onSubmit: SubmitHandler<FieldValues> = (data) => {
+      setIsLoading(true);
+      axios.post("/api/newsletter", data)
+          .then(() => {
+              toast('Subscribed to newsletter', {icon: '✅'});
+          })
+          .catch((error) => { 
+              if(error.response.status == 409) {
+                  return toast.error("Email is already registered!");   
+              }
+              if(error.response.status == 408) {
+                return toast.error("No email entered");   
+              }
+              toast.error("Something went wrong");
+              console.log(error);
+          })
+          .finally(() => {
+              setIsLoading(false);
+          })
+      };
 
   return (
-    <footer className="relative w-full">
-      <div className="mx-auto w-full max-w-7xl px-8 border-t">
+    <>
+    <footer className="relative w-full bg-[#000000] text-white">
+      
+      {isMainPage &&
+      (<footer className="bg-gray-800 text-white py-10 px-4 md:px-6">
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div>
+          <h3 className="text-lg font-semibold mb-2">Why AdrenL?</h3>
+          <p className="text-xs">
+            Established in 2023, AdrenL has since positioned itself as one of the leading companies, providing great offers, competitive pricings, exclusive discounts, and a seamless online booking experience to many of its customers. The experience of booking your tickets through our desktop site or mobile app can be done with complete ease and no hassles at all. We also deliver amazing offers, such as Instant Discounts, Price Calendar, MyRewardsProgram, MyWallet, and many more while updating them from time to time to better suit our customers’ evolving needs and demands.
+          </p>
+        </div>
+        <div>
+          <h3 className="text-lg font-semibold mb-2">Booking Adventures with AdrenL</h3>
+          <p className="text-xs">
+            At AdrenL, you can find the best of deals and cheap bookings to any place you want by booking your tickets on our website or app. Being India’s leading website for adventure bookings, AdrenL helps you book tickets that are affordable and customized to your convenience. With customer satisfaction being our ultimate goal, we also have a 24/7 dedicated helpline to cater to our customer’s queries and concerns. Serving over 5 million happy customers, we at AdrenL are glad to fulfill the dreams of folks who need a quick and easy means to find adventures. You can get a hold of the most exciting adventure of your choice today while also enjoying the other available options for your travel needs with us.
+          </p>
+        </div>
+        <div>
+          <h3 className="text-lg font-semibold mb-2">Insurance Policy with AdrenL</h3>
+          <p className="text-xs">
+            At AdrenL, we prioritize the safety and well-being of our valued adventurers. To ensure a worry-free and enjoyable experience, we highly recommend considering comprehensive travel insurance coverage. Travel insurance provides a safety net against unforeseen circumstances such as trip cancellations, medical emergencies, or unexpected travel disruptions. By securing the right insurance policy, you can embark on your adventures with confidence, knowing that you have financial protection in place. We encourage all our users to carefully review and select an insurance plan that aligns with their specific needs and the nature of their chosen adventures. For more information on travel insurance options, feel free to reach out to our customer support team. Your safety and peace of mind are our top priorities.
+          </p>
+        </div>
+        <div>
+          <h3 className="text-lg font-semibold mb-2">Our Learning Program</h3>
+          <p className="text-xs">
+          Explore more than just adventure with AdrenL. Join our Learning Program in collaboration with trusted partners to receive expert training in activities like skiing, paragliding, and more. Whether you're a beginner or looking to refine your skills, our program offers tailored sessions with experienced professionals. Elevate your adventure experience – learn, grow, and embrace the thrill with confidence!
+          </p>
+        </div>
+      </div>
+    </footer>)
+    }
+
+      <div className="mx-auto w-full  px-8">
         <div className="mx-auto grid w-full grid-cols-1 gap-8 py-12 md:grid-cols-2 lg:grid-cols-4">
           {CONTENTS.map(({ title, links }, key) => (
             <div key={key} className="w-full">
@@ -43,7 +113,7 @@ const FooterWithSitemap = () => {
               </Typography>
               <ul className="space-y-1">
                 {links.map(({title, href}, key) => (
-                  <Typography key={key} as="li" color="blue-gray" className="font-normal">
+                  <Typography key={key} as="li" color="blue-gray" className="font-medium">
                     <a onClick={() => {router.push(`${href}`)}} className="inline-block py-1 pr-2 transition-transform hover:scale-105 cursor-pointer">
                       {title}
                     </a>
@@ -52,9 +122,21 @@ const FooterWithSitemap = () => {
               </ul>
             </div>
           ))}
+          <div className="flex flex-col items-center justify-center space-y-4">
+            <div className="space-y-2">
+              <h2 className="text-2xl font-bold">Newsletter</h2>
+              <p className="text-gray-500 dark:text-gray-400"> Join our newsletter and stay updated on the latest announcements and exclusive deals.</p>
+            </div>
+            <div className="w-full max-w-sm space-y-2">
+              <form className="flex space-x-2">
+                <Input id="email" disabled={isLoading} {...register("email")} placeholder="Enter your email" type="email" required className={`max-w-lg flex-1 ${errors['email']?'border-rose-500':''} ${errors['email']?'focus:border-rose-500':''}`} />
+                <Button onClick={handleSubmit(onSubmit)} variant="outline">Subscribe</Button>
+              </form>
+            </div>
+          </div>
         </div>
-        <div className="flex w-full flex-col items-center justify-center border-t border-blue-gray-50 py-4 md:flex-row md:justify-between">
-          <Typography variant="small" className="mb-4 text-center font-normal text-blue-gray-900 md:mb-0">
+        <div className="flex w-full flex-col items-center justify-center border-t border-[#454d5e] py-4 md:flex-row md:justify-between">
+          <Typography variant="small" className="mb-4 text-center font-medium text-blue-gray-900 md:mb-0">
             &copy; {currentYear} ZUBD Technologies Pvt. Ltd. All Rights Reserved.
           </Typography>
           <div className="flex gap-4 text-blue-gray-900 sm:justify-center">
@@ -85,6 +167,7 @@ const FooterWithSitemap = () => {
         </div>
       </div>
     </footer>
+    </>
   );
 }
 

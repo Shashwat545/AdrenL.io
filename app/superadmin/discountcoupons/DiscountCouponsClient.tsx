@@ -1,6 +1,6 @@
 'use client';
 
-import { User, DiscountCoupons } from "@prisma/client";
+import { DiscountCoupons } from "@prisma/client";
 import Container from "@/app/components/Container";
 import Heading from "@/app/components/Heading";
 import Input from "@/app/components/inputs/Input";
@@ -8,18 +8,15 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
 
-import useLoginModal from "@/app/hooks/useLoginModal";
 import { useRouter } from "next/navigation";
 import { useState, useCallback } from "react";
 import Button from "@/app/components/Button";
 
 interface CalendarClientProps {
-    currentUser?: User | null;
     allDiscountCoupons?: DiscountCoupons[];
 }
 
-const CalendarClient: React.FC<CalendarClientProps> = ({ currentUser, allDiscountCoupons }) => {
-    const loginModal = useLoginModal();
+const CalendarClient: React.FC<CalendarClientProps> = ({ allDiscountCoupons }) => {
     const router = useRouter();
 
     const [isLoading, setIsLoading] = useState(false);
@@ -31,9 +28,6 @@ const CalendarClient: React.FC<CalendarClientProps> = ({ currentUser, allDiscoun
     });
 
     const onSubmit: SubmitHandler<FieldValues> = useCallback((data) => {
-        if(!currentUser) {
-            return loginModal.onOpen();
-        }
         if(data.percentageOff <= 0 || data.percentageOff >=100) {
             return toast.error("The discount percentage needs to be within valid limits");
         }
@@ -52,7 +46,7 @@ const CalendarClient: React.FC<CalendarClientProps> = ({ currentUser, allDiscoun
         .finally(() => {
             setIsLoading(false);
         });
-    }, [router, currentUser, loginModal]);
+    }, [router]);
     
     return (
         <Container>
