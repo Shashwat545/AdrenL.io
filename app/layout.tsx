@@ -12,48 +12,45 @@ import SearchModal from './components/modals/SearchModal';
 import Footer from "./components/Footer";
 
 import getCurrentUser from './actions/getCurrentUser';
-import { NextRouter } from 'next/router';
 import AuthContext from './providers/AuthProvider';
 import LayoutHelper from "@/app/helper/index"
 
 const font=Nunito({
-  subsets: ["latin"],
+    subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: 'AdrenL',
-  description: 'Book your adventure today!',
+    title: 'AdrenL',
+    description: 'Book your adventure today!',
 }
 interface LayoutProps {
-  children: React.ReactNode;
-  router: NextRouter;
+    children: React.ReactNode;
 }
 
 
-export default async function RootLayout({
-  children, router
-}: LayoutProps) {
-  const currentUser=await getCurrentUser();
-  return (
-    <html lang="en">
-      <body className={font.className}>
-        <ClientOnly>
-          <ToasterProvider />
-          <SearchModal />
-          <HostModal />
-          <LoginModal />
-          <RegisterModal />
-          <Navbar currentUser={currentUser}/>
-        </ClientOnly>
-        <LayoutHelper>
-          <AuthContext>
-          {children}
-          </AuthContext>
-        </LayoutHelper>
-        <ClientOnly>
-          <Footer />
-        </ClientOnly>
-      </body>
-    </html>
-  )
+export default async function RootLayout({ children }: LayoutProps) {
+    const currentUser=await getCurrentUser();
+    
+    return (
+        <html lang="en">
+            <body className={font.className}>
+                <ClientOnly>
+                    <ToasterProvider />
+                    <SearchModal />
+                    <HostModal />
+                    <LoginModal />
+                    <RegisterModal />
+                    <Navbar currentUser={currentUser}/>
+                </ClientOnly>
+                <LayoutHelper>
+                    <AuthContext>
+                        {children}
+                    </AuthContext>
+                </LayoutHelper>
+                <ClientOnly>
+                    <Footer />
+                </ClientOnly>
+            </body>
+        </html>
+    );
 }
