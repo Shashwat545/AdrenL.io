@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from "react";
-import { Review } from "@prisma/client";
+import { User, Review } from "@prisma/client";
 import Button from "../Button";
 import ReviewCard from "./ReviewCard";
 import ReviewModal from "./ReviewModal";
