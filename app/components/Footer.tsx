@@ -97,7 +97,7 @@ const FooterWithSitemap = () => {
         <div>
           <h3 className="text-lg font-semibold mb-2">Our Learning Program</h3>
           <p className="text-xs">
-          Explore more than just adventure with AdrenL. Join our Learning Program in collaboration with trusted partners to receive expert training in activities like skiing, paragliding, and more. Whether you're a beginner or looking to refine your skills, our program offers tailored sessions with experienced professionals. Elevate your adventure experience – learn, grow, and embrace the thrill with confidence!
+          Explore more than just adventure with AdrenL. Join our Learning Program in collaboration with trusted partners to receive expert training in activities like skiing, paragliding, and more. Whether you&apos;re a beginner or looking to refine your skills, our program offers tailored sessions with experienced professionals. Elevate your adventure experience – learn, grow, and embrace the thrill with confidence!
           </p>
         </div>
       </div>
