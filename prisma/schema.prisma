@@ -99,6 +99,8 @@ model Reservation {
     id String @id @default(auto()) @map("_id") @db.ObjectId
     userId String @db.ObjectId
     listingId String @db.ObjectId
+    discountCouponApplied Boolean @default(false)
+    discountCouponName String
     startDate DateTime
     endDate DateTime
     totalPrice Int
@@ -109,7 +111,7 @@ model Reservation {
 
     user User @relation(fields: [userId], references: [id], onDelete: Cascade)
     listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
-    // coupon DiscountCoupons @relation(fields: [discountCouponid], references: [id], onDelete: Cascade)
+    // coupon DiscountCoupons? @relation(fields: [discountCouponid], references: [id], onDelete: Cascade)
 
     transaction Transaction?
 }
@@ -191,7 +193,7 @@ model Review{
   
 model DiscountCoupons {
     id String @id @default(auto()) @map("_id") @db.ObjectId
-    coupon String
+    coupon String @unique
     percentageOff Int
     totalTimesUsed Int
     maxPerUser Int
