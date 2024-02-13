@@ -23,14 +23,15 @@ const UserMenu:React.FC<UserMenuProps> = ({currentUser}) => {
     const HostModalHook=useHostModal();
     const [isOpen, setIsOpen]=useState(false);
     
-    const toggleOpen=useCallback(() => {
+    const toggleOpen = useCallback(() => {
         setIsOpen((value) => !value);
     }, []);
 
-    const onHost=useCallback(() => {
+    const onHost = useCallback(() => {
         if(!currentUser) {
             return LoginModalHook.onOpen();
         }
+        
         if(!currentUser?.host) {
             router.push("/hosting/become-a-host");
             return toast.error("You are not a host yet!");

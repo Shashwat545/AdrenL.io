@@ -3,6 +3,7 @@
 import { CardTitle, CardDescription, CardHeader, CardContent, CardFooter, Card } from "@/app/components/shadcn/Card";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { Listing, Reservation, Transaction, User } from "@prisma/client";
 import { format } from "date-fns";
 
@@ -22,6 +23,8 @@ const ReservationCard: React.FC<ReservationCardProps> = ({reservation, currentUs
       colorClass = "bg-red-400"
     }
   }
+
+  const router = useRouter();
 
   return (
     <main className="p-8 space-y-8">
@@ -57,9 +60,11 @@ const ReservationCard: React.FC<ReservationCardProps> = ({reservation, currentUs
           </p>
         </CardContent>
         <CardFooter>
-          <Link className="text-blue-500 hover:text-blue-700" href="#">
-            View Details
-          </Link>
+          <div onClick={() => router.push(`/trips/${reservation.id}`)}>
+            <Link className="text-blue-500 hover:text-blue-700" href="#">
+              View Details
+            </Link>
+          </div>
         </CardFooter>
       </Card>
     </main>

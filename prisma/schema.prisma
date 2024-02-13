@@ -38,6 +38,7 @@ model User {
 
     messages Message[]
     review Review[]
+    Notification Notification[]
 
     emailVerificationToken EmailVerificationToken?
 }
@@ -98,7 +99,10 @@ enum OPTIONS{
 model Reservation {
     id String @id @default(auto()) @map("_id") @db.ObjectId
     userId String @db.ObjectId
+    isConfirmed ReservationState @default(pending)
     listingId String @db.ObjectId
+    discountCouponApplied Boolean @default(false)
+    discountCouponName String
     startDate DateTime
     endDate DateTime
     totalPrice Int
@@ -109,10 +113,15 @@ model Reservation {
 
     user User @relation(fields: [userId], references: [id], onDelete: Cascade)
     listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
-    // coupon DiscountCoupons @relation(fields: [discountCouponid], references: [id], onDelete: Cascade)
 
     transaction Transaction?
 }
+enum ReservationState{
+    pending
+    confirmed
+    rejected
+}
+
 
 model FuturePricing {
     id String @id @default(auto()) @map("_id") @db.ObjectId
@@ -191,13 +200,11 @@ model Review{
   
 model DiscountCoupons {
     id String @id @default(auto()) @map("_id") @db.ObjectId
-    coupon String
+    coupon String @unique
     percentageOff Int
     totalTimesUsed Int
     maxPerUser Int
     trackingInfo String
-
-    // reservations Reservation[]
 }
 
 model Host{
@@ -229,4 +236,22 @@ model Transaction {
 
     reservationId String @db.ObjectId @unique
     reservation Reservation @relation(fields: [reservationId], references: [id], onDelete: Cascade)
+}
+
+model Notification{
+     id String @id @default(auto()) @map("_id") @db.ObjectId
+     userId String @db.ObjectId
+     user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    message    String
+    timestamp  DateTime  @default(now())
+    readStatus Boolean   @default(false)
+    redirectURL String?
+}
+
+model NewsLetter {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+    email String? @unique
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }

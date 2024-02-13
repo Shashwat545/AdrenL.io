@@ -9,6 +9,7 @@ import { IoArrowForwardCircle } from "react-icons/io5";
 
 import useCountries from "@/app/hooks/useCountries";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const Map = dynamic(() => import("../Map"), { ssr: false });
 
@@ -36,11 +37,14 @@ const ListingInfo: React.FC<ListingInfoProps> = ({ listing, user, description, g
         onSubmit();
         setButtonClicked(true);
     };
+    const router = useRouter();
 
     return (
         <div className="col-span-4 flex flex-col gap-8">
             <div className="flex flex-col gap-2">
-                <div className="text-xl font-semibold flex flex-row items-center gap-2">
+                <div className="text-xl font-semibold flex flex-row items-center gap-2 hover:cursor-pointer" onClick={()=>{
+                    router.push(`/hosting/profile/${listing.userId}`)
+                }}>
                     <div>Hosted by {user?.name}</div>
                     <Avatar src={user?.image} />
                 </div>

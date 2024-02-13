@@ -10,12 +10,12 @@ export async function POST (request: Request) {
     }
 
     const body = await request.json();
-    const { listingId, startDate, endDate, totalPrice, totalPeople, cancellationPolicy } = body;
+    const { listingId, discountApplied, discountCoupon, startDate, endDate, totalPrice, totalPeople, cancellationPolicy } = body;
 
-    if(!listingId || !startDate || !endDate || !totalPrice || !cancellationPolicy) {
+    if(!listingId || !discountCoupon || !startDate || !endDate || !totalPrice || !totalPeople || !cancellationPolicy) {
         return NextResponse.error();
     }
-    
+ 
     const listingAndReservation = await prisma.listing.update({
         where: {
             id: listingId
@@ -24,6 +24,8 @@ export async function POST (request: Request) {
             reservations: {
                 create: {
                     userId: currentUser.id,
+                    discountCouponApplied: discountApplied,
+                    discountCouponName: discountCoupon,
                     startDate,
                     endDate,
                     totalPrice,
@@ -42,6 +44,19 @@ export async function POST (request: Request) {
             endDate: endDate
         }
     });
+
+    if (discountApplied && discountCoupon) {
+        await prisma.discountCoupons.update({
+            where: {
+                coupon: discountCoupon
+            },
+            data: {
+                totalTimesUsed: {
+                    increment: 1
+                }
+            }
+        });
+    }
 
     return NextResponse.json(newReservation[newReservation.length-1]);
 }
