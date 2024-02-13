@@ -63,7 +63,7 @@ const HomeClient:React.FC<HomeClientProps> = ({ allListings, listings, currentUs
                 </div>
             </ContainerHome>
             
-                <div id="categorySelector" className="px-0 sticky top-[10vh] md:top-[15vh] z-10 w-full mt-4 border-2 border-gray-500">
+                <div id="categorySelector" className="px-0 sticky top-[104px] z-10 w-full mt-4 border-2 border-gray-500">
                     <CategorySelector />
                 </div>
             <ContainerHome>

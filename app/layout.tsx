@@ -42,10 +42,7 @@ export default async function RootLayout({
           <HostModal />
           <LoginModal />
           <RegisterModal />
-          { isVerified ? null : <VerificationAlert />}
-          <div className={`relative ${isVerified ? '' : 'mt-1'}`}>
           <Navbar currentUser={currentUser}/>
-          </div>
           
         </ClientOnly>
         <LayoutHelper>
