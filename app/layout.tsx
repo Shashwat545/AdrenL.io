@@ -15,6 +15,7 @@ import getCurrentUser from './actions/getCurrentUser';
 import { NextRouter } from 'next/router';
 import AuthContext from './providers/AuthProvider';
 import LayoutHelper from "@/app/helper/index"
+import VerificationAlert from './components/VerificationAlert';
 
 const font=Nunito({
   subsets: ["latin"],
@@ -34,6 +35,7 @@ export default async function RootLayout({
   children, router
 }: LayoutProps) {
   const currentUser=await getCurrentUser();
+  const isVerified = currentUser?.emailVerified;
   return (
     <html lang="en">
       <body className={font.className}>
@@ -43,7 +45,11 @@ export default async function RootLayout({
           <HostModal />
           <LoginModal />
           <RegisterModal />
+          { isVerified ? null : <VerificationAlert />}
+          <div className={`relative ${isVerified ? '' : 'mt-1'}`}>
           <Navbar currentUser={currentUser}/>
+          </div>
+          
         </ClientOnly>
         <LayoutHelper>
           <AuthContext>

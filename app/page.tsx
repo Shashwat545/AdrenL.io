@@ -7,6 +7,7 @@ import ListingCard from "./components/listings/ListingCard";
 
 import getCurrentUser from "./actions/getCurrentUser";
 import getListings, { IListingsParams } from "./actions/getListings";
+import VerificationAlert from "./components/VerificationAlert";
 
 interface HomeProps {
   searchParams: IListingsParams;

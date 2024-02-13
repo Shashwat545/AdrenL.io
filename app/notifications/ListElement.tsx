@@ -26,6 +26,7 @@ export default async function ListElement({
         id: id,
         readStatus: true,
       });
+      router.refresh();
     } catch (error) {
       console.log(error);
     }
@@ -51,14 +52,14 @@ export default async function ListElement({
             Mark as Read
           </button>
         )}
-        { redirectURL && (
+        {/* { redirectURL && (
           <button
             className="text-blue-500 hover:text-blue-700"
             onClick={()=>{router.push(redirectURL)}}
           >
             View
           </button>
-        )}
+        )} */}
       </div>
     </>
   );
