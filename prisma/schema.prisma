@@ -111,7 +111,6 @@ model Reservation {
 
     user User @relation(fields: [userId], references: [id], onDelete: Cascade)
     listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
-    // coupon DiscountCoupons? @relation(fields: [discountCouponid], references: [id], onDelete: Cascade)
 
     transaction Transaction?
 }
@@ -198,8 +197,6 @@ model DiscountCoupons {
     totalTimesUsed Int
     maxPerUser Int
     trackingInfo String
-
-    // reservations Reservation[]
 }
 
 model Host{

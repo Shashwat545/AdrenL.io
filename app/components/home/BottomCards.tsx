@@ -3,8 +3,11 @@
 import { CardTitle, CardHeader, CardContent, CardFooter, Card } from "@/app/components/shadcn/CardWhite";
 import { Button } from "@/app/components/shadcn/Button";
 import Image from 'next/image';
+import { useRouter } from "next/navigation";
 
 export default function Component() {
+  const router = useRouter();
+
   return (
     <div className="flex flex-col align-center justify-center mt-10 md:flex-row gap-4">
       <Card className="w-full md:w-1/2">
@@ -24,7 +27,7 @@ export default function Component() {
           </p>
         </CardContent>
         <CardFooter>
-          <Button variant="outline" className="w-full md:w-auto">Explore Courses</Button>
+          <Button onClick={() => {router.push('/coming-soon')}} variant="outline" className="w-full md:w-auto">Explore Courses</Button>
         </CardFooter>
       </Card>
       <Card className="w-full md:w-1/2">
@@ -44,7 +47,7 @@ export default function Component() {
           </p>
         </CardContent>
         <CardFooter>
-          <Button variant="outline" className="w-full md:w-auto">Read Blogs</Button>
+          <Button onClick={() => {router.push('/coming-soon')}} variant="outline" className="w-full md:w-auto">Read Blogs</Button>
         </CardFooter>
       </Card>
     </div>

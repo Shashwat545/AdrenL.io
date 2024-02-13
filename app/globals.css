@@ -36,3 +36,18 @@ html, body, :root {
 .carousel-container .transition-opacity {
     transition: opacity 0.3s ease-in-out;
 }
+
+@media print {
+    body * {
+      visibility: hidden;
+    }
+    #printable, #printable * {
+      visibility: visible;
+    }
+    #printable {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+    }
+}
