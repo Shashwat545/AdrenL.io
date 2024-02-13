@@ -15,9 +15,15 @@ interface PaymentConfirmationProps {
   totalPrice: number;
   totalPeople: number;
   onChangePeople: (value: number) => void;
+  couponApplied: boolean;
+  coupon: string;
+  onChangeCoupon: (value: string) => void;
+  onCouponSubmit: () => void;
+  percentageOff: number;
 }
 
-const PaymentConfirmation: React.FC<PaymentConfirmationProps> = ({onSubmit, dateValue, listing, disabled, price, totalPrice, totalPeople, onChangePeople}) => {
+const PaymentConfirmation: React.FC<PaymentConfirmationProps> = ({onSubmit, dateValue, listing, disabled, price, totalPrice, totalPeople, onChangePeople, 
+couponApplied, coupon, onChangeCoupon, onCouponSubmit, percentageOff }) => {
   return (
     <>
       <main className="p-6 md:p-12">
@@ -48,11 +54,15 @@ const PaymentConfirmation: React.FC<PaymentConfirmationProps> = ({onSubmit, date
           </Card>
           <Card>
             <CardHeader>
-              <CardTitle>Number of Persons</CardTitle>
+              <CardTitle>Number of People</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex items-center justify-between mb-2">
-                <input className="p-2 border border-gray-300 rounded" min="1" type="number" />
+                <div className="flex-1 mr-4">
+                  <input type="range" id="numberSlider" name="numberSlider" min="1" max={listing.guestCount} value={totalPeople}
+                  onChange={(e) => onChangePeople(Number(e.target.value))} className="" />
+                </div>
+                <span className="font-medium">{totalPeople} {totalPeople > 1 ? 'People' : 'Person'}</span>
               </div>
             </CardContent>
           </Card>
@@ -63,15 +73,15 @@ const PaymentConfirmation: React.FC<PaymentConfirmationProps> = ({onSubmit, date
             <CardContent>
               <div className="flex items-center justify-between mb-2">
                 <span>Price per person (after discount):</span>
-                <span className="font-medium">₹{price}.00</span>
+                <span className="font-medium">₹{price*(1-(percentageOff/100))}.00</span>
               </div>
               <div className="flex items-center justify-between mb-2">
-                <span>Number of persons:</span>
+                <span>Number of people:</span>
                 <span className="font-medium">{totalPeople}</span>
               </div>
               <div className="flex items-center justify-between mb-2">
                 <span>Total:</span>
-                <span className="font-medium">₹{totalPrice}.00</span>
+                <span className="font-bold">₹{totalPrice}.00</span>
               </div>
             </CardContent>
           </Card>
@@ -81,7 +91,9 @@ const PaymentConfirmation: React.FC<PaymentConfirmationProps> = ({onSubmit, date
             </CardHeader>
             <CardContent>
               <div className="flex items-center justify-between mb-2">
-                <input className="p-2 border border-gray-300 rounded" placeholder="Enter coupon code" type="text" />
+              <input className="p-2 border border-gray-300 rounded mr-2" placeholder="Enter coupon code" type="text"
+              value={coupon} onChange={(e) => onChangeCoupon(e.target.value)} />
+              <Button label="Apply" onClick={onCouponSubmit} disabled={couponApplied || !coupon}/>
               </div>
             </CardContent>
           </Card>

@@ -12,24 +12,21 @@ import SearchModal from './components/modals/SearchModal';
 import Footer from "./components/Footer";
 
 import getCurrentUser from './actions/getCurrentUser';
-import { NextRouter } from 'next/router';
 import AuthContext from './providers/AuthProvider';
 import LayoutHelper from "@/app/helper/index"
 import VerificationAlert from './components/VerificationAlert';
 
 const font=Nunito({
-  subsets: ["latin"],
+    subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: 'AdrenL',
-  description: 'Book your adventure today!',
+    title: 'AdrenL',
+    description: 'Book your adventure today!',
 }
 interface LayoutProps {
-  children: React.ReactNode;
-  router: NextRouter;
+    children: React.ReactNode;
 }
-
 
 export default async function RootLayout({
   children, router

@@ -27,7 +27,8 @@ const ListingPage = async ({ params }: {params: IParams}) => {
 
     return (
         <ClientOnly>
-            <PaymentClient currentUser={currentUser} listing={listing} futurePrices={futurePrices}/>
+            <PaymentClient currentUser={currentUser} listing={listing} futurePrices={futurePrices}
+            allDiscountCoupons={allDiscountCoupons}/>
         </ClientOnly>
     );
 }
