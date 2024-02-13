@@ -7,7 +7,7 @@ interface IParams {
     reservationId?: string;
 };
 
-export async function DELETE(request: Request, {params}: {params: IParams}) {
+export async function POST(request: Request, {params}: {params: IParams}) {
     const currentUser = await getCurrentUser();
 
     if(!currentUser) {
@@ -20,15 +20,20 @@ export async function DELETE(request: Request, {params}: {params: IParams}) {
         throw new Error("Invalid ID");
     }
 
-    const reservation = await prisma.reservation.deleteMany({
-        where: {
-            id: reservationId,
-            OR: [
-                { userId: currentUser.id },
-                { listing: { userId: currentUser.id } }
-            ]
-        }
-    });
+    const data = await request.json();
 
-    return NextResponse.json(reservation);
+    console.log(data);
+
+    const updateUser = await prisma.reservation.update({
+        where: {
+          id: reservationId,
+        },
+        data: {
+            isConfirmed: data.status,
+        },
+      })
+
+      console.log(updateUser);
+
+    return NextResponse.json("ok");
 }

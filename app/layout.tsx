@@ -14,6 +14,7 @@ import Footer from "./components/Footer";
 import getCurrentUser from './actions/getCurrentUser';
 import AuthContext from './providers/AuthProvider';
 import LayoutHelper from "@/app/helper/index"
+import VerificationAlert from './components/VerificationAlert';
 
 const font=Nunito({
     subsets: ["latin"],
@@ -27,30 +28,35 @@ interface LayoutProps {
     children: React.ReactNode;
 }
 
-
-export default async function RootLayout({ children }: LayoutProps) {
-    const currentUser=await getCurrentUser();
-    
-    return (
-        <html lang="en">
-            <body className={font.className}>
-                <ClientOnly>
-                    <ToasterProvider />
-                    <SearchModal />
-                    <HostModal />
-                    <LoginModal />
-                    <RegisterModal />
-                    <Navbar currentUser={currentUser}/>
-                </ClientOnly>
-                <LayoutHelper>
-                    <AuthContext>
-                        {children}
-                    </AuthContext>
-                </LayoutHelper>
-                <ClientOnly>
-                    <Footer />
-                </ClientOnly>
-            </body>
-        </html>
-    );
+export default async function RootLayout({
+  children, router
+}: LayoutProps) {
+  const currentUser=await getCurrentUser();
+  const isVerified = currentUser?.emailVerified;
+  return (
+    <html lang="en">
+      <body className={font.className}>
+        <ClientOnly>
+          <ToasterProvider />
+          <SearchModal />
+          <HostModal />
+          <LoginModal />
+          <RegisterModal />
+          { isVerified ? null : <VerificationAlert />}
+          <div className={`relative ${isVerified ? '' : 'mt-1'}`}>
+          <Navbar currentUser={currentUser}/>
+          </div>
+          
+        </ClientOnly>
+        <LayoutHelper>
+          <AuthContext>
+          {children}
+          </AuthContext>
+        </LayoutHelper>
+        <ClientOnly>
+          <Footer />
+        </ClientOnly>
+      </body>
+    </html>
+  )
 }

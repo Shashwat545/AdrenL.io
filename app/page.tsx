@@ -7,6 +7,7 @@ import ListingCardHome from "./components/home/ListingCardHome";
 
 import getCurrentUser from "./actions/getCurrentUser";
 import getListings, { IListingsParams } from "./actions/getListings";
+import VerificationAlert from "./components/VerificationAlert";
 import CarouselHome from "./components/home/CarouselHome";
 import TrendingSlider from "./components/home/TrendingSlider";
 import CategorySelector from "./components/home/CategorySelector";
