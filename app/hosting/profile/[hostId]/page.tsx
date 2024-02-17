@@ -91,7 +91,7 @@ export default async function Component({ params } : {params: IParams}) {
 
                   
                   { hostReviews?.map((review) => (  
-                  <div className="inline-block px-3">
+                  <div key={review.id} className="inline-block px-3">
                     <div className="w-64 max-w-xs overflow-hidden rounded-lg shadow-md bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out">
                       <ReviewComponent key={review.id} reviewBody={review.comment ?? ""} userName={review?.user?.name ?? ""} date={review.createdAt} userImage={review.user.image ?? ""} />
                     </div>
