@@ -39,12 +39,13 @@ const FooterWithSitemap = () => {
     const router = useRouter();
     const pathname=usePathname();
     const isMainPage=(pathname==='/');
+    const [isLoading, setIsLoading]=useState(false);
 
     if (pathname === '/reservations') {
       return null;
     }
 
-    const [isLoading, setIsLoading]=useState(false);
+    
 
     const { register, handleSubmit, formState: { errors } } = useForm<FieldValues> ({ 
         defaultValues: {
