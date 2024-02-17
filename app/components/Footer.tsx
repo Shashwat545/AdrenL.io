@@ -41,17 +41,19 @@ const FooterWithSitemap = () => {
     const isMainPage=(pathname==='/');
     const [isLoading, setIsLoading]=useState(false);
 
+    const { register, handleSubmit, formState: { errors } } = useForm<FieldValues> ({ 
+      defaultValues: {
+          email: ''
+      }
+  });
+
     if (pathname === '/reservations') {
       return null;
     }
 
     
 
-    const { register, handleSubmit, formState: { errors } } = useForm<FieldValues> ({ 
-        defaultValues: {
-            email: ''
-        }
-    });
+    
 
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
       setIsLoading(true);
