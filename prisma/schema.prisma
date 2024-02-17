@@ -107,7 +107,7 @@ model Reservation {
     endDate DateTime
     totalPrice Int
     numberOfPeople Int
-    cancellationPolicy OPTIONS?
+    cancellationPolicy OPTIONS
     cancelled Boolean @default(false)
     createdAt DateTime @default(now())
 
