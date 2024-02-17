@@ -13,7 +13,7 @@ import HeartButton from "../components/HeartButton";
 
 interface ListingCardProps {
   data: Listing;
-  reservation?: Reservation;
+  reservation?: Reservation & {user: User};
   onCancel?: (id: string) => void;
   onConfirm?: (id: string) => void;
   disabled?: boolean;
@@ -96,7 +96,7 @@ const ReservationCard: React.FC<ListingCardProps> = ({
           {reservationDate}
         </div>
         <div className="font-semibold ">
-          {reservation.user.name}
+          {reservation?.user?.name}
         </div>
         <div className="font-semibold">
           {reservation?.numberOfPeople} {reservation?.numberOfPeople==1 ? "person" : "people"}
