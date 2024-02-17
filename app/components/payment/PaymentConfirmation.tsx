@@ -99,7 +99,7 @@ couponApplied, coupon, onChangeCoupon, onCouponSubmit, percentageOff }) => {
           </Card>
         </div>
         <div className="mt-6">
-          <Button disabled={disabled} label="Proceed to payment" onClick={onSubmit}/>
+          <Button loading disabled={disabled} label="Proceed to payment" onClick={onSubmit}/>
         </div>
       </main>
     </>

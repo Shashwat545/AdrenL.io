@@ -7,13 +7,13 @@ import MenuItem from "./MenuItem";
 import useLoginModal from "../../hooks/useLoginModal";
 import useRegisterModal from "../../hooks/useRegisterModal";
 import useHostModal from "../../hooks/useHostModal";
-import {User} from "@prisma/client";
+import {Host, User} from "@prisma/client";
 import {signOut} from "next-auth/react";
 import {useRouter} from "next/navigation"
 import toast from "react-hot-toast";
 
 interface UserMenuProps {
-    currentUser?: User | null
+    currentUser: User & {host: Host};
 }
 
 const UserMenu:React.FC<UserMenuProps> = ({currentUser}) => {
@@ -80,8 +80,13 @@ const UserMenu:React.FC<UserMenuProps> = ({currentUser}) => {
                             <>
                                 <MenuItem onClick={() => { toggleOpen(); router.push("/trips"); }} label="My trips" fontBold/>
                                 <MenuItem onClick={() => { toggleOpen(); router.push("/favorites"); }} label="My favorites" fontBold/>
-                                <MenuItem onClick={() => { toggleOpen(); router.push("/reservations"); }} label="My reservations" fontBold/>
+                                {
+                                    currentUser?.host?.isVerified && (
+                                        <MenuItem onClick={() => { toggleOpen(); router.push("/reservations"); }} label="Accept/ Reject Bookings" fontBold/>
+                                    )
+                                }
                                 <MenuItem onClick={() => { toggleOpen(); router.push("/account-settings"); }} label="My Account" fontBold/>
+                                <MenuItem onClick={() => { toggleOpen(); router.push("/inbox"); }} label="My Inbox" fontBold/>
                                 <MenuItem onClick={() => { toggleOpen(); router.push("/notifications"); }} label="Notifications" fontBold/>
                                 <hr />
                                 <MenuItem onClick={() => { toggleOpen(); router.push("/contact-us"); }} label="Contact us"/>

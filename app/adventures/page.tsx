@@ -18,19 +18,23 @@ const AdventuresPage = async () => {
 
     const listings = await getListings({ userId: currentUser.id });
 
-    if(listings.length === 0) {
-        return (
-            <ClientOnly>
-                <EmptyState title="No listings found" subtitle="Looks like you have no adventures hosted with us."/>
-            </ClientOnly>
-        );
-    }
-
     return (
-        <ClientOnly>
-            <AdventuresClient listings={listings} currentUser={currentUser}/>
-        </ClientOnly>
-    );
+        <EmptyState />
+    )
+
+    // if(listings.length === 0) {
+    //     return (
+    //         <ClientOnly>
+    //             <EmptyState title="No listings found" subtitle="Looks like you have no adventures hosted with us."/>
+    //         </ClientOnly>
+    //     );
+    // }
+
+    // return (
+    //     <ClientOnly>
+    //         <AdventuresClient listings={listings} currentUser={currentUser}/>
+    //     </ClientOnly>
+    // );
 };
 
 export default AdventuresPage;

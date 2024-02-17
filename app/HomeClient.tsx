@@ -12,7 +12,7 @@ import { Button } from "@/app/components/shadcn/Button";
 
 const CAROUSEL_CONTENTS = {
     imageSrc: ["/images/HomeCarousel/slide1.jpg", "/images/HomeCarousel/slide2.jpg", "/images/HomeCarousel/slide3.jpg", "/images/HomeCarousel/slide4.jpg"],
-    linkSrc1: ["/listing/65464281ce265630f00e3ea8", null, null, "/listing/65464281ce265630f00e3ea8"],
+    linkSrc1: ["/listing/65464281ce265630f00e3ea8", null, null, "/coming-soon"],
     linkTitle1: ["Explore", null, null, "Explore"],
     linkSrc2: [null, null, null, null],
     linkTitle2: [null, null, null, null],
@@ -63,7 +63,7 @@ const HomeClient:React.FC<HomeClientProps> = ({ allListings, listings, currentUs
                 </div>
             </ContainerHome>
             
-                <div id="categorySelector" className="px-0 sticky top-[104px] z-10 w-full mt-4 border-2 border-gray-500">
+                <div id="categorySelector" className="px-0 sticky top-[84px] md:top-[104px] z-10 w-full mt-4 border-2 border-gray-500">
                     <CategorySelector />
                 </div>
             <ContainerHome>

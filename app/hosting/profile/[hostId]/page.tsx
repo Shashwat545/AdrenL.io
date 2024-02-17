@@ -6,11 +6,15 @@ import getUserById from "@/app/actions/getUserById";
 import ReviewComponent from "./ReviewComponent";
 import getHostReviews from "@/app/actions/getHostReviews";
 
-export default async function Component({ params }) {
+interface IParams {
+  hostId: string;
+}
+
+export default async function Component({ params } : {params: IParams}) {
   const listings = await getListingsByUserId({userId: params.hostId});
   const host = await getUserById({userId: params.hostId});
   const hostReviews = await getHostReviews({hostId: host.id});
-  console.log(hostReviews,"Host Reviews");
+  
   return (
     <main className="lg:flex">
       <aside className="lg:w-1/3 space-y-6">
@@ -24,7 +28,7 @@ export default async function Component({ params }) {
               <div className="absolute -bottom-12 flex h-[87px] w-[87px] items-center justify-center rounded-full border-[4px] border-white bg-pink-400">
                 <img
                   className="h-full w-full rounded-full"
-                  src={host?.image}
+                  src={host?.image || "/images/placeholder.jpg"}
                   alt=""
                 />
               </div>
@@ -87,9 +91,9 @@ export default async function Component({ params }) {
 
                   
                   { hostReviews?.map((review) => (  
-                  <div className="inline-block px-3">
+                  <div key={review.id} className="inline-block px-3">
                     <div className="w-64 max-w-xs overflow-hidden rounded-lg shadow-md bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out">
-                      <ReviewComponent reviewBody={review.comment} userName={review?.user?.name} date={review.createdAt} userImage={review.user.image} />
+                      <ReviewComponent key={review.id} reviewBody={review.comment ?? ""} userName={review?.user?.name ?? ""} date={review.createdAt} userImage={review.user.image ?? ""} />
                     </div>
                   </div>
                   ))

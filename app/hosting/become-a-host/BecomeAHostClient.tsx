@@ -1,6 +1,6 @@
 'use client';
 
-import { User } from "@prisma/client";
+import { Host, User } from "@prisma/client";
 import axios from "axios";
 import toast from "react-hot-toast";
 
@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import useHostModal from "@/app/hooks/useHostModal";
 
 interface BecomeAHostClientProps {
-    currentUser: User | null;
+    currentUser: User & {host: Host};
 }
 
 const BecomeAHostClient: React.FC<BecomeAHostClientProps> = ({ currentUser }) => {

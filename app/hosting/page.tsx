@@ -35,7 +35,7 @@ const HostingPage = async () => {
                 <div className="pt-24 pb-24 grid justify-items-center grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-8 bg-cover bg-center bg-no-repeat bg-[url('https://images.unsplash.com/photo-1618083707368-b3823daa2726?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')]">
                     <HostingCard
                         heading="My Account"
-                        redirectUrl=""
+                        redirectUrl={`/profile/${currentUser.id}`}
                         subtitle="View and manage your profile"
                     />
                     <HostingCard
@@ -69,14 +69,14 @@ const HostingPage = async () => {
                         subtitle="Check and reply to your messages"
                     />
                     <HostingCard
+                        heading="Accept / Reject Booking Requests"
+                        replaceUrl="reservations"
+                        subtitle="Accept or reject requests for bookings on your adventures"
+                    />
+                    <HostingCard
                         heading="Remove Listing"
                         replaceUrl="adventures"
                         subtitle="Delete your listing from AdrenL"
-                    />
-                    <HostingCard
-                        heading="Accept / Reject Booking Requests"
-                        redirectUrl=""
-                        subtitle="Accept or reject requests for bookings on your adventures"
                     />
                 </div>
             </div>

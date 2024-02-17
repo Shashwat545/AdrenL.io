@@ -19,7 +19,7 @@ export default function getRefundPayload ({ merchantUserId, originalMerchantTran
             merchantUserId: merchantUserId,
             originalTransactionId: originalMerchantTransactionId,
             merchantTransactionId: refundTransactionId,
-            amount: amount*100,
+            amount: 1000, //amount*100
             callbackUrl: `http://localhost:3000/api/payment/refund_callback`
         };
         

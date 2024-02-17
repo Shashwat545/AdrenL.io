@@ -33,7 +33,7 @@ const ListingReservation: React.FC<ListingReservationProps> = ({ host, user, pri
             <Calendar value={dateValue} disabledDates={disabledDates} onChange={(value) => onChangeDate(value)}/>
             <hr />
             <div className="p-4">
-                <Button disabled={(isTakingReservation || compareUserToHost || disabled)} label="Reserve" onClick={onSubmit}/>
+                <Button loading={!compareUserToHost} disabled={(isTakingReservation || compareUserToHost || disabled)} label="Reserve" onClick={onSubmit}/>
             </div>
             <div className="p-4 flex flex-row items-center justify-between font-semibold text-lg">
                 <div>

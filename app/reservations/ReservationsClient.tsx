@@ -12,7 +12,7 @@ import EmptyState from "../components/EmptyState";
 import { differenceInDays } from "date-fns";
 
 interface ReservationClientProps {
-    reservations?: (Reservation & { listing: Listing & { user: User }; transaction: Transaction; user: User })[];
+    reservations: (Reservation & { listing: Listing & { user: User }; transaction: Transaction | null; user: User })[];
     currentUser?: User | null;
 }
 
@@ -20,11 +20,10 @@ const ReservationsClient: React.FC<ReservationClientProps> = ({ reservations, cu
     const router = useRouter();
     const [deletingId, setDeletingId] = useState('');
     const [selectedButton, setSelectedButton] = useState('pending');
-    const [filteredReservations, setFilteredReservations] = useState([]);
+    const [filteredReservations, setFilteredReservations] = useState<(Reservation & { listing: Listing & { user: User }; transaction: Transaction | null; user: User })[]>([]);
 
     useEffect(() => {
-      // Filter reservations when the selectedState changes
-      const filteredData = reservations?.filter(reservation => reservation?.isConfirmed === selectedButton);
+      const filteredData = reservations?.filter(reservation => reservation?.isConfirmed === selectedButton) || [];
       setFilteredReservations(filteredData);
     }, [selectedButton, reservations]);
 
@@ -43,10 +42,12 @@ const ReservationsClient: React.FC<ReservationClientProps> = ({ reservations, cu
         axios.post(`/api/reservations/${id}`,{status: 'rejected'})
         .then(() => {
             toast.success("Reservation cancelled");
-            axios.post('/api/payment/refund', {merchantUserId: foundReservation.transaction.userId ,merchantTransactionId: foundReservation.transaction.merchantTransactionId, amount: refundAmount})
-            .then(() => {
-              toast.success(`Refund of ₹${refundAmount} initiated for the customer.`);
-            })
+            if(foundReservation.transaction) {
+              axios.post('/api/payment/refund', {merchantUserId: foundReservation.transaction.userId ,merchantTransactionId: foundReservation.transaction.merchantTransactionId, amount: refundAmount})
+              .then(() => {
+                toast.success(`Refund of ₹${refundAmount} initiated for the customer.`);
+              })
+            }
             router.refresh();
         })
         .catch(() => {

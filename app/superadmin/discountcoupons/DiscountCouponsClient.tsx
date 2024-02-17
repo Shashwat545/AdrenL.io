@@ -62,7 +62,7 @@ const CalendarClient: React.FC<CalendarClientProps> = ({ allDiscountCoupons }) =
                     <Input id="maxUsability" label="Max number of uses by a user" type="number" disabled={isLoading} register={register} errors={errors} required/>
                 </div>
                 <div className="p-4">
-                    <Button disabled={isLoading} label="Add coupon code" onClick={handleSubmit(onSubmit)}/>
+                    <Button loading disabled={isLoading} label="Add coupon code" onClick={handleSubmit(onSubmit)}/>
                 </div>
                 <hr />
                 <div className="mt-4">
@@ -71,7 +71,7 @@ const CalendarClient: React.FC<CalendarClientProps> = ({ allDiscountCoupons }) =
                     <div className="pt-20 flex flex-row justify-center">No active coupons right now</div> :
                         allDiscountCoupons?.map((coupon, index) => {
                         return (
-                            <div className="flex flex-row">
+                            <div key={index} className="flex flex-row">
                             <div className="flex flex-col p-4">
                                 <div className="text-xl font-semibold flex flex-row items-center gap-2">
                                     <div>{index+1}.</div>

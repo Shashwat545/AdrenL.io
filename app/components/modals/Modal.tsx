@@ -78,7 +78,7 @@ const Modal:React.FC<ModalProps> = ({isOpen, onClose, onSubmit, title, body, foo
                                     {secondaryAction && secondaryActionLabel && (
                                         <Button label={secondaryActionLabel} disabled={disabled} onClick={handleSecondaryAction}/>
                                     )}
-                                    <Button label={actionLabel} disabled={disabled} onClick={handleSubmit}/>
+                                    <Button loading label={actionLabel} disabled={disabled} onClick={handleSubmit}/>
                                 </div>
                                 {footer}
                             </div>

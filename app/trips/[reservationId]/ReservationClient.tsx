@@ -12,7 +12,7 @@ import { toast } from "react-hot-toast";
 import { differenceInDays } from "date-fns";
 
 interface ReservationClientProps {
-    reservation: Reservation & { listing: Listing & { user: User }; transaction: Transaction; user: User };
+    reservation: Reservation & { listing: Listing & { user: User }; transaction: Transaction | null; user: User };
     currentUser: User;
 }
 
@@ -71,13 +71,15 @@ const ReservationClient: React.FC<ReservationClientProps> = ({ reservation, curr
       axios.post(`/api/reservations/${reservation.id}/cancel`,{})
       .then(() => {
           toast.success("Reservation cancelled.");
-          axios.post('/api/payment/refund', {merchantUserId: reservation.transaction.userId ,merchantTransactionId: reservation.transaction.merchantTransactionId, amount: refundAmount})
-          .then(() => {
-            toast.success(`Refund of ₹${refundAmount} initiated.`);
-          })
-          .catch(() => {
-            toast.error("Something went wrong in initiating refund.");
-          })
+          if(reservation.transaction) {
+            axios.post('/api/payment/refund', {merchantUserId: reservation.transaction.userId ,merchantTransactionId: reservation.transaction.merchantTransactionId, amount: refundAmount})
+            .then(() => {
+              toast.success(`Refund of ₹${refundAmount} initiated.`);
+            })
+            .catch(() => {
+              toast.error("Something went wrong in initiating refund.");
+            })
+          }
           router.refresh();
       })
       .catch(() => {
@@ -88,12 +90,12 @@ const ReservationClient: React.FC<ReservationClientProps> = ({ reservation, curr
     useEffect(() => {
       const fetchData = async () => {
         try {
-            const response = await axios.post('/api/payment/check_status', {merchantTransactionId: reservation.transaction.merchantTransactionId});
+            const response = await axios.post('/api/payment/check_status', {merchantTransactionId: reservation?.transaction?.merchantTransactionId});
         } catch (error) {
             console.error('Error checking status of Payment: ', error);
         }
       };
-      if(reservation.transaction.status == "" || reservation.transaction.status == "PAYMENT_PENDING" || reservation.transaction.status == "INTERNAL_SERVER_ERROR") {
+      if(reservation?.transaction?.status == "" || reservation?.transaction?.status == "PAYMENT_PENDING" || reservation?.transaction?.status == "INTERNAL_SERVER_ERROR") {
         fetchData();
         location.reload();
       }
@@ -171,7 +173,7 @@ const ReservationClient: React.FC<ReservationClientProps> = ({ reservation, curr
             </div>
             <div className="grid gap-0.5">
               <div className="font-semibold">Transaction Status</div>
-              <div>{reservation.transaction.status}</div>
+              <div>{reservation?.transaction?.status ?? "No record of transaction found."}</div>
             </div>
           </CardContent>
         </Card>

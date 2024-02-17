@@ -39,7 +39,7 @@ const CalendarHostOverall: React.FC<CalendarHostOverallProps> = ({ price, dateRa
             <CalendarHost value={dateRange} onChange={(value) => onChangeDate(value.selection)} price={price} futurePrices={futurePrices}/>
             <hr />
             <div className="p-4">
-                <Button disabled={disabled} label="Update Pricing" onClick={handleSubmit(onSubmit)}/>
+                <Button loading disabled={disabled} label="Update Pricing" onClick={handleSubmit(onSubmit)}/>
             </div>
             <div className="p-4 flex flex-row items-center justify-between font-semibold text-lg">
                 <div>

@@ -10,12 +10,14 @@ import { IoArrowForwardCircle } from "react-icons/io5";
 import useCountries from "@/app/hooks/useCountries";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
 
 const Map = dynamic(() => import("../Map"), { ssr: false });
 
 interface ListingInfoProps {
     listing: Listing;
     user?: User;
+    compareUserToHost: boolean;
     description: string;
     guestCount: number;
     category: {
@@ -27,13 +29,16 @@ interface ListingInfoProps {
     onSubmit: () => void;
 }
 
-const ListingInfo: React.FC<ListingInfoProps> = ({ listing, user, description, guestCount, category, onSubmit }) => {
+const ListingInfo: React.FC<ListingInfoProps> = ({ listing, user, compareUserToHost, description, guestCount, category, onSubmit }) => {
     const { getByValue } = useCountries();
     const coordinates = [parseFloat(listing.coordinates[0]), parseFloat(listing.coordinates[1])];
 
     const [isButtonClicked, setButtonClicked] = useState(false);
 
     const onSubmitButton = () => {
+        if(compareUserToHost) {
+            return toast.error("You're the host!")
+        }
         onSubmit();
         setButtonClicked(true);
     };

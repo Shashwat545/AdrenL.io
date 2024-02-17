@@ -26,7 +26,7 @@ const CalendarHostOverall: React.FC<CalendarHostOverallProps> = ({ value, disabl
             <CalendarHost value={value} onChange={(value) => onChangeDate(value)} pausedDates={pausedDates}/>
             <hr />
             <div className="p-4">
-                <Button disabled={disabled} label="Pause / Resume" onClick={onSubmit}/>
+                <Button loading disabled={disabled} label="Pause / Resume" onClick={onSubmit}/>
             </div>
         </div>
     );

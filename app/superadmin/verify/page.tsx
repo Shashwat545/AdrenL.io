@@ -4,6 +4,11 @@ import { getHosts, getUnverifiedHosts, getVerifiedHosts } from "@/app/actions/ge
 import VerifyClient from "./verifyClient";
 import ClientOnly from "@/app/components/ClientOnly";
 import EmptyState from "@/app/components/EmptyState";
+import { Host, User } from "@prisma/client";
+
+interface HostsIncludeProps extends Host {
+    user?: User | undefined; // 
+}
 
 const verifyKYCPage = async () => {
     const isAdmin = await isAdminAuthenticated();
@@ -12,9 +17,9 @@ const verifyKYCPage = async () => {
     }
 
     try {
-        const verifiedHosts = await getVerifiedHosts();
-        const notVerifiedHosts = await getUnverifiedHosts();
-        const hosts = await getHosts();
+        const verifiedHosts: HostsIncludeProps[] = await getVerifiedHosts();
+        const notVerifiedHosts: HostsIncludeProps[] = await getUnverifiedHosts();
+        const hosts: HostsIncludeProps[] = await getHosts();
 
         return (
             <VerifyClient verifiedHosts={verifiedHosts} notVerifiedHosts={notVerifiedHosts} hosts={hosts} />

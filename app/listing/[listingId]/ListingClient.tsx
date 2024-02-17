@@ -28,7 +28,7 @@ interface ListingClientProps {
   currentUser: User | null;
   listing: Listing & { user: User };
   pausedDates: PausedDates[];
-  reviews: Review[];
+  reviews: (Review & {user: User})[];
   futurePrices: FuturePricing[];
 }
 
@@ -142,6 +142,8 @@ const ListingClient: React.FC<ListingClientProps> = ({
     reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length;
   const totalRatings = reviews.length;
 
+  const compareUserToHost = (listing.user.id === currentUser?.id);
+
   return (
     <Container>
       <div className="max-w-screen-lg mx-auto">
@@ -158,6 +160,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
             <ListingInfo
               listing={listing}
               user={listing.user}
+              compareUserToHost={compareUserToHost}
               category={category}
               description={listing.description}
               guestCount={listing.guestCount}

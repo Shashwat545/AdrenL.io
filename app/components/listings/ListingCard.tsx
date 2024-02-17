@@ -17,11 +17,12 @@ interface ListingCardProps {
     onAction?: (id: string) => void;
     disabled?: boolean;
     actionLabel?: string;
+    loading?: boolean;
     actionId?: string;
     currentUser?: User | null | undefined;
 }
 
-const ListingCard: React.FC<ListingCardProps> = ({ data, reservation, onAction, disabled, actionLabel, actionId = "", currentUser }) => {
+const ListingCard: React.FC<ListingCardProps> = ({ data, reservation, onAction, disabled, actionLabel, loading, actionId = "", currentUser }) => {
     const router = useRouter();
     const { getByValue } = useCountries();
 
@@ -77,7 +78,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ data, reservation, onAction, 
                     )}
                 </div>
                 {onAction && actionLabel && (
-                    <Button disabled={disabled} small label={actionLabel} onClick={handleCancel}/>
+                    <Button loading={loading} disabled={disabled} small label={actionLabel} onClick={handleCancel}/>
                 )}
             </div>
         </div>
