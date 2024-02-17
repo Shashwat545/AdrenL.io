@@ -29,8 +29,6 @@ export default function CancellationPolicy(){
         <ol className="list-disc list-inside leading-8">
             <li> Full refund if cancelled 1 day prior to the activity.
             </li>
-            <li> 50% refund if cancelled within 24 hours but more than 1 day before the activity.
-            </li>
             <li>   No refund if cancelled on the same day of the activity.
             </li>
           </ol>

@@ -49,16 +49,15 @@ const ReservationClient: React.FC<ReservationClientProps> = ({ reservation, curr
       let refundPercentage = 0;
       switch (reservation.cancellationPolicy) {
         case "Flexible":
-          if (daysDifference > 1) refundPercentage = 100;
-          else if (daysDifference <= 1) refundPercentage = 50;
+          if (daysDifference >= 1) refundPercentage = 100;
           break;
         case "Moderate":
-          if (daysDifference > 2) refundPercentage = 100;
-          else if (daysDifference > 1) refundPercentage = 50;
+          if (daysDifference >= 2) refundPercentage = 100;
+          else if (daysDifference >= 1) refundPercentage = 50;
           break;
         case "Strict":
-          if (daysDifference > 3) refundPercentage = 100;
-          else if (daysDifference > 2) refundPercentage = 50;
+          if (daysDifference >= 3) refundPercentage = 100;
+          else if (daysDifference >= 2) refundPercentage = 50;
           break;
         case "SuperStrict":
           if (daysDifference >= 7) refundPercentage = 100;
