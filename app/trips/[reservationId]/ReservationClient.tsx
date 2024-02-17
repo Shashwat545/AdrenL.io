@@ -3,11 +3,13 @@
 import { Separator } from "@/app/components/shadcn/Separator";
 import { CardTitle, CardHeader, CardContent, Card } from "@/app/components/shadcn/Card";
 import { Button } from "@/app/components/shadcn/Button";
-import Button2 from "@/app/components/Button";
 import { Listing, Reservation, Transaction, User } from "@prisma/client";
 import { format } from "date-fns";
 import { useRouter } from "next/navigation";
-import React, { useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import { differenceInDays } from "date-fns";
 
 interface ReservationClientProps {
     reservation: Reservation & { listing: Listing & { user: User }; transaction: Transaction; user: User };
@@ -20,6 +22,83 @@ const ReservationClient: React.FC<ReservationClientProps> = ({ reservation, curr
     const handlePrint = () => {
         window.print();
     };
+
+    let statusText = "";
+    if(reservation.cancelled) {
+      statusText = "Booking cancelled by user.";
+    } else {
+      if(reservation.isConfirmed == 'confirmed') {
+        statusText = "Booking confirmed by host."
+      } else if (reservation.isConfirmed == 'pending') {
+        statusText = "Waiting for confirmation from host.";
+      } else if (reservation.isConfirmed == 'rejected') {
+        statusText = "Booking rejected by host."
+      }
+    }
+
+    const daysDifference: number = differenceInDays(new Date(reservation.startDate), new Date());
+
+    const onCancel = useCallback(() => {
+      if(reservation.cancelled) {
+        return toast.error("Already cancelled.")
+      }
+      if(daysDifference <= 0) {
+        return toast.error("Cancellation not possible now.")
+      }
+      
+      let refundPercentage = 0;
+      switch (reservation.cancellationPolicy) {
+        case "Flexible":
+          if (daysDifference > 1) refundPercentage = 100;
+          else if (daysDifference <= 1) refundPercentage = 50;
+          break;
+        case "Moderate":
+          if (daysDifference > 2) refundPercentage = 100;
+          else if (daysDifference > 1) refundPercentage = 50;
+          break;
+        case "Strict":
+          if (daysDifference > 3) refundPercentage = 100;
+          else if (daysDifference > 2) refundPercentage = 50;
+          break;
+        case "SuperStrict":
+          if (daysDifference >= 7) refundPercentage = 100;
+          break;
+        case "NonRefundable":
+          refundPercentage = 0;
+          break;
+      }
+      
+      const refundAmount = (reservation.totalPrice * refundPercentage) / 100;
+      axios.post(`/api/reservations/${reservation.id}/cancel`,{})
+      .then(() => {
+          toast.success("Reservation cancelled.");
+          axios.post('/api/payment/refund', {merchantUserId: reservation.transaction.userId ,merchantTransactionId: reservation.transaction.merchantTransactionId, amount: refundAmount})
+          .then(() => {
+            toast.success(`Refund of ₹${refundAmount} initiated.`);
+          })
+          .catch(() => {
+            toast.error("Something went wrong in initiating refund.");
+          })
+          router.refresh();
+      })
+      .catch(() => {
+          toast.error("Something went wrong. Cannot process request now.");
+      })
+    }, [router, reservation]);
+
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+            const response = await axios.post('/api/payment/check_status', {merchantTransactionId: reservation.transaction.merchantTransactionId});
+        } catch (error) {
+            console.error('Error checking status of Payment: ', error);
+        }
+      };
+      if(reservation.transaction.status == "" || reservation.transaction.status == "PAYMENT_PENDING" || reservation.transaction.status == "INTERNAL_SERVER_ERROR") {
+        fetchData();
+        location.reload();
+      }
+    }, []);
 
   return (
     <div id="printable" ref={printRef} className="px-4 py-8 md:py-12 lg:py-16">
@@ -37,7 +116,7 @@ const ReservationClient: React.FC<ReservationClientProps> = ({ reservation, curr
             <div className="text-sm text-gray-500 dark:text-gray-400">Status</div>
             <div className="flex items-center gap-2">
               <CalendarCheckIcon className="w-4 h-4" />
-              <span>Waiting for confirmation from host</span>
+              <span>{statusText}</span>
             </div>
           </div>
         </div>
@@ -102,7 +181,7 @@ const ReservationClient: React.FC<ReservationClientProps> = ({ reservation, curr
           <Button onClick={() => {router.push('/contact-us')}} size="lg" variant="outline">
             Contact support
           </Button>
-          <Button onClick={() => {}} size="lg" variant="destructive">
+          <Button onClick={() => onCancel()} size="lg" variant="destructive">
             Cancel booking
           </Button>
         </div>

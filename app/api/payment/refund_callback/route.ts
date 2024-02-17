@@ -8,18 +8,17 @@ export async function POST (request: Request) {
         const decodedPayload = Buffer.from(response, 'base64').toString('utf-8');
         const parsedPayload = JSON.parse(decodedPayload);
 
-        const transaction = await prisma.transaction.update({
+        const refundTransaction = await prisma.refundTransaction.update({
             where: {
                 merchantTransactionId: parsedPayload.data.merchantTransactionId
             },
             data: {
                 callback_triggered: true,
-                status: parsedPayload.code,
-                paymentInstrument: JSON.stringify(parsedPayload.data.paymentInstrument)
+                status: parsedPayload.code
             }
         });
         
-        return NextResponse.json(transaction);
+        return NextResponse.json(refundTransaction);
     }
     catch (error) {
         console.error('Error in PhonePe callback route: ', error);

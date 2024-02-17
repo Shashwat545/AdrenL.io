@@ -15,16 +15,29 @@ interface ReservationCardProps {
 }
 
 const ReservationCard: React.FC<ReservationCardProps> = ({reservation, currentUser, listing, transaction}) => {
-  let colorClass = "";
-  if(transaction?.callback_triggered) {
-    if(transaction?.status == "Payment Successful") {
-      colorClass = "bg-green-300"
-    } else {
-      colorClass = "bg-red-400"
-    }
-  }
-
   const router = useRouter();
+
+  const renderPaymentStatus = () => {
+    if (transaction.status === "PAYMENT_SUCCESS") {
+      return (
+        <div className={`inline-flex items-center rounded-full bg-green-300 border px-2.5 py-0.5 w-fit text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground hover:bg-primary/80`}>
+          Payment successful
+        </div>
+      );
+    } else if (transaction.status == "" || transaction.status == "PAYMENT_PENDING" || transaction.status == "INTERNAL_SERVER_ERROR") {
+      return (
+        <div className={`inline-flex items-center rounded-full bg-yellow-300 border px-2.5 py-0.5 w-fit text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground hover:bg-primary/80`}>
+          Payment Processing...
+        </div>
+      );
+    } else {
+      return (
+        <div className={`inline-flex items-center rounded-full bg-red-400 border px-2.5 py-0.5 w-fit text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground hover:bg-primary/80`}>
+          {transaction.status}
+        </div>
+      );
+    }
+  };
 
   return (
     <main className="p-8 space-y-8">
@@ -46,16 +59,7 @@ const ReservationCard: React.FC<ReservationCardProps> = ({reservation, currentUs
           <p className="text-sm">Total Cost: ₹{reservation.totalPrice}.00</p>
           <p className="text-sm">
             <div className="pt-3">
-              {transaction?.callback_triggered && 
-                <div className={`inline-flex items-center rounded-full ${colorClass} border px-2.5 py-0.5 w-fit text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground hover:bg-primary/80`}>
-                  {transaction?.status}
-                </div>
-              }
-              {!transaction?.callback_triggered && 
-                <div className={`inline-flex items-center rounded-full bg-yellow-300 border px-2.5 py-0.5 w-fit text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground hover:bg-primary/80`}>
-                  Payment Processing...
-                </div>
-              }
+              {renderPaymentStatus()}
             </div>
           </p>
         </CardContent>

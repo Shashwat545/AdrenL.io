@@ -20,6 +20,8 @@ const ReservationsPage = async () => {
         authorId: currentUser.id
     });
 
+    const filteredReservations = reservations.filter( reservation => !reservation.cancelled);
+
     if(reservations.length === 0) {
         return (
             <ClientOnly>
@@ -30,7 +32,7 @@ const ReservationsPage = async () => {
 
     return (
         <ClientOnly>
-            <ReservationsClient reservations={reservations} currentUser={currentUser}/>
+            <ReservationsClient reservations={filteredReservations} currentUser={currentUser}/>
         </ClientOnly>
     );
 };

@@ -19,7 +19,5 @@ export async function POST (request: Request) {
       }
     });
 
-    console.log(newNotification);
-
     return NextResponse.json("ok");
 }

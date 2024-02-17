@@ -6,12 +6,13 @@ import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { Reservation, User } from "@prisma/client";
+import { Listing, Reservation, Transaction, User } from "@prisma/client";
 import ReservationCard from "./Card";
 import EmptyState from "../components/EmptyState";
+import { differenceInDays } from "date-fns";
 
 interface ReservationClientProps {
-    reservations?: Reservation[];
+    reservations?: (Reservation & { listing: Listing & { user: User }; transaction: Transaction; user: User })[];
     currentUser?: User | null;
 }
 
@@ -33,10 +34,19 @@ const ReservationsClient: React.FC<ReservationClientProps> = ({ reservations, cu
 
     const onCancel = useCallback((id: string) => {
         setDeletingId(id);
+        const foundReservation = reservations?.find(reservation => reservation.id == id);
+        if(!foundReservation) {
+          return toast.error("Reservation not found.");
+        }
+        const refundAmount = foundReservation.totalPrice;
 
         axios.post(`/api/reservations/${id}`,{status: 'rejected'})
         .then(() => {
             toast.success("Reservation cancelled");
+            axios.post('/api/payment/refund', {merchantUserId: foundReservation.transaction.userId ,merchantTransactionId: foundReservation.transaction.merchantTransactionId, amount: refundAmount})
+            .then(() => {
+              toast.success(`Refund of ₹${refundAmount} initiated for the customer.`);
+            })
             router.refresh();
         })
         .catch(() => {
@@ -79,7 +89,7 @@ const ReservationsClient: React.FC<ReservationClientProps> = ({ reservations, cu
           <path fillRule="evenodd" d="M2.25 2.25a.75.75 0 000 1.5H3v10.5a3 3 0 003 3h1.21l-1.172 3.513a.75.75 0 001.424.474l.329-.987h8.418l.33.987a.75.75 0 001.422-.474l-1.17-3.513H18a3 3 0 003-3V3.75h.75a.75.75 0 000-1.5H2.25zm6.04 16.5l.5-1.5h6.42l.5 1.5H8.29zm7.46-12a.75.75 0 00-1.5 0v6a.75.75 0 001.5 0v-6zm-3 2.25a.75.75 0 00-1.5 0v3.75a.75.75 0 001.5 0V9zm-3 2.25a.75.75 0 00-1.5 0v1.5a.75.75 0 001.5 0v-1.5z" clip-rule="evenodd"></path>
         </svg>
       </div>
-      Pending Reservations
+      Pending Requests
       <div className="grid place-items-center ml-auto justify-self-end">
         {/* <div className="relative grid items-center font-sans font-bold uppercase whitespace-nowrap select-none bg-blue-500/20 text-blue-900 py-1 px-2 text-xs rounded-full" >
           <span className="">2</span>
@@ -93,7 +103,7 @@ const ReservationsClient: React.FC<ReservationClientProps> = ({ reservations, cu
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="h-5 w-5">
           <path fillRule="evenodd" d="M7.5 6v.75H5.513c-.96 0-1.764.724-1.865 1.679l-1.263 12A1.875 1.875 0 004.25 22.5h15.5a1.875 1.875 0 001.865-2.071l-1.263-12a1.875 1.875 0 00-1.865-1.679H16.5V6a4.5 4.5 0 10-9 0zM12 3a3 3 0 00-3 3v.75h6V6a3 3 0 00-3-3zm-3 8.25a3 3 0 106 0v-.75a.75.75 0 011.5 0v.75a4.5 4.5 0 11-9 0v-.75a.75.75 0 011.5 0v.75z" clip-rule="evenodd"></path>
         </svg>
-      </div>Upcoming Reservations
+      </div>Confirmed Bookings
     </div>
     <div role="button"  
     onClick={() => handleButtonClick('rejected')}
@@ -102,7 +112,7 @@ const ReservationsClient: React.FC<ReservationClientProps> = ({ reservations, cu
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="h-5 w-5">
           <path fillRule="evenodd" d="M6.912 3a3 3 0 00-2.868 2.118l-2.411 7.838a3 3 0 00-.133.882V18a3 3 0 003 3h15a3 3 0 003-3v-4.162c0-.299-.045-.596-.133-.882l-2.412-7.838A3 3 0 0017.088 3H6.912zm13.823 9.75l-2.213-7.191A1.5 1.5 0 0017.088 4.5H6.912a1.5 1.5 0 00-1.434 1.059L3.265 12.75H6.11a3 3 0 012.684 1.658l.256.513a1.5 1.5 0 001.342.829h3.218a1.5 1.5 0 001.342-.83l.256-.512a3 3 0 012.684-1.658h2.844z" clip-rule="evenodd"></path>
         </svg>
-      </div>Past Bookings<div className="grid place-items-center ml-auto justify-self-end">
+      </div>Past / Cancelled Bookings<div className="grid place-items-center ml-auto justify-self-end">
         {/* <div className="relative grid items-center font-sans font-bold uppercase whitespace-nowrap select-none bg-blue-500/20 text-blue-900 py-1 px-2 text-xs rounded-full" >
           <span className="">14</span>
         </div> */}
@@ -111,17 +121,18 @@ const ReservationsClient: React.FC<ReservationClientProps> = ({ reservations, cu
   </nav>
 </div>
 
-            <div className="mt-10 ml-[22rem] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-8">
-                {filteredReservations ? filteredReservations.map((reservation) => (
-                    //@ts-ignore
+                {filteredReservations.length!==0 ? (
+                <div className="mt-10 ml-[22rem] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 justify-items-center gap-2">
+                  {filteredReservations.map((reservation) => (
                     <ReservationCard key={reservation.id} data={reservation.listing} reservation={reservation} 
                     actionId={reservation.id} onConfirm={onConfirm} onCancel={onCancel} disabled={deletingId === reservation.id} 
                     confirmActionLabel = "Accept guest reservation"
                     cancelActionLabel="Cancel guest reservation"
                     currentUser={currentUser}/>
-                )): <EmptyState/>}
+                  ))}
+                </div>)
+                : <EmptyState title="No items found here"/>}
 
-            </div>
        </>
     );
 }

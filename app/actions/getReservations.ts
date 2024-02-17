@@ -29,7 +29,8 @@ export default async function getReservations (params: IParams) {
                         user: true
                     }
                 },
-                transaction: true
+                transaction: true,
+                user: true
             },
             orderBy: {
                 createdAt: "desc"

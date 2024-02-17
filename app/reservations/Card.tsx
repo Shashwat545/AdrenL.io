@@ -78,7 +78,7 @@ const ReservationCard: React.FC<ListingCardProps> = ({
 
   return (
     <div
-      onClick={() => router.push(`/listing/${data.id}`)}
+      onClick={() => {}}
       className="col-span-1 cursor-pointer group"
     >
       <div className="flex flex-col gap-2 w-full">
@@ -89,16 +89,17 @@ const ReservationCard: React.FC<ListingCardProps> = ({
             src={data.imageSrc[0]}
             className="object-cover h-full w-full group-hover:scale-110 transition"
           />
-          <div className="absolute top-3 right-3">
-            <HeartButton listingId={data.id} currentUser={currentUser} />
-          </div>
+          
         </div>
         <div className="font-semibold">{data.title}</div>
         <div className="font-light text-neutral-500">
-          {reservationDate || data.category}
+          {reservationDate}
         </div>
         <div className="font-semibold ">
-          {data?.cityValue}, {location?.label}
+          {reservation.user.name}
+        </div>
+        <div className="font-semibold">
+          {reservation?.numberOfPeople} {reservation?.numberOfPeople==1 ? "person" : "people"}
         </div>
         <div className="flex flex-row items-center gap-1">
           <div className="font-semibold">₹ {price}/-</div>

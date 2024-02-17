@@ -2,7 +2,7 @@ import crypto from "crypto";
 import { User } from "@prisma/client";
 
 interface IgetPayload {
-    currentUser: User | null;
+    currentUser: User;
     priceTotal: number;
 }
 
@@ -13,9 +13,9 @@ export default function getPayload ({ currentUser, priceTotal }: IgetPayload) {
 
         const data = {
             merchantId: MERCHANT_ID,
-            merchantTransactionId: ((currentUser?.id)?.slice(5,15).concat(crypto.randomBytes(4).toString('hex'))) || crypto.randomBytes(4).toString('hex'),
-            merchantUserId: currentUser?.id || "NOT_LOGGED_IN",
-            amount: 10000, //priceTotal*100
+            merchantTransactionId: ((currentUser.id).slice(5,15).concat(crypto.randomBytes(4).toString('hex'))),
+            merchantUserId: currentUser.id,
+            amount: 1000, //priceTotal*100
             redirectUrl: `http://localhost:3000/trips`,
             redirectMode: 'REDIRECT',
             callbackUrl: `http://localhost:3000/api/payment/callback`,

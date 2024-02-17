@@ -82,7 +82,7 @@ const UserMenu:React.FC<UserMenuProps> = ({currentUser}) => {
                                 <MenuItem onClick={() => { toggleOpen(); router.push("/favorites"); }} label="My favorites" fontBold/>
                                 <MenuItem onClick={() => { toggleOpen(); router.push("/reservations"); }} label="My reservations" fontBold/>
                                 <MenuItem onClick={() => { toggleOpen(); router.push("/account-settings"); }} label="My Account" fontBold/>
-                                <MenuItem onClick={() => { toggleOpen(); }} label="Notifications" fontBold/>
+                                <MenuItem onClick={() => { toggleOpen(); router.push("/notifications"); }} label="Notifications" fontBold/>
                                 <hr />
                                 <MenuItem onClick={() => { toggleOpen(); router.push("/contact-us"); }} label="Contact us"/>
                                 <MenuItem onClick={() => { toggleOpen(); onHost(); }} label="Host your adventure with us"/>
