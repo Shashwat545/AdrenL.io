@@ -6,7 +6,11 @@ import getUserById from "@/app/actions/getUserById";
 import ReviewComponent from "./ReviewComponent";
 import getHostReviews from "@/app/actions/getHostReviews";
 
-export default async function Component({ params }) {
+interface IParams {
+  hostId: string;
+}
+
+export default async function Component({ params } : {params: IParams}) {
   const listings = await getListingsByUserId({userId: params.hostId});
   const host = await getUserById({userId: params.hostId});
   const hostReviews = await getHostReviews({hostId: host.id});
@@ -24,7 +28,7 @@ export default async function Component({ params }) {
               <div className="absolute -bottom-12 flex h-[87px] w-[87px] items-center justify-center rounded-full border-[4px] border-white bg-pink-400">
                 <img
                   className="h-full w-full rounded-full"
-                  src={host?.image}
+                  src={host?.image || "/images/placeholder.jpg"}
                   alt=""
                 />
               </div>

@@ -28,7 +28,7 @@ interface ListingClientProps {
   currentUser: User | null;
   listing: Listing & { user: User };
   pausedDates: PausedDates[];
-  reviews: Review[];
+  reviews: (Review & {user: User})[];
   futurePrices: FuturePricing[];
 }
 

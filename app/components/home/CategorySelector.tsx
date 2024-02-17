@@ -134,7 +134,7 @@ const CategorySelector = () => {
 
 export default CategorySelector;
   
-  function BackpackIcon(props) {
+  function BackpackIcon(props: any) {
     return (
       <svg
         {...props}
@@ -158,7 +158,7 @@ export default CategorySelector;
   }
   
   
-  function CloudIcon(props) {
+  function CloudIcon(props: any) {
     return (
       <svg
         {...props}
@@ -178,7 +178,7 @@ export default CategorySelector;
   }
   
   
-  function FlameIcon(props) {
+  function FlameIcon(props: any) {
     return (
       <svg
         {...props}
@@ -198,7 +198,7 @@ export default CategorySelector;
   }
   
   
-  function GlassWaterIcon(props) {
+  function GlassWaterIcon(props: any) {
     return (
       <svg
         {...props}
@@ -219,7 +219,7 @@ export default CategorySelector;
   }
   
   
-  function MountainIcon(props) {
+  function MountainIcon(props: any) {
     return (
       <svg
         {...props}
@@ -239,7 +239,7 @@ export default CategorySelector;
   }
   
   
-  function SnowflakeIcon(props) {
+  function SnowflakeIcon(props: any) {
     return (
       <svg
         {...props}
@@ -264,7 +264,7 @@ export default CategorySelector;
   }
   
   
-  function SunIcon(props) {
+  function SunIcon(props: any) {
     return (
       <svg
         {...props}
@@ -292,7 +292,7 @@ export default CategorySelector;
   }
   
   
-  function TreesIcon(props) {
+  function TreesIcon(props: any) {
     return (
       <svg
         {...props}

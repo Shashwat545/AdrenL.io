@@ -16,7 +16,7 @@ export async function POST (request: Request) {
 
         const { payload, xVerify, base64Payload } = getRefundPayload({merchantUserId, originalMerchantTransactionId: merchantTransactionId, amount});
 
-        const response = await axios.post("https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/refund", { request: base64Payload }, {
+        const response = await axios.post("https://api.phonepe.com/apis/hermes/pg/v1/refund", { request: base64Payload }, {
             headers: {
               'Content-Type': 'application/json',
               'X-VERIFY': xVerify,

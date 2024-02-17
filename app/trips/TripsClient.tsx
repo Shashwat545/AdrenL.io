@@ -48,7 +48,7 @@ const TripsClient: React.FC<TripsClientProps> = ({ reservations, currentUser }) 
             </div> */}
             {reservations?.map((reservation) => (
                 //@ts-ignore
-                <ReservationCard reservation={reservation} currentUser={currentUser} listing={reservation.listing} transaction={reservation.transaction}/>
+                <ReservationCard key={reservation.id} reservation={reservation} currentUser={currentUser} listing={reservation.listing} transaction={reservation.transaction}/>
             ))}
         </Container>
     );

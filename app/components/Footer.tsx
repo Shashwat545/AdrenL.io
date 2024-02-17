@@ -83,13 +83,13 @@ const FooterWithSitemap = () => {
         <div>
           <h3 className="text-lg font-semibold mb-2">Why AdrenL?</h3>
           <p className="text-xs">
-            Established in 2023, AdrenL has since positioned itself as one of the leading companies, providing great offers, competitive pricings, exclusive discounts, and a seamless online booking experience to many of its customers. The experience of booking your tickets through our desktop site or mobile app can be done with complete ease and no hassles at all. We also deliver amazing offers, such as Instant Discounts, Price Calendar, MyRewardsProgram, MyWallet, and many more while updating them from time to time to better suit our customers’ evolving needs and demands.
+            Established in 2023, AdrenL has since positioned itself as one of the leading companies, providing great offers, competitive pricings, exclusive discounts, and a seamless online booking experience to many of its customers. The experience of booking your tickets through our desktop site or mobile app can be done with complete ease and no hassles at all. We also deliver amazing offers, such as Instant Discounts, Price Calendar, MyRewardsProgram, MyWallet, and many more while updating them from time to time to better suit our customers&apos; evolving needs and demands.
           </p>
         </div>
         <div>
           <h3 className="text-lg font-semibold mb-2">Booking Adventures with AdrenL</h3>
           <p className="text-xs">
-            At AdrenL, you can find the best of deals and cheap bookings to any place you want by booking your tickets on our website or app. Being India’s leading website for adventure bookings, AdrenL helps you book tickets that are affordable and customized to your convenience. With customer satisfaction being our ultimate goal, we also have a 24/7 dedicated helpline to cater to our customer’s queries and concerns. Serving over 5 million happy customers, we at AdrenL are glad to fulfill the dreams of folks who need a quick and easy means to find adventures. You can get a hold of the most exciting adventure of your choice today while also enjoying the other available options for your travel needs with us.
+            At AdrenL, you can find the best of deals and cheap bookings to any place you want by booking your tickets on our website or app. Being India&apos;s leading website for adventure bookings, AdrenL helps you book tickets that are affordable and customized to your convenience. With customer satisfaction being our ultimate goal, we also have a 24/7 dedicated helpline to cater to our customer&apos;s queries and concerns. Serving over 5 million happy customers, we at AdrenL are glad to fulfill the dreams of folks who need a quick and easy means to find adventures. You can get a hold of the most exciting adventure of your choice today while also enjoying the other available options for your travel needs with us.
           </p>
         </div>
         <div>
@@ -101,7 +101,7 @@ const FooterWithSitemap = () => {
         <div>
           <h3 className="text-lg font-semibold mb-2">Our Learning Program</h3>
           <p className="text-xs">
-          Explore more than just adventure with AdrenL. Join our Learning Program in collaboration with trusted partners to receive expert training in activities like skiing, paragliding, and more. Whether you're a beginner or looking to refine your skills, our program offers tailored sessions with experienced professionals. Elevate your adventure experience – learn, grow, and embrace the thrill with confidence!
+          Explore more than just adventure with AdrenL. Join our Learning Program in collaboration with trusted partners to receive expert training in activities like skiing, paragliding, and more. Whether you&apos;re a beginner or looking to refine your skills, our program offers tailored sessions with experienced professionals. Elevate your adventure experience – learn, grow, and embrace the thrill with confidence!
           </p>
         </div>
       </div>

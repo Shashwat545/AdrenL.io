@@ -2,12 +2,12 @@
 
 import ReviewCard from "./ReviewCard";
 import Modal from "../chat/Modal";
-import { Review } from "@prisma/client";
+import { Review, User } from "@prisma/client";
 
 interface ReviewModalProps {
     isModalOpen: boolean;
     setIsModalOpen: (value: boolean) => void;
-    reviews: Review[];
+    reviews: (Review & {user: User})[];
     formatPostedTime: Function;
 }
 

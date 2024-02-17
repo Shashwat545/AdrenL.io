@@ -1,14 +1,14 @@
 'use client';
 
 import { useState } from "react";
-import { Review } from "@prisma/client";
+import { Review, User } from "@prisma/client";
 import Button from "../Button";
 import ReviewCard from "./ReviewCard";
 import ReviewModal from "./ReviewModal";
 import { differenceInDays } from "date-fns";
 
 interface ReviewClientProps {
-    reviews: Review[];
+    reviews: (Review & {user: User})[];
 }
 
 const ReviewClient: React.FC<ReviewClientProps> = ({ reviews }) => {
@@ -36,7 +36,7 @@ const ReviewClient: React.FC<ReviewClientProps> = ({ reviews }) => {
     return (
         <>
             {reviews.slice(0, 4).map((review) => (
-                <ReviewCard review={review} formatPostedTime={formatPostedTime} />
+                <ReviewCard key={review.id} review={review} formatPostedTime={formatPostedTime} />
             ))}
             {showMoreButton && (
                 <div className="col-span-3">
