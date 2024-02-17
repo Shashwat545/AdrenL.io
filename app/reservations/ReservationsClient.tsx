@@ -20,11 +20,10 @@ const ReservationsClient: React.FC<ReservationClientProps> = ({ reservations, cu
     const router = useRouter();
     const [deletingId, setDeletingId] = useState('');
     const [selectedButton, setSelectedButton] = useState('pending');
-    const [filteredReservations, setFilteredReservations] = useState([]);
+    const [filteredReservations, setFilteredReservations] = useState<(Reservation & { listing: Listing & { user: User }; transaction: Transaction; user: User })[]>([]);
 
     useEffect(() => {
-      // Filter reservations when the selectedState changes
-      const filteredData = reservations?.filter(reservation => reservation?.isConfirmed === selectedButton);
+      const filteredData = reservations?.filter(reservation => reservation?.isConfirmed === selectedButton) || [];
       setFilteredReservations(filteredData);
     }, [selectedButton, reservations]);
 
