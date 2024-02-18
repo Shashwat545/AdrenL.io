@@ -69,6 +69,9 @@ model Listing {
     imageSrc String[]
     createdAt DateTime @default(now())
     category String
+    thrillIntensity String
+    address String
+    amenities String[]
     guestCount Int
     locationValue String
     stateValue String

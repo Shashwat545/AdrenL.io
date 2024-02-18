@@ -11,7 +11,7 @@ export const config = {
         "/hosting/:path*",
         "/inbox",
         "/inbox/:path*",
-        "/review/:path*"
-
+        "/review/:path*",
+        "/notifications"
     ]
 }

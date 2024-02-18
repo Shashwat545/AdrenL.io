@@ -49,9 +49,9 @@ const HostingPage = async () => {
                         subtitle="Manage prices for upcoming dates on your listings"
                     />
                     <HostingCard
-                        heading="Listing Status"
-                        redirectUrl="instant-switch"
-                        subtitle="Start / Stop taking reservations for your listings"
+                        heading="Accept / Reject Booking Requests"
+                        replaceUrl="reservations"
+                        subtitle="Accept or reject requests for bookings on your adventures"
                     />
                     <HostingCard
                         heading="Pause / Resume Bookings"
@@ -69,9 +69,9 @@ const HostingPage = async () => {
                         subtitle="Check and reply to your messages"
                     />
                     <HostingCard
-                        heading="Accept / Reject Booking Requests"
-                        replaceUrl="reservations"
-                        subtitle="Accept or reject requests for bookings on your adventures"
+                        heading="Listing Status"
+                        redirectUrl="instant-switch"
+                        subtitle="Start / Stop taking reservations for your listings"
                     />
                     <HostingCard
                         heading="Remove Listing"

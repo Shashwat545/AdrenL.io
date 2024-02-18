@@ -5,6 +5,7 @@ import { Card, CardHeader, Typography, Button, CardBody, CardFooter, Tabs, TabsH
 import TableRow from "./tableRow";
 import { useState } from "react";
 import { Host, User } from "@prisma/client";
+import { format } from "date-fns";
 
 const TABS = [
     {
@@ -101,7 +102,7 @@ const VerifyClient: React.FC<VerifyClientProps> = async ({ verifiedHosts, notVer
                             {TABLE_ROWS?.map((data) => {
                                 return (
                                     <TableRow key={data.id} img={data?.user?.image ?? ""} name={data?.user?.name ?? ""} email={data?.user?.email ?? ""}
-                                    verified={data?.isVerified ?? false} date={(data?.verificationDate)?.toString() ?? ""} id={data?.id ?? ""} />
+                                    verified={data?.isVerified ?? false} date={format(data?.verificationDate ?? new Date(), 'dd-MM-yyyy') ?? ""} id={data?.id ?? ""} />
                                 );
                             })}
                         </tbody>

@@ -3,6 +3,9 @@
 import {useRouter, useSearchParams} from "next/navigation";
 import qs from "query-string";
 import { useCallback } from "react";
+import { BiWater } from "react-icons/bi";
+import { FaHiking, FaStar, FaTag, FaWalking } from "react-icons/fa";
+import { GiAirBalloon, GiIsland, GiWingedSword } from "react-icons/gi";
 
 const CategorySelector = () => {
   const params=useSearchParams();
@@ -72,20 +75,20 @@ const CategorySelector = () => {
         <div className="container mx-auto px-4 md:px-6 py-2 flex items-center justify-between">
           <div className="flex items-center space-x-4 mr-5">
             <h3 className="font-semibold">Intensity:</h3>
-            <div onClick={() => handleIntensityClick("High")} className="flex items-center space-x-2 border-r pr-4 cursor-pointer">
-              <FlameIcon className="w-6 h-6 text-red-500" />
-              <span className={`${intensity==="High"?`${underlineClasses}`:''}`}>
-                High
+            <div onClick={() => handleIntensityClick("Extreme")} className="flex items-center space-x-2 border-r pr-4 cursor-pointer">
+              <GiWingedSword className="w-6 h-6 text-red-500" />
+              <span className={`${intensity==="Extreme"?`${underlineClasses}`:''}`}>
+                Extreme
               </span>
             </div>
-            <div onClick={() => handleIntensityClick("Medium")} className="flex items-center space-x-2 border-r pr-4 cursor-pointer">
-              <SunIcon className="w-6 h-6 text-yellow-500" />
-              <span className={`${intensity==="Medium"?`${underlineClasses}`:''}`}>
-                Medium
+            <div onClick={() => handleIntensityClick("Moderate")} className="flex items-center space-x-2 border-r pr-4 cursor-pointer">
+              <FaHiking className="w-6 h-6 text-yellow-500" />
+              <span className={`${intensity==="Moderate"?`${underlineClasses}`:''}`}>
+                Moderate
               </span>
             </div>
             <div onClick={() => handleIntensityClick("Low")} className="flex items-center space-x-2 cursor-pointer">
-              <SnowflakeIcon className="w-6 h-6 text-blue-500" />
+              <FaWalking className="w-6 h-6 text-blue-500" />
               <span className={`${intensity==="Low"?`${underlineClasses}`:''}`}>
                 Low
               </span>
@@ -94,36 +97,36 @@ const CategorySelector = () => {
           <div className="flex items-center space-x-4 mr-5">
             <h3 className="font-semibold">Medium:</h3>
             <div onClick={() => handleCategoryClick("Air")} className="flex items-center space-x-2 border-r pr-4 cursor-pointer">
-              <CloudIcon className="w-6 h-6 text-gray-500" />
+              <GiAirBalloon className="w-6 h-6 text-gray-500" />
               <span className={`${category==="Air"?`${underlineClasses}`:''}`}>
                 Air
               </span>
             </div>
             <div onClick={() => handleCategoryClick("Land")} className="flex items-center space-x-2 border-r pr-4 cursor-pointer">
-              <TreesIcon className="w-6 h-6 text-green-500" />
+              <GiIsland className="w-6 h-6 text-green-500" />
               <span className={`${category==="Land"?`${underlineClasses}`:''}`}>
                 Land
               </span>
             </div>
             <div onClick={() => handleCategoryClick("Water")} className="flex items-center space-x-2 cursor-pointer">
-              <GlassWaterIcon className="w-6 h-6 text-blue-500" />
+              <BiWater className="w-6 h-6 text-blue-500" />
               <span className={`${category==="Water"?`${underlineClasses}`:''}`}>
                 Water
               </span>
             </div>
           </div>
           <div className="flex items-center space-x-4 mr-5">
-            <h3 className="font-semibold">Miscellaneous:</h3>
-            <div onClick={() => handleMiscClick("Hiking")} className="flex items-center space-x-2 border-r pr-4 cursor-pointer">
-              <BackpackIcon className="w-6 h-6 text-brown-500" />
-              <span className={`${misc==="Hiking"?`${underlineClasses}`:''}`}>
-                Hiking
+            <h3 className="font-semibold">Sort:</h3>
+            <div onClick={() => handleMiscClick("Rating")} className="flex items-center space-x-2 border-r pr-4 cursor-pointer">
+              <FaStar className="w-6 h-6 text-brown-500" />
+              <span className={`${misc==="Rating"?`${underlineClasses}`:''}`}>
+                Rating
               </span>
             </div>
-            <div onClick={() => handleMiscClick("Mountains")} className="flex items-center space-x-2 cursor-pointer">
-              <MountainIcon className="w-6 h-6 text-gray-500" />
-              <span className={`${misc==="Mountains"?`${underlineClasses}`:''}`}>
-                Mountains
+            <div onClick={() => handleMiscClick("Price")} className="flex items-center space-x-2 cursor-pointer">
+              <FaTag className="w-6 h-6 text-gray-500" />
+              <span className={`${misc==="Price"?`${underlineClasses}`:''}`}>
+                Price
               </span>
             </div>
           </div>

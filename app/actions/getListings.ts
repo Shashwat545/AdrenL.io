@@ -2,6 +2,7 @@ import prisma from "@/app/libs/prismadb";
 
 export interface IListingsParams {
     userId?: string;
+    intensity?: string;
     guestCount?: number,
     startDate?: string,
     endDate?: string,
@@ -13,11 +14,20 @@ export interface IListingsParams {
 
 export default async function getListings(params: IListingsParams) {
     try {
-        const { userId, guestCount, startDate, endDate, locationValue, stateValue, cityValue, category } = params;
+        const { userId, intensity, guestCount, startDate, endDate, locationValue, stateValue, cityValue, category } = params;
         let query:any = {};
         
         if(userId) {
             query.userId = userId;
+        }
+        if(intensity) {
+            if(intensity == "Extreme") {
+                query.thrillIntensity = "Extreme Intensity";
+            } else if(intensity == "Moderate") {
+                query.thrillIntensity = "Moderate Intensity";
+            } else if(intensity == "Low") {
+                query.thrillIntensity = "Low Intensity";
+            }
         }
         if(category) {
             query.category = category;
@@ -57,6 +67,13 @@ export default async function getListings(params: IListingsParams) {
 
         const listings = await prisma.listing.findMany({
             where: query,
+            include : {
+                user: {
+                    include: {
+                        host: true
+                    }
+                }
+            },
             orderBy: {
                 createdAt: 'desc'
             }

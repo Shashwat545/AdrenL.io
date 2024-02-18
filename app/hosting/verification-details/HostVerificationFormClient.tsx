@@ -20,8 +20,17 @@ const HostVerificationFormClient: React.FC<HostVerificationFormClientProps> = as
         bankingName: "", ifscCode: "", aadharCard: "", panCard: "", accountNo: "" }
     });
     const router = useRouter();
+    const [aadharUploaded, setAadharUploaded] = useState(false);
+    const [panUploaded, setPanUploaded] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const onSubmit = (data: any) => {
+        if(data.aadharCard == "") {
+            return toast.error("Aadhar Card not uploaded!");
+        } else if (data.panCard == "") {
+            return toast.error("PAN Card not uploaded!");
+        }
+        setIsLoading(true);
         axios.post("/api/hosting/hostVerificationDetails", {
             id: currentUser.id,
             ...data,
@@ -30,17 +39,17 @@ const HostVerificationFormClient: React.FC<HostVerificationFormClientProps> = as
             router.refresh();
             toast.success("Your details have been submitted successfully.");
         });
-        
+        setIsLoading(false);
     };
-
-    const image = watch("aadharCard");
 
     const handleAadharUpload = (result: any) => {
         setValue("aadharCard", result.info.secure_url, { shouldValidate: true });
+        setAadharUploaded(true);
     };
 
     const handlePANUpload = (result: any) => {
         setValue("panCard", result.info.secure_url, { shouldValidate: true });
+        setPanUploaded(true);
     };
 
 
@@ -142,6 +151,7 @@ const HostVerificationFormClient: React.FC<HostVerificationFormClientProps> = as
                                 </svg>
                         </Button>
                     </CldUploadButton>
+                    {aadharUploaded && <span className="ml-2 mt-2">(Uploaded ✅)</span>}
                 </div>
         
                 <div className="flex">
@@ -153,6 +163,7 @@ const HostVerificationFormClient: React.FC<HostVerificationFormClientProps> = as
                                 </svg>
                         </Button>
                     </CldUploadButton>
+                    {panUploaded && <span className="ml-2 mt-2">(Uploaded ✅)</span>}
                 </div>
                 
                 <input type="submit" className="bg-red-500 text-white font-semibold px-4 py-2 rounded-md cursor-pointer"/>

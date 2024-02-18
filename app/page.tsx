@@ -33,6 +33,9 @@ const Home = async ({ searchParams }: HomeProps) => {
     const listings = await getListings(searchParams);
     const allListings = await getListings({});
 
+    const filteredAllListings = allListings.filter( listing => listing.user.host?.isVerified ?? false );
+    const filteredListings = listings.filter ( listing => listing.user.host?.isVerified ?? false  );
+
     if(listings.length === 0) {
         return (
             <ClientOnly>
@@ -42,7 +45,7 @@ const Home = async ({ searchParams }: HomeProps) => {
     }
 
     return (
-        <HomeClient allListings={allListings} listings={listings} currentUser={currentUser}/>
+        <HomeClient allListings={filteredAllListings} listings={filteredListings} currentUser={currentUser}/>
     );
 }
 

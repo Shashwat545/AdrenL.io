@@ -3,7 +3,7 @@
 import { Separator } from "@/app/components/shadcn/Separator";
 import { CardTitle, CardHeader, CardContent, Card } from "@/app/components/shadcn/Card";
 import { Button } from "@/app/components/shadcn/Button";
-import { Listing, Reservation, Transaction, User } from "@prisma/client";
+import { Listing, RefundTransaction, Reservation, Transaction, User } from "@prisma/client";
 import { format } from "date-fns";
 import { useRouter } from "next/navigation";
 import React, { useCallback, useEffect, useRef } from "react";
@@ -12,7 +12,7 @@ import { toast } from "react-hot-toast";
 import { differenceInDays } from "date-fns";
 
 interface ReservationClientProps {
-    reservation: Reservation & { listing: Listing & { user: User }; transaction: Transaction | null; user: User };
+    reservation: Reservation & { listing: Listing & { user: User }; transaction: (Transaction & { refund?: RefundTransaction | null }) | null; user: User };
     currentUser: User;
 }
 
@@ -149,8 +149,8 @@ const ReservationClient: React.FC<ReservationClientProps> = ({ reservation, curr
               <div>{reservation.listing.cityValue}</div>
             </div>
             <div className="grid gap-0.5">
-              <div className="font-semibold">Address</div>
-              <div>123 Adventure Way, Big Sur, CA</div>
+              <div className="font-semibold">Exact Address of Adventure</div>
+              <div>{reservation.listing.address}</div>
             </div>
           </CardContent>
         </Card>
@@ -175,6 +175,12 @@ const ReservationClient: React.FC<ReservationClientProps> = ({ reservation, curr
               <div className="font-semibold">Transaction Status</div>
               <div>{reservation?.transaction?.status ?? "No record of transaction found."}</div>
             </div>
+            { reservation.transaction?.refundInitiated && (
+              <div className="grid gap-0.5">
+                <div className="font-semibold">Refund Status</div>
+                <div>{reservation?.transaction?.refund?.status ?? "No record of refund found."}</div>
+              </div>
+            )}
           </CardContent>
         </Card>
         <div className="flex flex-col gap-2 min-[400px]:flex-row">

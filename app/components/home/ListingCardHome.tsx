@@ -61,7 +61,7 @@ const ListingCardHome: React.FC<ListingCardHomeProps> = ({data, reservation, onA
             </Typography>
           </div>
           <Typography color="black">
-            Low Intensity, {data.category}
+            {data.thrillIntensity}, {data.category}
           </Typography>
           <div className="group mt-3 inline-flex flex-wrap items-center gap-1">
             <Tooltip content="Free wifi">

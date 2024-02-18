@@ -18,6 +18,9 @@ const getVerifiedHosts = () => {
         const hosts = prisma?.host.findMany({
             where: {
                 isVerified: true,
+            },
+            include: {
+                user: true
             }
         });
         return hosts;

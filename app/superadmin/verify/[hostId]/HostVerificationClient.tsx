@@ -3,6 +3,7 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Host } from "@prisma/client";
+import { useRouter } from "next/navigation";
 
 interface TableItem {
   label: string;
@@ -17,16 +18,22 @@ interface HostVerificationClientProps {
 }
 
 const HostVerificationClient:React.FC<HostVerificationClientProps> = async ({pdfUrls, leftTableData, rightTableData, host}) => {
+    const router = useRouter();
     const handleSubmit = async (e: any) => {
-        axios.post('/api/hosting/verify', {hostId: host?.id})
-        .then((res) =>{
-            console.log(res);
+        if(host?.isVerified) {
+          toast.error("Already verified!");
+        }
+        axios.post('/api/hosting/verify', {hostId: host.id})
+        .then(() =>{
             return toast.success("Host Verified");
         })
         .catch(() => {
             return toast.error("Something went wrong! Could not verify host");
         })
-      }
+        .finally(() => {
+          router.refresh();
+        })
+    }
     return(
         <div className="bg-gray-100 min-h-screen p-4">
         <h1 className="text-4xl font-bold mb-8">Host Details</h1>

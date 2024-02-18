@@ -18,7 +18,11 @@ export default async function getReservationById( params: IParams ) {
                         user: true
                     }
                 },
-                transaction: true,
+                transaction: {
+                    include: {
+                        refund: true
+                    }
+                },
                 user: true
             },
         });
