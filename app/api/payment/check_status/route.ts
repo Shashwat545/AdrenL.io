@@ -16,7 +16,7 @@ export async function POST (request: Request) {
 
         const { xVerify, MERCHANT_ID, basePath } = getCheckStatusPayload(merchantTransactionId);
 
-        const response = await axios.get(`https://api-preprod.phonepe.com/apis/pg-sandbox${basePath}`, {
+        const response = await axios.get(`https://api.phonepe.com/apis/hermes${basePath}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'X-VERIFY': xVerify,
