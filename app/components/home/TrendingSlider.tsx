@@ -6,7 +6,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Tag } from 'primereact/tag';
 import ListingCardHome from './ListingCardHome';
 import getListings from '@/app/actions/getListings';
-import { Listing, User } from '@prisma/client';
+import { Listing, Review, User } from '@prisma/client';
 
 interface TrendingSliderProps {
     listings: Listing[];
@@ -33,7 +33,7 @@ const TrendingSlider: React.FC<TrendingSliderProps> = ({ listings, currentUser }
         );
     }, []);
 
-    const Template = (listing: Listing) => {
+    const Template = (listing: Listing & {reviews: Review[]}) => {
         return (
             <div className="p-5">
                 <ListingCardHome data={listing} currentUser={currentUser}/>
