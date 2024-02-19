@@ -16,12 +16,12 @@ export type CountrySelectValue = {
 export type StateSelectValue = {
     label: string;
     value: string;
-    latlng: number[];
+    latlng: any;
 }
 
 export type CitySelectValue = {
     label: string;
-    latlng: number[];
+    latlng: any;
 }
 
 interface LocationSelectProps {
