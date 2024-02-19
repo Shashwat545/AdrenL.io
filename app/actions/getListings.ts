@@ -72,7 +72,8 @@ export default async function getListings(params: IListingsParams) {
                     include: {
                         host: true
                     }
-                }
+                },
+                reviews: true
             },
             orderBy: {
                 createdAt: 'desc'
