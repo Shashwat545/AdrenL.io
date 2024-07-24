@@ -20,7 +20,7 @@ export default function getRefundPayload ({ merchantUserId, originalMerchantTran
             originalTransactionId: originalMerchantTransactionId,
             merchantTransactionId: refundTransactionId,
             amount: 1000, //amount*100
-            callbackUrl: `https://adrenl.io/api/payment/refund_callback`
+            callbackUrl: `https://adrenl.vercel.app/api/payment/refund_callback`
         };
         
         const base64Payload = Buffer.from(JSON.stringify(payload)).toString('base64');

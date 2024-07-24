@@ -16,9 +16,9 @@ export default function getPayload ({ currentUser, priceTotal }: IgetPayload) {
             merchantTransactionId: ((currentUser.id).slice(5,15).concat(crypto.randomBytes(4).toString('hex'))),
             merchantUserId: currentUser.id,
             amount: 1000, //priceTotal*100
-            redirectUrl: `https://adrenl.io/trips`,
+            redirectUrl: `https://adrenl.vercel.app/trips`,
             redirectMode: 'REDIRECT',
-            callbackUrl: `https://adrenl.io/api/payment/callback`,
+            callbackUrl: `https://adrenl.vercel.app/api/payment/callback`,
             paymentInstrument: {
                 type: 'PAY_PAGE'
             }
